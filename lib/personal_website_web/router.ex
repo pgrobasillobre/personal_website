@@ -29,6 +29,9 @@ defmodule PersonalWebsiteWeb.Router do
 
     live "/", HomeLive
     live "/software", SoftwareLive
+
+    live "/notes", NotesLive
+    live "/notes/:slug", NoteLive
   end
 
 
