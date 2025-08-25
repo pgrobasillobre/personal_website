@@ -45,7 +45,7 @@ defmodule PersonalWebsite.Content do
 
 # Reads the file contents
 # Splits it into frontmatter (YAML metadata) and markdown body
-# Parses markdown into HTML (via EarmarkParser)
+# Parses markdown into HTML (via Earmark)
 # Builds a structured Elixir map with keys like:
 #   :title, :summary, :tags, :impact, :date, etc.
 #   :slug: a URL-safe name based on the filename
@@ -53,7 +53,7 @@ defmodule PersonalWebsite.Content do
   defp parse_md!(path) do
     body = File.read!(path)
     {meta, md} = split_frontmatter(body)
-    html = EarmarkParser.as_html!(md, code_class_prefix: "lang-")
+    html = Earmark.as_html!(md, code_class_prefix: "lang-")
 
     %{
       section: Path.basename(Path.dirname(path)),
