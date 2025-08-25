@@ -28,6 +28,20 @@ defmodule PersonalWebsite.Content do
     # At this point, you're getting a sorted list of content items (like blog posts, projects, etc.), each represented by a structured map.
   end
 
+  def list(section) when section in ~w(projects notes publications cases) do
+    section_path = Path.join(@root, section)
+
+    section_path
+    |> File.ls!()
+    |> Enum.filter(&String.ends_with?(&1, ".md"))
+    |> Enum.map(&Path.join(section_path, &1))
+    |> Enum.map(&parse_md!/1)
+    > Enum.sort_by(&sort_date_key/1, {:desc, Date})
+  end
+
+  defp sort_date_key(%{date: %Date{} = d}), do: d
+  defp sort_date_key(_), do: ~D[0001-01-01]   # fallback for nil/absent dates
+
 
 
   # Loads a YAML file named now.yml from priv/content.
