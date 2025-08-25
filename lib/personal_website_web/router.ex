@@ -14,11 +14,23 @@ defmodule PersonalWebsiteWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Classic HTTP routes (controller + template)
+  # Use when rendering a static or pre-rendered page with no interactivity
+  #scope "/", PersonalWebsiteWeb do
+  #  pipe_through :browser
+  #
+  #  get "/", PageController, :home
+  #end
+
+  # LiveView routes (interactive, real-time via WebSocket)
+  # Use when you need dynamic updates or richer interactivity (no JS needed)
   scope "/", PersonalWebsiteWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
+    live "/software", SoftwareLive
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", PersonalWebsiteWeb do
