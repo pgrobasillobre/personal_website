@@ -28,6 +28,8 @@ defmodule PersonalWebsite.Content do
     # At this point, you're getting a sorted list of content items (like blog posts, projects, etc.), each represented by a structured map.
   end
 
+
+
   # Loads a YAML file named now.yml from priv/content.
   # If it exists, parses it into Elixir data (using YamlElixir).
   # If it doesn’t exist, returns an empty list.
@@ -92,5 +94,15 @@ defmodule PersonalWebsite.Content do
     |> String.downcase()
     |> String.replace(~r/[^a-z0-9]+/u, "-")
     |> String.trim("-")
+  end
+
+  # Fetch a single content item by slug within a given section.
+  #
+  # Used for detail pages like /notes/:slug or /projects/:slug.
+  # Searches the list of parsed items in the section and returns the one with a matching slug.
+  #
+  # logic: “Find me the file in this section whose filename (after slugifying) matches this slug.”
+  def get(section, slug) when section in ~w(projects notes publications) do
+    list(section) |> Enum.find(&(&1.slug == slug))
   end
 end
