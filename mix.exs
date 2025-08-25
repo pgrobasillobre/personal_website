@@ -15,6 +15,11 @@ defmodule PersonalWebsite.MixProject do
     ]
   end
 
+  # debugpgi add parsers to read markdonw and yaml files
+  {:earmark_parser, "~> 1.4"}
+  {:yaml_elixir, "~> 2.9"}
+
+
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
