@@ -1,0 +1,63 @@
+Love it—here’s a simple, personal, and recruiter-friendly plan you can build in Phoenix step by step (no DB, all content as files for now).
+
+Site structure (what to include)
+
+Home (root): your story + value prop, quick CTAs, and fresh “what I’m doing now.”
+
+Software / Projects: 4–6 flagship projects with “problem → approach → impact” and links.
+
+Case Studies: short, narrative outcomes (1–2 paragraphs each). This is what hiring managers actually read.
+
+Publications (curated): 3–6 with plain-English summaries and your role.
+
+Lab Notebook (micro-notes): bite-size posts (bug you fixed, profiling trick, paper takeaway).
+
+Now: 3 bullets updated monthly—what you’re learning/building/reading.
+
+About (personal): why you mix chemistry + software; how you like to work; a friendly photo.
+
+Contact: clear “open to roles” line + email/GitHub/LinkedIn/ORCID/Scholar.
+
+(Optional later) Talks/Teaching, Uses/Colophon, Interactive Demos (e.g., molecule viewer).
+
+Implementation approach (keep it lightweight)
+
+Phoenix + LiveView, no DB.
+
+Markdown content in priv/content/ with front matter (title, date, tags, summary, impact, links).
+
+blog/ (lab notes), projects/, cases/, publications/, now.yml.
+
+Reusable components: Card, Tag, Metric, Timeline, “Link row” for CTAs.
+
+Visual tone: minimal Tailwind, one accent color, headshot, multilingual greeting line.
+
+Root page (home) layout
+
+Hero (personal + clear):
+
+One-liner: “Computational chemist building high-performance scientific software.”
+
+Two buttons: Download CV and Contact.
+
+Small facts row: Pisa · Remote-friendly · Python/C++/Fortran · Open to roles.
+
+“Now” strip: 3 bullets pulled from now.yml (auto-updates the homepage when you update one file).
+
+Highlights (3 cards): your strongest project, one case study, one publication—each with a single impact metric (e.g., “12× speedup,” “reduced memory 40%”).
+
+Recent writing: last 3 Lab Notebook notes (titles + 1-line takeaway).
+
+Trust signals: current affiliation/collaborations (logos or text), links to Scholar/ORCID.
+
+Final CTA: “Work with me / Hire me” → Contact page.
+
+Why this works
+
+Personal voice up front, but outcomes and links are easy to scan for recruiters.
+
+You can ship it incrementally: Home → Software → Publications → Notes, then add Case Studies and Demos later.
+
+No backend complexity; everything is just markdown files + LiveView pages.
+
+If you like this, I’ll map these sections to concrete routes and the exact content file schema (front-matter fields) next.
