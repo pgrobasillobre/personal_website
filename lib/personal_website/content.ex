@@ -79,6 +79,7 @@ defmodule PersonalWebsite.Content do
       tags: meta["tags"] || [],
       impact: meta["impact"],
       links: meta["links"] || %{},
+      venue: meta["venue"] || nil,       # <- prevent KeyError
       date: meta["date"] && Date.from_iso8601!(meta["date"]),
       html: html
     }

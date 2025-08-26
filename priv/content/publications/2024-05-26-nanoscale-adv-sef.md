@@ -2,7 +2,6 @@
 title: Multiscale Modeling of Surface-Enhanced Fluorescence
 authors: [P. Grobas Illobre, ...]
 venue: Nanoscale Advances
-year: 2024
 date: 2024-11-15
 tags: [qm-mm, spectroscopy, fluorescence]
 links:

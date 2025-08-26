@@ -16,7 +16,7 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
           <li class="rounded-2xl shadow p-4">
             <div class="flex flex-wrap items-baseline gap-2">
               <a class="text-xl font-medium underline" href={~p"/publications/#{p.slug}"}><%= p.title %></a>
-              <%= if p.year do %><span class="text-sm text-gray-600">(<%= p.year %>)</span><% end %>
+              <%= if p.date do %><span class="text-sm text-gray-600">(<%= p.date.year %>)</span><% end %>
             </div>
             <%= if p.summary do %><p class="mt-1"><%= p.summary %></p><% end %>
             <div class="mt-2 text-sm text-gray-700">
