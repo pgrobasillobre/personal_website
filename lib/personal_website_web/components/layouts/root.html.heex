@@ -52,8 +52,9 @@
     Appears on every page, provides quick links to key sections:
     Home, Software, Notes, CV, Contact
   -->
+
   <header class="border-b">
-    <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main">
       <a href={~p"/"} class="font-semibold">Pablo Grobas Illobre</a>
       <div class="flex gap-4 text-sm">
         <a href={~p"/about"}>About</a>
@@ -66,7 +67,9 @@
     </nav>
   </header>
 
-
+  <main class="min-h-screen">
     {@inner_content}
+  </main>
+
   </body>
 </html>
