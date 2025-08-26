@@ -4,9 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="PersonalWebsite" suffix=" · Phoenix Framework">
+
+    <!-- debugpgi
+    Default <title> and <meta description> for SEO.
+    Can be overridden per-page using :page_title and :meta_description assigns.
+    Also includes favicon for browser tabs.
+    -->
+    <.live_title
+      default="Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer"
+      suffix=""
+    >
       {assigns[:page_title]}
     </.live_title>
+
+    <meta name="description" content={
+      assigns[:meta_description] ||
+      "Computational chemist building high-performance scientific software (Python · C++ · Fortran). Projects, publications, and notes."
+}     />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
