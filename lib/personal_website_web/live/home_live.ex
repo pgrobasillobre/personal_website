@@ -6,7 +6,7 @@ defmodule PersonalWebsiteWeb.HomeLive do
   def mount(_params, _session, socket) do
     assigns = [
       now: Content.now(),
-      notes: [], # we’ll add notes later
+      notes: PersonalWebsite.Content.list("notes") |> Enum.take(3), # include last three notes
       projects: Content.list("projects") |> Enum.take(1) # top highlight
     ]
     {:ok, assign(socket, assigns)}
@@ -47,6 +47,18 @@ defmodule PersonalWebsiteWeb.HomeLive do
             </div>
           <% end %>
         </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-2">Recent notes</h2>
+        <ul class="space-y-2">
+          <%= for n <- @notes do %>
+            <li>
+              <a class="underline" href={~p"/notes/#{n.slug}"}><%= n.title %></a>
+              <%= if n.summary do %><span class="text-gray-600"> — <%= n.summary %></span><% end %>
+            </li>
+          <% end %>
+        </ul>
       </section>
     </div>
     """
