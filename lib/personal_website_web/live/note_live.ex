@@ -9,7 +9,7 @@ defmodule PersonalWebsiteWeb.NoteLive do
     end
   end
 
-  def render(%{note: nil} = _assigns) do
+  def render(%{note: nil} = assigns) do
     ~H"""
     <div class="max-w-3xl mx-auto p-6">
       <h1 class="text-2xl font-semibold mb-4">Note not found</h1>
