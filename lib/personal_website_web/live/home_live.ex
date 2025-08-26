@@ -39,7 +39,11 @@ defmodule PersonalWebsiteWeb.HomeLive do
         <div class="grid md:grid-cols-2 gap-4">
           <%= for p <- @projects do %>
             <div class="rounded-2xl shadow p-4">
-              <h3 class="text-xl font-medium"><%= p.title %></h3>
+              <!-- debugpgi: make highlight project title clickable (links to /software/:slug) -->
+              <h3 class="text-xl font-medium">
+                <a class="underline" href={~p"/software/#{p.slug}"}><%= p.title %></a>
+              </h3>
+
               <p class="mt-1"><%= p.summary %></p>
               <%= if p.impact do %><p class="mt-2 text-sm text-gray-600">Impact: <%= p.impact %></p><% end %>
               <div class="mt-3 flex gap-3">
