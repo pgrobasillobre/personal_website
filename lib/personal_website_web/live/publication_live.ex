@@ -3,8 +3,11 @@ defmodule PersonalWebsiteWeb.PublicationLive do
   alias PersonalWebsite.Content
 
   def mount(%{"slug" => slug}, _session, socket) do
-    {:ok, assign(socket, pub: Content.get("publications", slug))}
+  case Content.get("publications", slug) do
+    nil -> {:ok, assign(socket, :pub, nil)}
+    pub -> {:ok, assign(socket, :pub, pub)}
   end
+end
 
   def render(%{pub: nil} = assigns) do
     ~H"""
@@ -24,7 +27,7 @@ defmodule PersonalWebsiteWeb.PublicationLive do
       <h1 class="text-3xl font-semibold"><%= @pub.title %></h1>
       <div class="mt-1 text-gray-700">
         <%= if @pub.venue do %><%= @pub.venue %><% end %>
-        <%= if @pub.year do %> · <%= @pub.year %><% end %>
+        <%= if @pub.date do %> · <%= @pub.date.year %><% end %>
       </div>
       <div class="mt-4">
         <%= if @pub.summary do %><p><%= @pub.summary %></p><% end %>
