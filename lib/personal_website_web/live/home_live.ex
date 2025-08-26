@@ -7,9 +7,9 @@ defmodule PersonalWebsiteWeb.HomeLive do
     assigns = [
       page_title: "Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer",
       meta_description: "Projects, publications, and notes. Now: " <> Enum.join(PersonalWebsite.Content.now(), " "),
-      now: Content.now(),
+      now: PersonalWebsite.Content.now(),
       notes: PersonalWebsite.Content.list("notes") |> Enum.take(3), # include last three notes
-      projects: Content.list("projects") |> Enum.take(1) # top highlight
+      projects: PersonalWebsite.Content.list("projects") |> Enum.take(1) # top highlight
     ]
     {:ok, assign(socket, assigns)}
   end
