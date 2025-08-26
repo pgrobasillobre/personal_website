@@ -5,6 +5,8 @@ defmodule PersonalWebsiteWeb.HomeLive do
   # assign(socket, [key1: val1, key2: val2]) is valid shorthand!
   def mount(_params, _session, socket) do
     assigns = [
+      page_title: "Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer",
+      meta_description: "Projects, publications, and notes. Now: " <> Enum.join(PersonalWebsite.Content.now(), " "),
       now: Content.now(),
       notes: PersonalWebsite.Content.list("notes") |> Enum.take(3), # include last three notes
       projects: Content.list("projects") |> Enum.take(1) # top highlight
