@@ -33,6 +33,8 @@ defmodule PersonalWebsiteWeb.Router do
     live "/notes", NotesLive
     live "/notes/:slug", NoteLive
 
+    # When someone visits /about, Phoenix will call the about/2 function in your PageController.
+    # This is different from live "/", which uses a LiveView module directly.
     get  "/about", PageController, :about
   end
 
