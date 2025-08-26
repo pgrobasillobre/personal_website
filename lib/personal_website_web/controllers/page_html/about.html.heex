@@ -1,0 +1,38 @@
+<section class="max-w-3xl mx-auto p-6 space-y-6">
+  <div class="flex items-start gap-6">
+    <img src="/images/profile.jpg" alt="Pablo Grobas Illobre" class="w-24 h-24 rounded-full object-cover shadow" />
+    <div>
+      <h1 class="text-3xl font-semibold">About</h1>
+      <p class="text-gray-700 mt-2">
+        I’m a computational chemist who loves turning physics into fast, reliable software.
+        My happy place is the boundary between <span class="font-medium">correctness</span> and
+        <span class="font-medium">performance</span> — especially in QM/MM and spectroscopy.
+      </p>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    <p>
+      I build in <strong>Python</strong>, <strong>C++</strong>, and <strong>Fortran</strong> (with OpenMP),
+      and I care about clear APIs, reproducibility, and good docs. Lately, I’m learning
+      <strong>Elixir + LiveView</strong> to make scientific results easier to share.
+    </p>
+    <p>
+      Outside of code, I enjoy short “lab notes” that capture what I learned today — not just the final plots.
+    </p>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold mb-2">Now</h2>
+    <ul class="list-disc ml-6 space-y-1">
+      <%= for item <- PersonalWebsite.Content.now() do %>
+        <li><%= item %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <a href="/cv.pdf" class="px-4 py-2 rounded-2xl bg-gray-900 text-white shadow">Download CV</a>
+    <a href="mailto:you@example.com" class="px-4 py-2 rounded-2xl bg-gray-100 shadow">Contact</a>
+  </div>
+</section>
