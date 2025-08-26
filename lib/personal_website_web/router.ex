@@ -32,6 +32,8 @@ defmodule PersonalWebsiteWeb.Router do
 
     live "/notes", NotesLive
     live "/notes/:slug", NoteLive
+
+    get  "/about", PageController, :about
   end
 
 
