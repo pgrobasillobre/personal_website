@@ -8,9 +8,10 @@ defmodule PersonalWebsiteWeb.HomeLive do
       page_title: "Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer",
       meta_description: "Projects, publications, and notes. Now: " <> Enum.join(PersonalWebsite.Content.now(), " "),
       now: PersonalWebsite.Content.now(),
-      notes: PersonalWebsite.Content.list("notes") |> Enum.take(3), # include last three notes
-      projects: PersonalWebsite.Content.list("projects") |> Enum.take(1) # top highlight
-    ]
+      projects: PersonalWebsite.Content.list("projects") |> Enum.take(1),
+      notes: PersonalWebsite.Content.list("notes") |> Enum.take(3),
+      pubs: PersonalWebsite.Content.list("publications") |> Enum.take(2)
+      ]
     {:ok, assign(socket, assigns)}
   end
 
@@ -66,6 +67,26 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <% end %>
         </ul>
       </section>
+
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-2">Publications (selected)</h2>
+        <ul class="space-y-2">
+          <%= for p <- @pubs do %>
+            <li>
+            <a class="underline" href={~p"/publications/#{p.slug}"}><%= p.title %></a>
+            <%= if p.date do %><span class="text-gray-600"> — <%= p.date %></span><% end %>
+            <%= if p.summary do %><div class="text-gray-600"><%= p.summary %></div><% end %>
+            </li>
+          <% end %>
+        </ul>
+        <p class="mt-2">
+        <a class="underline" href={~p"/publications"}>See all publications →</a>
+        </p>
+      </section>
+
+
+
     </div>
     """
   end
