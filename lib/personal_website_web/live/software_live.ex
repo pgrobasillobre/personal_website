@@ -1,51 +1,74 @@
- # Defines the LiveView module for the /software route.
 defmodule PersonalWebsiteWeb.SoftwareLive do
-  # Tells Phoenix this is a LiveView and lets us call Content.list("projects").
   use PersonalWebsiteWeb, :live_view
   alias PersonalWebsite.Content
 
-  # Runs when the page loads — it (It's automatically called when the LiveView loads):
-  # Phoenix makes @projects available inside your render template, like this 
-  # Fetches your .md files from priv/content/projects
-  # Assigns them to @projects
-  #
-  # The socket is your LiveView's state container + browser connection
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, projects: Content.list("projects"))}
+    projects = Content.list("projects")
+
+    tags =
+      projects
+      |> Enum.flat_map(& &1.tags)
+      |> Enum.uniq()
+      |> Enum.sort()
+
+    {:ok,
+     socket
+     |> assign(:projects, projects)
+     |> assign(:tags, tags)
+     |> assign(:selected_tags, [])}
   end
 
-  # This is your page layout, using HEEx (HTML + Elixir):
-  #   Loops over each project (for p <- @projects)
-  #   Displays its title, summary, impact, links, tags
-  #   Uses Tailwind CSS classes for layout and styling
+  def handle_event("toggle_tag", %{"tag" => tag}, socket) do
+    selected = socket.assigns.selected_tags
 
-  #
-  # Phoenix makes @projects available inside your render template, like this
-  #
-  #
-  # def render(assigns) do
-  # ~H"""
-  # <h1>My Projects</h1>
-  # <%= for p <- @projects do %>
-  #   <p><%= p.title %></p>
-  # <% end %>
-  # """
-  # end
-  #
+    new_selection =
+      if tag in selected do
+        List.delete(selected, tag)
+      else
+        [tag | selected]
+      end
+
+    {:noreply, assign(socket, selected_tags: new_selection)}
+  end
+
+  def handle_event("clear_tags", _params, socket) do
+    {:noreply, assign(socket, selected_tags: [])}
+  end
+
   def render(assigns) do
     ~H"""
-    <div class="max-w-5xl mx-auto p-6">
-      <h1 class="text-3xl font-semibold mb-4">Software & Projects</h1>
+    <div class="max-w-5xl mx-auto p-6 space-y-6">
+      <h1 class="text-3xl font-semibold">Software & Projects</h1>
+
+      <!-- debugpgi: Multi-tag filtering -->
+      <div class="flex flex-wrap gap-2 items-center">
+        <button phx-click="clear_tags"
+          class="px-3 py-1 rounded-full border text-sm bg-gray-200 hover:bg-gray-300">
+          Clear All
+        </button>
+
+        <%= for tag <- @tags do %>
+          <button
+            phx-click="toggle_tag"
+            phx-value-tag={tag}
+            class={
+              "px-3 py-1 rounded-full border text-sm transition " <>
+              if tag in @selected_tags, do: "bg-gray-900 text-white", else: "bg-white"
+            }>
+            <%= tag %>
+          </button>
+        <% end %>
+      </div>
+
+      <!-- debugpgi: Filtered projects -->
       <div class="grid md:grid-cols-2 gap-4">
-        <%= for p <- @projects do %>
+        <%= for p <- Enum.filter(@projects, fn p ->
+              @selected_tags == [] or Enum.any?(p.tags, &(&1 in @selected_tags))
+            end) do %>
           <div class="rounded-2xl shadow p-4">
-            # debugpgi
-            # Makes the project title a clickable link to its individual detail page via slug.
-            # Example: /software/my-awesome-project
             <h3 class="text-xl font-medium">
               <a class="underline" href={~p"/software/#{p.slug}"}><%= p.title %></a>
             </h3>
-
             <p class="mt-1"><%= p.summary %></p>
             <%= if p.impact do %>
               <p class="mt-2 text-sm text-gray-600">Impact: <%= p.impact %></p>
