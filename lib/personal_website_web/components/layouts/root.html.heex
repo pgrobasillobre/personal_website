@@ -53,15 +53,20 @@
     Home, Software, Notes, CV, Contact
   -->
 
-  <header class="border-b">
+  <header class="bg-sky-50 border-b border-sky-500">
     <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main">
-      <a href={~p"/"} class="font-semibold">Pablo Grobas Illobre</a>
+      <!-- Left-aligned name -->
+      <div>
+        <a href={~p"/"} class="font-semibold">Pablo Grobas Illobre, PhD</a>
+      </div>
+
+      <!-- Right-aligned navigation -->
       <div class="flex gap-4 text-sm">
         <a href={~p"/about"}>About</a>
         <a href={~p"/software"}>Software</a>
         <a href="/cv.pdf">CV</a>
         <a href={~p"/publications"}>Publications</a>
-        <a href={~p"/notes"}>Notes</a>
+        <%#  <a href={~p"/notes"}>Notes</a> %>
         <a href="mailto:you@example.com">Contact</a>
       </div>
     </nav>
