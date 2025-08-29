@@ -50,12 +50,13 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <!--  <a href={~p"/about"} class="px-5 py-2.5 rounded-2xl bg-gray-900 text-white shadow hover:opacity-95">
             About
           </a> -->
-          <a href={~p"/software"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
-            Software
-          </a>
           <a href="/cv.pdf" class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
             CV
           </a>
+          <a href={~p"/software"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
+            Software
+          </a>
+
           <a href={~p"/publications"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
             Publications
           </a>
