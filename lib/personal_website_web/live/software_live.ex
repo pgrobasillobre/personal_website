@@ -74,7 +74,10 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
               end) do %>
 
             <!-- OUTER thick-bordered box -->
-            <div class="p-4 rounded-2xl border-1 border-gray-600 shadow">
+            <!-- <div class="p-4 rounded-2xl border border-gray-600 shadow bg-white hover:bg-gray-200 hover:shadow-md transition">  -->
+            <div class="p-4 rounded-2xl border border-sky-200 shadow bg-white hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50 hover:shadow-md transition cursor-pointer">
+
+
 
                 <%= if p.image do %>
                   <a href={~p"/software/#{p.slug}"}>
