@@ -37,6 +37,11 @@ end
         <%= if @pub.links["doi"] do %><a class="underline" href={@pub.links["doi"]}>DOI</a><% end %>
         <%= if @pub.links["pdf"] do %><a class="underline" href={@pub.links["pdf"]}>PDF</a><% end %>
       </div>
+
+      <p class="pt-4">
+        <a class="underline" href={~p"/publications"}>← Back to all publications</a>
+      </p>
+
     </div>
     """
   end
