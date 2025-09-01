@@ -76,10 +76,12 @@ defmodule PersonalWebsite.Content do
       slug: path |> Path.basename(".md") |> slugify(),
       title: meta["title"] || "Untitled",
       summary: meta["summary"],
+      authors: meta["authors"] || [],
       tags: meta["tags"] || [],
       impact: meta["impact"],
       links: meta["links"] || %{},
       image: meta["image"],
+      abstract: meta["abstract"],
       venue: meta["venue"] || nil,       # <- prevent KeyError
       date: meta["date"] && Date.from_iso8601!(meta["date"]),
       html: html

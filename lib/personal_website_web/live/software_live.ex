@@ -44,8 +44,8 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
                   bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
       </div>
 
-      <div class="max-w-5xl mx-auto p-6 space-y-6">
-        <h1 class="text-3xl font-semibold">Software</h1>
+      <div class="max-w-7xl mx-auto p-6 space-y-6">
+        <h1 class="text-5xl font-semibold mt-6 mb-6">Software</h1>
 
         <!-- debugpgi: Multi-tag filtering -->
         <div class="flex flex-wrap gap-2 items-center">
