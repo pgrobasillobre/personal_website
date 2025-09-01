@@ -50,14 +50,20 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <!--  <a href={~p"/about"} class="px-5 py-2.5 rounded-2xl bg-gray-900 text-white shadow hover:opacity-95">
             About
           </a> -->
-          <a href="/cv.pdf" class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
+          <a href="/cv.pdf" class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+                       hover:shadow-md hover:border-sky-300 transition
+                       flex gap-4 p-4">
             CV
           </a>
-          <a href={~p"/software"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
+          <a href={~p"/software"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+                       hover:shadow-md hover:border-sky-300 transition
+                       flex gap-4 p-4">
             Software
           </a>
 
-          <a href={~p"/publications"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
+          <a href={~p"/publications"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+                       hover:shadow-md hover:border-sky-300 transition
+                       flex gap-4 p-4">
             Publications
           </a>
 
@@ -67,7 +73,9 @@ defmodule PersonalWebsiteWeb.HomeLive do
             data-contact-trigger
             aria-haspopup="true"
             aria-expanded="false"
-            class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50"
+            class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+                       hover:shadow-md hover:border-sky-300 transition
+                       flex gap-4 p-4"
           >
             Contact
           </button>

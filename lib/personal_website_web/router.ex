@@ -31,15 +31,11 @@ defmodule PersonalWebsiteWeb.Router do
     live "/software", SoftwareLive
     live "/software/:slug", SoftwareDetailLive
 
-    live "/notes", NotesLive
-    live "/notes/:slug", NoteLive
-
     # When someone visits /about, Phoenix will call the about/2 function in your PageController.
     # This is different from live "/", which uses a LiveView module directly.
     get  "/about", PageController, :about
 
     live "/publications", PublicationsLive
-    live "/publications/:slug", PublicationLive # render one publication, based on its filename-derived slug
   end
 
 

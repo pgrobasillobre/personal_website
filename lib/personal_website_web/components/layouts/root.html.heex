@@ -48,19 +48,49 @@
         <a href={~p"/"} class="font-semibold">Pablo Grobas Illobre, PhD</a>
       </div>
 
-      <!-- Right-aligned nav -->
-      <div class="flex gap-4 text-sm">
-        <a href={~p"/about"}>About</a>
-        <a href="/cv.pdf">CV</a>
-        <a href={~p"/software"}>Software</a>
-        <a href={~p"/publications"}>Publications</a>
-        <%# <a href={~p"/notes"}>Notes</a> %>
 
-        <!-- Contact trigger -->
-        <button type="button" data-contact-trigger aria-haspopup="true" aria-expanded="false">
-          Contact
-        </button>
-      </div>
+  <!-- Right-aligned nav -->
+  <div class="flex gap-1 text-sm">
+    <a href={~p"/about"}
+    class="px-2 py-1 rounded-md transition
+          hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+      About
+    </a>
+
+    <a href="/cv.pdf"
+    class="px-2 py-1 rounded-md transition
+          hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+      CV
+    </a>
+
+    <a href={~p"/software"}
+    class="px-2 py-1 rounded-md transition
+          hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+      Software
+    </a>
+
+    <a href={~p"/publications"}
+    class="px-2 py-1 rounded-md transition
+          hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+      Publications
+    </a>
+
+    <!-- Contact trigger (same hover) -->
+    <button
+      type="button"
+      data-contact-trigger
+      aria-haspopup="true"
+      aria-expanded="false"
+      class="px-2 py-1 rounded-md transition
+            hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+      Contact
+    </button>
+  </div>
     </nav>
   </header>
 
