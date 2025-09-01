@@ -1,58 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content={get_csrf_token()} />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content={get_csrf_token()} />
 
-    <!-- debugpgi
-    Default <title> and <meta description> for SEO.
-    Can be overridden per-page using :page_title and :meta_description assigns.
-    Also includes favicon for browser tabs.
-    -->
-    <.live_title
-      default="Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer"
-      suffix=""
-    >
-      {assigns[:page_title]}
-    </.live_title>
+  <!-- SEO title + favicon -->
+  <.live_title default="Pablo Grobas Illobre — Computational Chemist & Scientific Software Developer" suffix="">
+    {assigns[:page_title]}
+  </.live_title>
+  <meta name="description" content={
+    assigns[:meta_description] ||
+    "Computational chemist building high-performance scientific software (Python · C++ · Fortran). Projects, publications, and notes."
+  } />
+  <link rel="icon" href="/images/favicon.svg?v=1" type="image/svg+xml" />
 
-    <meta name="description" content={
-      assigns[:meta_description] ||
-      "Computational chemist building high-performance scientific software (Python · C++ · Fortran). Projects, publications, and notes."
-}     />
-    <link rel="icon" href="/images/favicon.svg?v=1" type="image/svg+xml" />
+  <!-- CSS + JS -->
+  <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+  <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}></script>
 
-    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
-    </script>
-    <script>
-      (() => {
-        const setTheme = (theme) => {
-          if (theme === "system") {
-            localStorage.removeItem("phx:theme");
-            document.documentElement.removeAttribute("data-theme");
-          } else {
-            localStorage.setItem("phx:theme", theme);
-            document.documentElement.setAttribute("data-theme", theme);
-          }
-        };
-        if (!document.documentElement.hasAttribute("data-theme")) {
-          setTheme(localStorage.getItem("phx:theme") || "system");
+  <!-- Theme switcher -->
+  <script>
+    (() => {
+      const setTheme = (theme) => {
+        if (theme === "system") {
+          localStorage.removeItem("phx:theme");
+          document.documentElement.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("phx:theme", theme);
+          document.documentElement.setAttribute("data-theme", theme);
         }
-        window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
-        
-        window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
-      })();
-    </script>
-  </head>
-  <body>
-    <!-- debugpgi
-    Site-wide header navigation
-    Appears on every page, provides quick links to key sections:
-    Home, Software, Notes, CV, Contact
-  -->
-
+      };
+      if (!document.documentElement.hasAttribute("data-theme")) {
+        setTheme(localStorage.getItem("phx:theme") || "system");
+      }
+      window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
+      window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
+    })();
+  </script>
+</head>
+<body>
+  <!-- Site-wide header -->
   <header class="bg-sky-50 border-b border-sky-500">
     <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main">
       <!-- Left-aligned name -->
@@ -60,26 +48,43 @@
         <a href={~p"/"} class="font-semibold">Pablo Grobas Illobre, PhD</a>
       </div>
 
-      <!-- Right-aligned navigation -->
+      <!-- Right-aligned nav -->
       <div class="flex gap-4 text-sm">
         <a href={~p"/about"}>About</a>
         <a href="/cv.pdf">CV</a>
         <a href={~p"/software"}>Software</a>
         <a href={~p"/publications"}>Publications</a>
-        <%#  <a href={~p"/notes"}>Notes</a> %>
-        <a href="mailto:you@example.com">Contact</a>
+        <%# <a href={~p"/notes"}>Notes</a> %>
+
+        <!-- Contact trigger -->
+        <button type="button" data-contact-trigger aria-haspopup="true" aria-expanded="false">
+          Contact
+        </button>
       </div>
     </nav>
   </header>
 
+  <!-- Main content -->
   <main class="min-h-screen">
     {@inner_content}
   </main>
 
+  <!-- Footer -->
   <footer class="border-t mt-10">
     <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-600 flex flex-wrap gap-4 justify-between">
       <span>© <%= Date.utc_today().year %> Pablo Grobas Illobre</span>
       <span class="flex gap-4">
+
+          <a href="https://www.linkedin.com/in/grobas-illobre/" class="flex items-center gap-1 underline">
+          <!-- LinkedIn -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.4
+              c-.96 0-1.75-.79-1.75-1.75s.79-1.75 1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.5 11.4h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87
+              0-2.16 1.46-2.16 2.96v5.7h-3v-10h2.9v1.37h.04c.4-.75 1.37-1.54 2.83-1.54 3.03 0 3.59 2 3.59 4.6v5.6z"/>
+          </svg>
+          LinkedIn
+        </a>
+
         <a href="https://github.com/pgrobasillobre" class="flex items-center gap-1 underline">
           <!-- GitHub icon -->
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -88,26 +93,10 @@
           GitHub
         </a>
 
-        <a href="https://www.linkedin.com/in/grobas-illobre/" class="flex items-center gap-1 underline">
-          <!-- LinkedIn icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 
-                    0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.4
-                    c-.96 0-1.75-.79-1.75-1.75s.79-1.75 
-                    1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 
-                    1.75zm13.5 11.4h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 
-                    0-2.16 1.46-2.16 2.96v5.7h-3v-10h2.9v1.37h.04c.4-.75 
-                    1.37-1.54 2.83-1.54 3.03 0 3.59 2 
-                    3.59 4.6v5.6z"/>
-          </svg>
-          LinkedIn
-        </a>
-
         <a href="https://scholar.google.com/citations?user=PX6w2hMAAAAJ&hl=es" class="flex items-center gap-1 underline">
-          <!-- Google Scholar (academic cap icon as placeholder) -->
+          <!-- Scholar -->
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 
-                    13l-8-3.64v2.13L12 19l8-5.51V11L12 15z"/>
+            <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 13l-8-3.64v2.13L12 19l8-5.51V11L12 15z"/>
           </svg>
           Scholar
         </a>
@@ -115,5 +104,134 @@
     </div>
   </footer>
 
-  </body>
+  <!-- Contact Dropdown Panel -->
+  <div id="contact-panel"
+       class="fixed z-50 hidden opacity-0 translate-y-1 transition will-change-transform will-change-opacity"
+       role="dialog"
+       aria-label="Contact options">
+    <div class="relative">
+
+      <!-- Card with options -->
+      <div class="rounded-2xl border border-sky-200 bg-white/95 shadow-xl backdrop-blur p-3 w-56">
+        <ul class="space-y-1 text-sm">
+          <li>
+            <a href="https://www.linkedin.com/in/grobas-illobre/"
+               class="flex items-center gap-2 rounded-lg px-2 py-2 hover:bg-sky-50 focus:bg-sky-50">
+              <!-- LinkedIn icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8 19H5V9h3v10zM6.5
+                  7.6A1.75 1.75 0 116.5 4a1.75 1.75 0 010 3.6zM19 19h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16
+                  2.96V19H9V9h2.9v1.37h.04c.4-.75 1.37-1.54 2.83-1.54 3.03 0 3.59 2 3.59 4.6V19z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/pgrobasillobre"
+               class="flex items-center gap-2 rounded-lg px-2 py-2 hover:bg-sky-50 focus:bg-sky-50">
+              <!-- GitHub icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.1c-3.2.7-3.9-1.5-3.9-1.5-.5-1.1-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7
+                  1.1.1 1.7 1.1 1.7 1.1 1 .1.7 1.7 2.8 1.7 1.2 0 2.1-.4 2.5-.8-.7-.1-1.4-.4-1.4-1.8 0-.4.1-.8.4-1.1-2.6-.3-5.4-1.3-5.4-5.7
+                  0-1.3.5-2.3 1.1-3.1-.1-.3-.5-1.6.1-3.3 0 0 .9-.3 3 .9.9-.2 1.9-.4 2.9-.4s2 .2 2.9.4c2.1-1.2 3-.9 3-.9.6 1.7.2 3 .1
+                  3.3.7.8 1.1 1.8 1.1 3.1 0 4.4-2.8 5.4-5.4 5.7.4.3.5.7.5 1.4v2.5c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/>
+              </svg>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://scholar.google.com/citations?user=PX6w2hMAAAAJ&hl=es"
+               class="flex items-center gap-2 rounded-lg px-2 py-2 hover:bg-sky-50 focus:bg-sky-50">
+              <!-- Scholar icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 13l-8-3.64v2.13L12 19l8-5.51V11L12 15z"/>
+              </svg>
+              Scholar
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script to toggle panel -->
+  <script>
+    (() => {
+      const panel = document.getElementById('contact-panel');
+      if (!panel) return;
+
+      const triggers = () => Array.from(document.querySelectorAll('[data-contact-trigger]'));
+
+      function openPanelFor(trigger) {
+        const rect = trigger.getBoundingClientRect();
+        const top = Math.round(rect.bottom + window.scrollY + 12);
+        const left = Math.round(rect.left + window.scrollX + rect.width / 2 - panel.offsetWidth / 2);
+        panel.style.top = `${top}px`;
+        panel.style.left = `${Math.max(8, left)}px`;
+
+        panel.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          panel.classList.remove('opacity-0', 'translate-y-1');
+        });
+
+        triggers().forEach(t => t.setAttribute('aria-expanded', t === trigger ? 'true' : 'false'));
+        panel.dataset.open = 'true';
+        document.addEventListener('click', onDocClick, { capture: true });
+        document.addEventListener('keydown', onKeyDown);
+      }
+
+      function closePanel() {
+        panel.classList.add('opacity-0', 'translate-y-1');
+        panel.addEventListener('transitionend', function onEnd(e) {
+          if (e.propertyName !== 'opacity') return;
+          panel.classList.add('hidden');
+          panel.removeEventListener('transitionend', onEnd);
+        });
+        triggers().forEach(t => t.setAttribute('aria-expanded', 'false'));
+        panel.dataset.open = 'false';
+        document.removeEventListener('click', onDocClick, { capture: true });
+        document.removeEventListener('keydown', onKeyDown);
+      }
+
+      function toggleFor(trigger) {
+        if (panel.dataset.open === 'true') {
+          closePanel();
+        } else {
+          openPanelFor(trigger);
+        }
+      }
+
+      function onDocClick(e) {
+        const isTrigger = e.target.closest('[data-contact-trigger]');
+        const insidePanel = e.target.closest('#contact-panel');
+        if (isTrigger) {
+          e.preventDefault();
+          toggleFor(isTrigger);
+          return;
+        }
+        if (!insidePanel) closePanel();
+      }
+
+      function onKeyDown(e) {
+        if (e.key === 'Escape') closePanel();
+      }
+
+      triggers().forEach(t => {
+        t.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleFor(t);
+        });
+      });
+
+      ['resize', 'scroll'].forEach(evt => {
+        window.addEventListener(evt, () => {
+          if (panel.dataset.open === 'true') {
+            const owner = document.querySelector('[data-contact-trigger][aria-expanded="true"]');
+            if (owner) openPanelFor(owner);
+          }
+        }, { passive: true });
+      });
+    })();
+  </script>
+</body>
 </html>

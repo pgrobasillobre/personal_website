@@ -60,9 +60,17 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <a href={~p"/publications"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
             Publications
           </a>
-          <a href="mailto:you@example.com" class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50">
+
+          <!-- new contact trigger (same dropdown as navbar) -->
+          <button
+            type="button"
+            data-contact-trigger
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gray-50"
+          >
             Contact
-          </a>
+          </button>
         </div>
       </div>
 
