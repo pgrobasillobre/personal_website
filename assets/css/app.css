@@ -12,6 +12,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin "@tailwindcss/typography";
+.prose .katex-display {
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+
 /* A Tailwind plugin that makes "hero-#{ICON}" classes available.
    The heroicons installation itself is managed by your mix.exs */
 @plugin "../vendor/heroicons";

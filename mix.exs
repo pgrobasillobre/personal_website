@@ -67,8 +67,8 @@ defmodule PersonalWebsite.MixProject do
       {:earmark, "~> 1.4"},
       {:yaml_elixir, "~> 2.9"},
       {:finch, "~> 0.18"},          # HTTP client
-      {:html_sanitize_ex, "~> 1.4"} # Sanitize README HTML
-    ]
+      {:html_sanitize_ex, "~> 1.4"}, # Sanitize README HTML
+      {:floki, ">= 0.36.0"}    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

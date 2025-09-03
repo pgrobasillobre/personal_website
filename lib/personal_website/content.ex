@@ -43,6 +43,8 @@ defmodule PersonalWebsite.Content do
   # Convert Markdown + Frontmatter into a Map
   # This is the core function that transforms a plain .md file into a content object for the website.
 
+
+
 # Reads the file contents
 # Splits it into frontmatter (YAML metadata) and markdown body
 # Parses markdown into HTML (via Earmark)
@@ -54,7 +56,14 @@ defmodule PersonalWebsite.Content do
     body = File.read!(path)
     {meta, md} = split_frontmatter(body)
 
-    html = Earmark.as_html!(md || "", code_class_prefix: "lang-")
+    html =
+      md
+      |> Earmark.as_html!(
+        code_class_prefix: "lang-",
+        gfm: true,
+        smartypants: false
+      )
+      |> inject_heading_ids()
 
     %{
       section: Path.basename(Path.dirname(path)),
@@ -71,6 +80,33 @@ defmodule PersonalWebsite.Content do
       date: meta["date"] && Date.from_iso8601!(meta["date"]),
       html: html
     }
+  end
+
+
+
+  defp inject_heading_ids(html) do
+    {:ok, doc} = Floki.parse_document(html)
+
+    doc =
+      Floki.traverse_and_update(doc, fn
+        {"h2", attrs, children} ->
+          text = Floki.text(children) |> String.trim()
+          {"h2", put_id(attrs, slugify(text)), children}
+        {"h3", attrs, children} ->
+          text = Floki.text(children) |> String.trim()
+          {"h3", put_id(attrs, slugify(text)), children}
+        other -> other
+      end)
+
+    Floki.raw_html(doc)
+  end
+
+  defp put_id(attrs, id) do
+    if Enum.any?(attrs, fn {k, _} -> k == "id" end) do
+      attrs
+    else
+      [{"id", id} | attrs]
+    end
   end
 
   # Checks if the file starts with ---, which is how YAML frontmatter begins.
