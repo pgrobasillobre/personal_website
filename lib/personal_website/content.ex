@@ -13,21 +13,6 @@ defmodule PersonalWebsite.Content do
   # Give absolute path to priv/content, which we have created
   @root Application.app_dir(:personal_website, "priv/content")
 
-  def list(section) when section in ~w(projects notes publications) do
-    section_path = Path.join(@root, section)
-
-    section_path
-    # Lists files in the directory, filters only .md files, and builds their full paths.
-    |> File.ls!()
-    |> Enum.filter(&String.ends_with?(&1, ".md"))
-    |> Enum.map(&Path.join(section_path, &1))
-    # Parses each markdown file into a map (using parse_md!/1)
-    # Sorts them by date, descending, using Date module for proper date sorting.
-    |> Enum.map(&parse_md!/1)
-    |> Enum.sort_by(& &1.date, {:desc, Date})
-    # At this point, you're getting a sorted list of content items (like blog posts, projects, etc.), each represented by a structured map.
-  end
-
   def list(section) when section in ~w(projects notes publications cases) do
     section_path = Path.join(@root, section)
 
@@ -36,12 +21,11 @@ defmodule PersonalWebsite.Content do
     |> Enum.filter(&String.ends_with?(&1, ".md"))
     |> Enum.map(&Path.join(section_path, &1))
     |> Enum.map(&parse_md!/1)
-    > Enum.sort_by(&sort_date_key/1, {:desc, Date})
+    |> Enum.sort_by(&sort_date_key/1, {:desc, Date})
   end
 
   defp sort_date_key(%{date: %Date{} = d}), do: d
   defp sort_date_key(_), do: ~D[0001-01-01]   # fallback for nil/absent dates
-
 
 
   # Loads a YAML file named now.yml from priv/content.
@@ -69,7 +53,8 @@ defmodule PersonalWebsite.Content do
   defp parse_md!(path) do
     body = File.read!(path)
     {meta, md} = split_frontmatter(body)
-    html = Earmark.as_html!(md, code_class_prefix: "lang-")
+
+    html = Earmark.as_html!(md || "", code_class_prefix: "lang-")
 
     %{
       section: Path.basename(Path.dirname(path)),
@@ -82,7 +67,7 @@ defmodule PersonalWebsite.Content do
       links: meta["links"] || %{},
       image: meta["image"],
       abstract: meta["abstract"],
-      venue: meta["venue"] || nil,       # <- prevent KeyError
+      venue: meta["venue"] || nil,
       date: meta["date"] && Date.from_iso8601!(meta["date"]),
       html: html
     }
@@ -93,11 +78,32 @@ defmodule PersonalWebsite.Content do
   #   YAML frontmatter (for metadata)
   #   Markdown body
   # If no frontmatter is present, returns just the markdown with an empty metadata map.
-  defp split_frontmatter(<<"---", rest::binary>>) do
-    [yml, md] = String.split(rest, "\n---\n", parts: 2)
-    {YamlElixir.read_from_string!(yml), md}
+  defp split_frontmatter(str) when is_binary(str) do
+    raw = strip_bom(str)
+
+    # Match:
+    #   ---\n<yaml>\n---\n<body...>   (POSIX)
+    #   ---\r\n<yaml>\r\n---\r\n<body> (Windows)
+    #   also tolerates optional spaces after closing --- and optional blank line before body
+    regex = ~r/
+      \A---\s*\r?\n               # opening ---
+      (?<yml>.*?)                 # YAML front-matter (non-greedy)
+      \r?\n---\s*\r?\n?           # closing ---
+      (?<md>.*)\z                 # rest is markdown body (possibly empty)
+    /msx
+
+    case Regex.named_captures(regex, raw) do
+      %{"yml" => yml, "md" => md} ->
+        {YamlElixir.read_from_string!(String.trim_trailing(yml)), md}
+
+      _ ->
+        # No (valid) front-matter; treat whole file as markdown
+        {%{}, raw}
+    end
   end
-  defp split_frontmatter(md), do: {%{}, md}
+
+  defp strip_bom(<<239, 187, 191, rest::binary>>), do: rest
+  defp strip_bom(other), do: other
 
   # Create URL-Friendly Slugs
   #

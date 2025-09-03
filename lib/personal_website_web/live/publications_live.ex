@@ -31,13 +31,12 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
   ## -----------------------------------------------------------
   def render(assigns) do
     ~H"""
+    <!-- gradient background -->
+    <div aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-10
+                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
+    </div>
     <section class="relative isolate overflow-hidden">
-      <!-- page-wide radial background (non-interactive) -->
-      <div aria-hidden="true"
-           class="pointer-events-none absolute inset-0 -z-10
-                  bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
-      </div>
-
       <div class="max-w-7xl mx-auto p-4">
         <h1 class="text-5xl font-semibold mt-6 mb-6">Publications</h1>
 
@@ -73,19 +72,19 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                     type="button"
                     phx-click="open_abstract"
                     phx-value-slug={p.slug}
-                    class="text-left underline text-xl font-medium">
+                    class="text-xl text-left underline text-xl font-medium">
                     <%= p.title %>,
                   </button>
 
                   <!-- Journal and date -->
                   <%= if p.venue do %>
-                    <span><%= p.venue %></span> <span>(<%= p.date.year %>)</span>
+                    <p class="text-lg text-gray-700"><%= p.venue %> <span>(<%= p.date.year %>)</span> </p>
                   <% end %>
                 </div>
 
                 <!-- Authors (highlight your name) -->
                 <%= if (p.authors || []) != [] do %>
-                  <div class="mt-1 text-sm text-gray-700">
+                  <div class="mt-1 text-lg text-gray-700">
                     <%= for {a, i} <- Enum.with_index(p.authors) do %>
                       <%= if i > 0, do: ", " %>
                       <%= if a == "P. Grobas Illobre" do %>
@@ -99,10 +98,10 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
 
                 <!-- TL;DR shown in list-->
                 <%= if p.summary do %>
-                  <p class="mt-1 text-justify"><%= p.summary %></p>
+                  <p class="mt-5 text-xl text-justify"><%= p.summary %></p>
                 <% end %>
 
-                <div class="mt-2 text-sm text-gray-700">
+                <div class="mt-5 text-lg text-gray-700">
                   <%= if p.tags != [] do %>
                     <%= for {t, i} <- Enum.with_index(p.tags) do %>
                       <%= if i > 0, do: " ·  " %><%= t %>
@@ -111,17 +110,17 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                 </div>
 
                 <!-- Actions: Abstract opens modal; DOI still available here -->
-                <div class="mt-3 flex gap-3">
+                <div class="mt-5 flex gap-3">
                   <button
                     phx-click="open_abstract"
                     phx-value-slug={p.slug}
-                    class="underline"
+                    class="text-xl underline"
                     type="button">
                     Abstract
                   </button>
 
                   <%= if p.links["doi"] do %>
-                    <a class="underline" href={p.links["doi"]} target="_blank" rel="noopener noreferrer">
+                    <a class="text-xl underline" href={p.links["doi"]} target="_blank" rel="noopener noreferrer">
                       Read the article →
                     </a>
                   <% end %>
@@ -175,7 +174,7 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
             <div class="text-xl font-semibold">
               <%= @active_pub.title %>,
               <%= if @active_pub.venue do %>
-                <span class="text-sm text-gray-700">
+                <span class="text-xl text-gray-700">
                   <%= @active_pub.venue %><%= if @active_pub.date, do: " (#{@active_pub.date.year})" %>
                 </span>
               <% end %>
@@ -183,7 +182,7 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
 
               <!-- Authors (highlight your name) -->
               <%= if ( @active_pub.authors || [] ) != [] do %>
-                <div class="text-sm text-gray-700">
+                <div class="text-xl text-gray-700">
                   <%= for {a, i} <- Enum.with_index(@active_pub.authors) do %>
                     <%= if i > 0, do: ", " %>
                     <%= if a == "P. Grobas Illobre" do %>
@@ -197,7 +196,7 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
 
               <!-- Prefer abstract; fallback to summary -->
               <%= if @active_pub.abstract do %>
-                <p class="text-gray-700 text-justify"><%= @active_pub.abstract %></p>
+                <p class="text-xl text-gray-700 text-justify"><%= @active_pub.abstract %></p>
               <% else %>
                 <%= if @active_pub.summary do %>
                   <p class="text-gray-700 text-justify"><%= @active_pub.summary %></p>
@@ -208,7 +207,7 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                 <%= if @active_pub.links["doi"] do %>
                   <a href={@active_pub.links["doi"]}
                     target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1 underline">
+                    class="text-xl inline-flex items-center gap-1 underline">
                     Read the article →
                   </a>
                 <% end %>

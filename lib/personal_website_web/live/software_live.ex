@@ -37,12 +37,13 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
 
   def render(assigns) do
     ~H"""
+
+    <!-- gradient background -->
+    <div aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-10
+                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
+    </div>
     <section class="relative isolate overflow-hidden">
-      <!-- gradient background -->
-      <div aria-hidden="true"
-          class="pointer-events-none absolute inset-0 -z-10
-                  bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
-      </div>
 
       <div class="max-w-7xl mx-auto p-6 space-y-6">
         <h1 class="text-5xl font-semibold mt-6 mb-6">Software</h1>
@@ -50,7 +51,7 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
         <!-- debugpgi: Multi-tag filtering -->
         <div class="flex flex-wrap gap-2 items-center">
           <button phx-click="clear_tags"
-            class="px-3 py-1 rounded-full border text-sm bg-gray-200 hover:bg-gray-300">
+            class="px-3 py-1 rounded-full border text-base bg-gray-200 hover:bg-gray-300">
             Clear All
           </button>
 
@@ -59,7 +60,7 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
               phx-click="toggle_tag"
               phx-value-tag={tag}
               class={
-                "px-3 py-1 rounded-full border text-sm transition " <>
+                "px-3 py-1 rounded-full border text-base transition " <>
                 if tag in @selected_tags, do: "bg-gray-900 text-white", else: "bg-white"
               }>
               <%= tag %>
@@ -87,35 +88,35 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
                   </a>
                 <% end %>
 
-              <h3 class="text-xl font-medium">
+              <h3 class="text-2xl font-medium">
                 <a class="underline" href={~p"/software/#{p.slug}"}><%= p.title %></a>
               </h3>
 
 
-              <p class="mt-1 text-justify"><%= p.summary %></p>
+              <p class="mt-3 text-lg text-justify"><%= p.summary %></p>
               <%= if p.impact do %>
-                <p class="mt-2 text-sm text-gray-600 text-justify">Impact: <%= p.impact %></p>
+                <p class="mt-2 text-lg  text-base text-gray-600 text-justify">Impact: <%= p.impact %></p>
               <% end %>
 
               <div class="mt-3 flex gap-3">
-                <%= if p.links["code"] do %><a class="underline" href={p.links["code"]}>Code</a><% end %>
+                <%= if p.links["code"] do %><a class="text-lg underline" href={p.links["code"]}>Code</a><% end %>
 
                 <!-- Custom for FretLab -->
                 <%= if p.links["code_cpp"] do %>
-                  <a class="underline" href={p.links["code_cpp"]}>C++ Code</a>
+                  <a class="text-lg underline" href={p.links["code_cpp"]}>C++ Code</a>
                 <% end %>
 
                 <%= if p.links["code_fortran"] do %>
-                  <a class="underline" href={p.links["code_fortran"]}>Fortran Code</a>
+                  <a class="text-lg underline" href={p.links["code_fortran"]}>Fortran Code</a>
                 <% end %>
 
-                <%= if p.links["docs"] do %><a class="underline" href={p.links["docs"]}>Docs</a><% end %>
-                <%= if p.links["benchmarks"] do %><a class="underline" href={p.links["benchmarks"]}>Benchmarks</a><% end %>
+                <%= if p.links["docs"] do %><a class="text-lg underline" href={p.links["docs"]}>Docs</a><% end %>
+                <%= if p.links["benchmarks"] do %><a class="text-lg underline" href={p.links["benchmarks"]}>Benchmarks</a><% end %>
               </div>
               <%= if p.tags != [] do %>
                 <div class="mt-3 flex flex-wrap gap-2">
                   <%= for t <- p.tags do %>
-                    <span class="text-xs bg-gray-100 rounded px- py-.5"><%= t %></span>
+                    <span class="mt-2 h-full text-base bg-gray-100 rounded px-2 py-0.5"><%= t %></span>
                   <% end %>
                 </div>
               <% end %>

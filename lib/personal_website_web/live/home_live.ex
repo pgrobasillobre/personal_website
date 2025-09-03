@@ -25,9 +25,9 @@ defmodule PersonalWebsiteWeb.HomeLive do
       </div>
 
       <!-- hero -->
-      <div class="max-w-3xl mx-auto px-6 py-20 text-center space-y-8">
+      <div class="max-w-6xl mx-auto px-6 py-9 text-center space-y-7">
         <!-- photo with subtle gradient ring -->
-        <div class="mx-auto h-48 w-48 md:h-56 md:w-56 lg:h-64 lg:w-64 rounded-full p-[3px]
+        <div class="mx-auto h-60 w-60 md:h-70 md:w-70 lg:h-80 lg:w-80 rounded-full p-[5px]  <!-- Increased sizes -->
                     bg-gradient-to-br from-cyan-400 to-indigo-500 shadow-xl ring-1 ring-black/5">
           <img
             src="/images/profile.jpg"
@@ -40,7 +40,7 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
             Pablo Grobas Illobre, PhD
           </h1>
-          <p class="text-gray-700">
+          <p class="mt-5 text-xl text-gray-800">
             Computational Chemist & Scientific Software Developer (Python · C++ · Fortran)
           </p>
         </div>
@@ -50,18 +50,18 @@ defmodule PersonalWebsiteWeb.HomeLive do
           <!--  <a href={~p"/about"} class="px-5 py-2.5 rounded-2xl bg-gray-900 text-white shadow hover:opacity-95">
             About
           </a> -->
-          <a href="/cv.pdf" class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+          <a href="/cv.pdf" class="text-xl px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
                        hover:shadow-md hover:border-sky-300 transition
                        flex gap-4 p-4">
             CV
           </a>
-          <a href={~p"/software"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+          <a href={~p"/software"} class="text-xl px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
                        hover:shadow-md hover:border-sky-300 transition
                        flex gap-4 p-4">
             Software
           </a>
 
-          <a href={~p"/publications"} class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+          <a href={~p"/publications"} class="text-xl px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
                        hover:shadow-md hover:border-sky-300 transition
                        flex gap-4 p-4">
             Publications
@@ -73,7 +73,7 @@ defmodule PersonalWebsiteWeb.HomeLive do
             data-contact-trigger
             aria-haspopup="true"
             aria-expanded="false"
-            class="px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+            class="text-xl px-5 py-2.5 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
                        hover:shadow-md hover:border-sky-300 transition
                        flex gap-4 p-4"
           >
@@ -83,19 +83,17 @@ defmodule PersonalWebsiteWeb.HomeLive do
       </div>
 
       <!-- Short personal blurb inside the hero -->
-      <div class="mx-auto max-w-2xl text-left md:text-center text-gray-700 leading-relaxed">
-        <p>
-          I’m a computational chemist and scientific software developer with 6+ years of experience,
+      <div class="mx-auto max-w-3xl text-left md:text-center text-gray-800 leading-relaxed">
+        <p class="text-xl">
+          Hey there 👋 I’m a computational chemist and scientific software developer with 6+ years of experience,
           specializing in quantum chemistry and high-performance scientific programming. I build tools
-          to study light–matter interactions in QM/MM at the nanoscale.
+          for QM/MM applications in C++, Fortran and Python.
         </p>
-        <p class="mt-3">
-          Currently I’m a postdoctoral researcher at the Scuola Normale Superiore (Pisa, Italy), where I also
-          completed my Ph.D. <em>cum laude</em> in Methods and Models for Molecular Sciences. My work combines
-          machine learning, software development, and QM/MM quantum chemistry to investigate molecular systems
-          influenced by plasmonic materials.
+        <p class="mt-5 text-xl">
+          Currently, I’m a postdoctoral researcher at the Scuola Normale Superiore (Pisa, Italy), where I also
+          completed my Ph.D. <em>cum laude</em> in Methods and Models for Molecular Sciences. My research combines software development, quantum chemistry, and machine learning  to investigate molecular systems.
         </p>
-        <p class="mt-3">
+        <p class="mt-5 text-xl">
           <a href={~p"/about"} class="underline">More about me →</a>
         </p>
       </div>

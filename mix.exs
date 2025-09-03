@@ -65,7 +65,9 @@ defmodule PersonalWebsite.MixProject do
 
       # debugpgi add parsers to read markdonw and yaml files
       {:earmark, "~> 1.4"},
-      {:yaml_elixir, "~> 2.9"}
+      {:yaml_elixir, "~> 2.9"},
+      {:finch, "~> 0.18"},          # HTTP client
+      {:html_sanitize_ex, "~> 1.4"} # Sanitize README HTML
     ]
   end
 

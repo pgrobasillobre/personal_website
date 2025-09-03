@@ -14,7 +14,9 @@ defmodule PersonalWebsite.Application do
       # Start a worker by calling: PersonalWebsite.Worker.start_link(arg)
       # {PersonalWebsite.Worker, arg},
       # Start to serve requests, typically the last entry
-      PersonalWebsiteWeb.Endpoint
+      PersonalWebsiteWeb.Endpoint,
+      {Finch, name: PersonalWebsiteFinch}
+
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
