@@ -66,6 +66,43 @@ Hooks.BuildToc = {
   }
 }
 
+
+Hooks.HeroVideo = {
+  mounted() {
+    const video = this.el.querySelector("#hero-video-el")
+    const still = this.el.querySelector("#hero-still")
+    if (!video || !still) return
+
+    // Ensure initial state: video visible, still hidden
+    video.classList.add("opacity-100")
+    still.classList.add("opacity-0")
+
+    const showVideo = () => {
+      video.classList.add("opacity-100")
+      still.classList.add("opacity-0")
+      still.classList.remove("opacity-100")
+    }
+
+    const showStill = () => {
+      video.classList.remove("opacity-100") // fades video out
+      still.classList.remove("opacity-0")
+      still.classList.add("opacity-100")    // fades still in
+    }
+
+    // If you want to re-assert visibility when the video is ready:
+    video.addEventListener("canplay", showVideo, { once: true })
+    // When the video ends, reveal the still underneath
+    video.addEventListener("ended", showStill)
+
+    this._cleanup = () => {
+      video.removeEventListener("ended", showStill)
+    }
+  },
+  destroyed() {
+    this._cleanup && this._cleanup()
+  }
+}
+
 // Render LaTeX using KaTeX (expects KaTeX + auto-render to be loaded via <script> tags)
 Hooks.RenderMath = {
   mounted() { this.render() },

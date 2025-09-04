@@ -19,6 +19,19 @@
 }
 
 
+/* Softly fade the bottom of the video to transparent */
+.hero-video-mask {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+}
+
+/* Optional: add a bottom scrim that fades into your theme base color */
+.hero-bottom-fade {
+  background: linear-gradient(to bottom, transparent 0%, var(--color-base-100) 100%);
+  pointer-events: none;
+}
+
+
 /* A Tailwind plugin that makes "hero-#{ICON}" classes available.
    The heroicons installation itself is managed by your mix.exs */
 @plugin "../vendor/heroicons";

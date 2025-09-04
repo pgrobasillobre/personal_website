@@ -18,11 +18,42 @@ defmodule PersonalWebsiteWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <section class="relative isolate overflow-hidden">
-      <!-- gradient background -->
-      <div aria-hidden="true"
-          class="pointer-events-none absolute inset-0 -z-10
-                  bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
-      </div>
+
+    <!-- Radial background placed at the very back -->
+    <div aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-30
+                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
+    </div>
+
+    <!-- Video layer, masked + tiny bottom overhang to avoid 1px seam -->
+    <div id="hero-video"
+        phx-hook="HeroVideo"
+        class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5">
+      <!-- Underlay still (hidden initially) -->
+      <img
+        id="hero-still"
+        src={~p"/videos/molecules-final.jpg"}
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none opacity-0 transition-opacity duration-500"
+        loading="eager"
+        decoding="async"
+      />
+
+      <!-- Video on top (visible initially) -->
+      <video
+        id="hero-video-el"
+        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] transition-opacity duration-500 opacity-100"
+        autoplay
+        muted
+        playsinline
+        preload="auto"
+        poster={~p"/videos/molecules-final.jpg"}
+        aria-hidden="true"
+      >
+        <source src={~p"/videos/molecules.mp4"} type="video/mp4" />
+      </video>
+    </div>
+
 
       <!-- hero -->
       <div class="max-w-6xl mx-auto px-6 py-9 text-center space-y-7">

@@ -43,6 +43,18 @@ defmodule PersonalWebsiteWeb.SoftwareDetailLive do
                 bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
     </div>
 
+    <!-- final-frame image layer, SAME structure as Home's video wrapper -->
+    <div aria-hidden="true"
+        class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5">
+      <img
+        src={~p"/videos/molecules-final.jpg"}
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
     <section class="relative isolate overflow-hidden">
       <!-- Hero image -->
       <%= if @proj.image do %>
