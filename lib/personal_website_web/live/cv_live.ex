@@ -1,16 +1,25 @@
 defmodule PersonalWebsiteWeb.CVLive do
   use PersonalWebsiteWeb, :live_view
+  alias PersonalWebsite.Content
 
   @impl true
   def mount(_params, _session, socket) do
     section = "postdoc"
+
+    pubs =
+      Content.list("publications")
+      |> Enum.sort_by(&pub_key/1, &>=/2)  # newest first
+      |> Enum.take(2)                     # keep the two most recent
+      |> Enum.sort_by(&pub_key/1, &<=/2)  # display oldest→newest in the section
 
     socket =
       socket
       |> assign(
         page_title: "CV — Pablo Grobas Illobre",
         meta_description: "Interactive CV and downloadable PDF for Pablo Grobas Illobre.",
-        selected_section: section
+        selected_section: section,
+        recent_pubs: pubs,
+        active_pub: nil
       )
       |> push_event("edu:markers", %{
         markers: markers_for(section),
@@ -19,6 +28,26 @@ defmodule PersonalWebsiteWeb.CVLive do
 
     {:ok, socket}
   end
+
+  # Turn a publication into a sortable key {year, month, day}
+  # Works with %Date{} or maps like %{year: 2024, month: 5, day: 1}
+  defp pub_key(%{date: %Date{year: y, month: m, day: d}}), do: {y, m, d}
+
+  defp pub_key(%{date: %{} = m}) do
+    y = Map.get(m, :year)
+    mth = case Map.get(m, :month) do
+      n when is_integer(n) -> n
+      _ -> 12
+    end
+    day = case Map.get(m, :day) do
+      n when is_integer(n) -> n
+      _ -> 31
+    end
+
+    if is_integer(y), do: {y, mth, day}, else: {0, 0, 0}
+  end
+
+  defp pub_key(_), do: {0, 0, 0}
 
   @impl true
   def handle_event("select_section", %{"section" => section}, socket) do
@@ -29,6 +58,18 @@ defmodule PersonalWebsiteWeb.CVLive do
        markers: markers_for(section),
        view: view_for(section)
      })}
+  end
+
+  # Modal: open/close abstract (limit search to the two shown pubs)
+  @impl true
+  def handle_event("open_abstract", %{"slug" => slug}, socket) do
+    pub = Enum.find(socket.assigns.recent_pubs, &(&1.slug == slug))
+    {:noreply, assign(socket, active_pub: pub)}
+  end
+
+  @impl true
+  def handle_event("close_abstract", _params, socket) do
+    {:noreply, assign(socket, active_pub: nil)}
   end
 
   @impl true
@@ -123,7 +164,6 @@ defmodule PersonalWebsiteWeb.CVLive do
         <div class="grid md:grid-cols-3 gap-10 items-start">
           <!-- Left: Map -->
           <div class="rounded-xl border p-4 bg-white shadow-sm h-96">
-            <!-- Keep the map DOM alive across patches -->
             <div id="cv-edu-map" phx-hook="EduMap" phx-update="ignore" class="w-full h-full"></div>
           </div>
 
@@ -177,7 +217,7 @@ defmodule PersonalWebsiteWeb.CVLive do
 
               <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64-6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
                 </svg>
                 <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
                 <span class="ml-2">English · Italian</span>
@@ -199,7 +239,7 @@ defmodule PersonalWebsiteWeb.CVLive do
               </div>
               <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
                 </svg>
                 <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
                 <span class="ml-2">English · French · Spanish · Italian</span>
@@ -219,7 +259,7 @@ defmodule PersonalWebsiteWeb.CVLive do
               </div>
               <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
                 </svg>
                 <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
                 <span class="ml-2">English · Spanish · Galician</span>
@@ -240,7 +280,7 @@ defmodule PersonalWebsiteWeb.CVLive do
               </div>
               <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
                 </svg>
                 <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
                 <span class="ml-2">English · Spanish</span>
@@ -249,36 +289,30 @@ defmodule PersonalWebsiteWeb.CVLive do
           </div>
         </div>
 
-
         <!-- Research Projects -->
-        <div id="projects" class="max-w-7xl mx-auto px-4 py-16 mt-10">
+        <div id="projects" class="max-w-7xl mx-auto px-4 py-10 mt-10">
           <h2 class="text-3xl font-bold mb-10">Research Projects</h2>
 
           <!-- SCM / AMS -->
           <div class="grid md:grid-cols-3 gap-10 items-start">
-            <!-- Left: clickable logo -->
-            <a href="https://www.scm.com/"
-              target="_blank" rel="noopener noreferrer"
-              aria-label="Open Software for Chemistry & Materials"
-              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+            <a href="https://www.scm.com/" target="_blank" rel="noopener noreferrer"
+               aria-label="Open Software for Chemistry & Materials"
+               class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
               <img src="/images/cv/scm.png" alt="SCM (Software for Chemistry & Materials) logo" class="w-full h-full object-contain" />
             </a>
 
-            <!-- Right: text -->
             <div class="md:col-span-2 space-y-3">
               <div class="flex flex-wrap items-baseline gap-2">
                 <h3 class="text-xl font-bold">
-                  <a href="https://www.scm.com/"
-                    target="_blank" rel="noopener noreferrer"
-                    class="hover:underline decoration-sky-400/70 underline-offset-4">
+                  <a href="https://www.scm.com/" target="_blank" rel="noopener noreferrer"
+                     class="hover:underline decoration-sky-400/70 underline-offset-4">
                     Development of Quantum Chemistry Software for SCM (Software for Chemistry &amp; Materials)
                   </a>
                 </h3>
-                <span class="font-serif italic text-lg text-slate-700">Industry collaboration       associated with Scuola Normale Superiore | Nov 2020 – Present
+                <span class="font-serif italic text-lg text-slate-700">
+                  Industry collaboration associated with Scuola Normale Superiore | Nov 2020 – Present
                 </span>
               </div>
-
-
 
               <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
                 <li>Algorithms for <strong>Surface-Enhanced Raman Scattering (SERS)</strong>.</li>
@@ -291,12 +325,10 @@ defmodule PersonalWebsiteWeb.CVLive do
 
           <!-- FARE -->
           <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
-            <!-- Left: logo (same height as map) -->
             <div class="rounded-xl border p-4 bg-white shadow-sm h-60">
               <img src="/images/cv/fare.png" alt="FARE logo" class="w-full h-full object-contain" />
             </div>
 
-            <!-- Right: text -->
             <div class="md:col-span-2 space-y-3">
               <div class="flex flex-wrap items-baseline gap-2">
                 <h3 class="text-xl font-bold">FARE — “Framework per l’attrazione e il rafforzamento delle eccellenze per la ricerca in Italia”</h3>
@@ -314,21 +346,17 @@ defmodule PersonalWebsiteWeb.CVLive do
 
           <!-- GEMS -->
           <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
-            <!-- Left: logo (clickable, same height as map) -->
-            <a href="https://gems.sns.it/"
-              target="_blank" rel="noopener noreferrer"
-              aria-label="Open GEMS website"
-              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+            <a href="https://gems.sns.it/" target="_blank" rel="noopener noreferrer"
+               aria-label="Open GEMS website"
+               class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
               <img src="/images/cv/gems.png" alt="GEMS logo" class="w-full h-full object-contain" />
             </a>
 
-            <!-- Right: text -->
             <div class="md:col-span-2 space-y-3">
               <div class="flex flex-wrap items-baseline gap-2">
                 <h3 class="text-xl font-bold">
-                  <a href="https://gems.sns.it/"
-                    target="_blank" rel="noopener noreferrer"
-                    class="hover:underline decoration-sky-400/70 underline-offset-4">
+                  <a href="https://gems.sns.it/" target="_blank" rel="noopener noreferrer"
+                     class="hover:underline decoration-sky-400/70 underline-offset-4">
                     GEMS — General Embedding Models for Spectroscopy
                   </a>,
                 </h3>
@@ -345,8 +373,159 @@ defmodule PersonalWebsiteWeb.CVLive do
               </ul>
             </div>
           </div>
+        </div> <!-- end of #projects -->
+
+        <!-- Selected Publications -->
+        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-16">
+          <h2 class="text-3xl font-bold mb-10">Selected Publications</h2>
+
+          <ul class="space-y-5">
+            <%= for p <- @recent_pubs do %>
+              <li class="group rounded-2xl border border-sky-200 bg-white shadow
+                        hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
+                        hover:shadow-md hover:border-sky-300 transition
+                        flex gap-4 p-4">
+
+                <%= if p.image do %>
+                  <button type="button" phx-click="open_abstract" phx-value-slug={p.slug}
+                          class="shrink-0 self-center">
+                    <img
+                      src={p.image}
+                      alt={"TOC graphic for " <> p.title}
+                      class="max-w-[16rem] md:max-w-[24rem] h-auto group-hover:opacity-95 transition"
+                      loading="lazy"
+                    />
+                  </button>
+                <% end %>
+
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-baseline gap-2">
+                    <button type="button"
+                            phx-click="open_abstract"
+                            phx-value-slug={p.slug}
+                            class="text-left underline text-xl font-medium">
+                      <%= p.title %>,
+                    </button>
+
+                    <%= if p.venue do %>
+                      <p class="text-lg text-gray-700">
+                        <%= p.venue %><%= if p.date, do: " (#{p.date.year})" %>
+                      </p>
+                    <% end %>
+                  </div>
+
+                  <%= if (p.authors || []) != [] do %>
+                    <div class="mt-1 text-lg text-gray-700">
+                      <%= for {a, i} <- Enum.with_index(p.authors) do %>
+                        <%= if i > 0, do: ", " %>
+                        <%= if a == "P. Grobas Illobre" do %>
+                          <span class="font-semibold underline"><%= a %></span>
+                        <% else %>
+                          <span><%= a %></span>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
+
+                  <%= if p.summary do %>
+                    <p class="mt-5 text-xl text-justify"><%= p.summary %></p>
+                  <% end %>
+
+                  <div class="mt-5 text-lg text-gray-700">
+                    <%= if p.tags != [] do %>
+                      <%= for {t, i} <- Enum.with_index(p.tags) do %>
+                        <%= if i > 0, do: " ·  " %><%= t %>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <div class="mt-5">
+                    <%= if p.links && p.links["doi"] do %>
+                      <a class="text-xl underline" href={p.links["doi"]} target="_blank" rel="noopener noreferrer">
+                        Read the article →
+                      </a>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+
+          <div class="mt-8">
+            <a href={~p"/publications"} class="text-xl underline">See all publications →</a>
+          </div>
         </div>
 
+        <!-- Modal (abstract) -->
+        <%= if @active_pub do %>
+          <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"></div>
+
+          <div class="fixed inset-0 z-50 flex items-center justify-center p-8">
+            <div role="dialog" aria-modal="true" aria-label="Publication abstract"
+                 class="w-full max-w-5xl max-h-[85vh] overflow-y-auto
+                        bg-white rounded-2xl border border-sky-200 shadow-xl"
+                 phx-click-away="close_abstract"
+                 phx-window-keydown="close_abstract"
+                 phx-key="escape">
+
+              <div class="flex justify-end p-2">
+                <button phx-click="close_abstract" type="button"
+                        class="rounded-full p-1.5 hover:bg-sky-50 border border-sky-500"
+                        aria-label="Close">X</button>
+              </div>
+
+              <%= if @active_pub.image do %>
+                <img
+                  src={@active_pub.image}
+                  alt={"TOC graphic for " <> @active_pub.title}
+                  class="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              <% end %>
+
+              <div class="p-5 space-y-3">
+                <div class="text-xl font-semibold">
+                  <%= @active_pub.title %>,
+                  <%= if @active_pub.venue do %>
+                    <span class="text-xl text-gray-700">
+                      <%= @active_pub.venue %><%= if @active_pub.date, do: " (#{@active_pub.date.year})" %>
+                    </span>
+                  <% end %>
+                </div>
+
+                <%= if (@active_pub.authors || []) != [] do %>
+                  <div class="text-xl text-gray-700">
+                    <%= for {a, i} <- Enum.with_index(@active_pub.authors) do %>
+                      <%= if i > 0, do: ", " %>
+                      <%= if a == "P. Grobas Illobre" do %>
+                        <span class="font-semibold underline"><%= a %></span>
+                      <% else %>
+                        <span><%= a %></span>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <%= if @active_pub.abstract do %>
+                  <p class="text-xl text-gray-700 text-justify"><%= @active_pub.abstract %></p>
+                <% else %>
+                  <%= if @active_pub.summary do %>
+                    <p class="text-gray-700 text-justify"><%= @active_pub.summary %></p>
+                  <% end %>
+                <% end %>
+
+                <div class="pt-2">
+                  <%= if @active_pub.links && @active_pub.links["doi"] do %>
+                    <a href={@active_pub.links["doi"]} target="_blank" rel="noopener noreferrer"
+                       class="text-xl inline-flex items-center gap-1 underline">
+                      Read the article →
+                    </a>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </section>
     """
@@ -385,7 +564,7 @@ defmodule PersonalWebsiteWeb.CVLive do
   # View per section (country-level)
   # -------------------------
   defp view_for("postdoc"), do: %{center: [42.5, 12.5], zoom: 5}   # Italy
-  defp view_for("phd"), do: %{center: [42.5, 12.5], zoom: 5}   # Italy
+  defp view_for("phd"), do: %{center: [42.5, 12.5], zoom: 5}       # Italy
   defp view_for("research"), do: %{center: [40.2, -3.5], zoom: 5}  # Spain (mainland)
   defp view_for(_), do: nil
 end
