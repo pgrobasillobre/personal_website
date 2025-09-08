@@ -5,6 +5,8 @@ import { LiveSocket } from "phoenix_live_view"
 
 import { EduMap } from "./edu_map_hook"
 
+
+
 // ---------------------------
 // Custom LiveView Hooks
 // ---------------------------
@@ -117,7 +119,7 @@ const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { ...colocatedHooks, ...Hooks }
+  hooks: Hooks
 })
 
 // Topbar config

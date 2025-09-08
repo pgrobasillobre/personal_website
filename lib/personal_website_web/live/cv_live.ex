@@ -3,17 +3,26 @@ defmodule PersonalWebsiteWeb.CVLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok,
-     assign(socket,
-       page_title: "CV — Pablo Grobas Illobre",
-       meta_description: "Interactive CV and downloadable PDF for Pablo Grobas Illobre.",
-       selected_section: "postdoc"
-     )}
+    section = "postdoc"
+
+    socket =
+      socket
+      |> assign(
+        page_title: "CV — Pablo Grobas Illobre",
+        meta_description: "Interactive CV and downloadable PDF for Pablo Grobas Illobre.",
+        selected_section: section
+      )
+      |> push_event("edu:markers", %{markers: markers_for(section)})
+
+    {:ok, socket}
   end
 
   @impl true
   def handle_event("select_section", %{"section" => section}, socket) do
-    {:noreply, assign(socket, selected_section: section)}
+    {:noreply,
+     socket
+     |> assign(selected_section: section)
+     |> push_event("edu:markers", %{markers: markers_for(section)})}
   end
 
   @impl true
@@ -35,10 +44,14 @@ defmodule PersonalWebsiteWeb.CVLive do
             class="h-full w-full rounded-full object-cover"
           />
           <div class="flex flex-wrap gap-3">
-            <a href="/pdfs/GROBAS_CV_2025.pdf" download class="mt-13 px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg">
+            <a href="/pdfs/GROBAS_CV_2025.pdf"
+               download
+               class="mt-13 px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg">
               ↓ Download CV
             </a>
-            <button type="button" data-contact-trigger class="mt-13 text-lg px-4 py-2 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50 hover:shadow-md hover:border-sky-300 transition flex gap-4 p-4">
+            <button type="button"
+                    data-contact-trigger
+                    class="mt-13 text-lg px-4 py-2 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50 hover:shadow-md hover:border-sky-300 transition flex gap-4 p-4">
               Contact
             </button>
           </div>
@@ -71,25 +84,26 @@ defmodule PersonalWebsiteWeb.CVLive do
 
       <!-- Interactive Education Section -->
       <div id="education" class="max-w-7xl mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold mt-20 mb-10">Education & Training</h2>
+        <h2 class="text-3xl font-bold mt-20 mb-10">Experience & Training</h2>
 
-        <!-- Buttons (prevent scroll) -->
+        <!-- Buttons -->
         <div class="flex flex-wrap gap-3 mb-8">
           <button phx-click="select_section" phx-value-section="postdoc" class="btn btn-outline">Postdoc</button>
           <button phx-click="select_section" phx-value-section="phd" class="btn btn-outline">Ph.D.</button>
           <button phx-click="select_section" phx-value-section="msc" class="btn btn-outline">M.Sc.</button>
-          <button phx-click="select_section" phx-value-section="bsc" class="btn btn-outline">B.Sc.</button>
           <button phx-click="select_section" phx-value-section="research" class="btn btn-outline">Research Assistant</button>
+          <button phx-click="select_section" phx-value-section="bsc" class="btn btn-outline">B.Sc.</button>
         </div>
 
         <!-- Grid: Map and Details -->
         <div class="grid md:grid-cols-3 gap-10 items-start">
-          <!-- Left: Placeholder for Map -->
+          <!-- Left: Map -->
           <div class="rounded-xl border p-4 bg-white shadow-sm h-96">
-            <div id="map" phx-hook="EduMap" data-section={@selected_section} class="w-full h-full"></div>
+            <!-- IMPORTANT: keep the map DOM alive across patches -->
+            <div id="cv-edu-map" phx-hook="EduMap" phx-update="ignore" class="w-full h-full"></div>
           </div>
 
-          <!-- Right: Education content (conditionally rendered) -->
+          <!-- Right: Education content -->
           <div class="md:col-span-2 space-y-10">
             <%= if @selected_section == "postdoc" do %>
               <div>
@@ -150,4 +164,33 @@ defmodule PersonalWebsiteWeb.CVLive do
     </section>
     """
   end
+
+  # -------------------------
+  # Marker data per section
+  # -------------------------
+  defp markers_for("postdoc"), do: [
+    %{lat: 43.716, lng: 10.403, label: "Pisa · SNS", offset: %{dlat: 0.7, dlng: 1.0}}
+  ]
+
+  defp markers_for("phd"), do: [
+    %{lat: 43.716, lng: 10.403, label: "Pisa · SNS", offset: %{dlat: 0.7, dlng: 1.0}}
+  ]
+
+  defp markers_for("msc"), do: [
+    %{lat: 43.6045, lng: 1.4440, label: "Toulouse · UPS", offset: %{dlat: 0.6, dlng: 0.9}},
+    %{lat: 45.6495, lng: 13.7768, label: "Trieste · Units", offset: %{dlat: 0.6, dlng: -0.9}},
+    %{lat: 40.4168, lng: -3.7038, label: "Madrid · UAM", offset: %{dlat: -0.6, dlng: -0.9}},
+    %{lat: 34.6550, lng: 133.9190, label: "Okayama · Okayama University", offset: %{dlat: 0.6, dlng: 0.9}}
+  ]
+
+  defp markers_for("bsc"), do: [
+    %{lat: 43.3623, lng: -8.4115, label: "A Coruña · UDC", offset: %{dlat: 0.6, dlng: 0.9}},
+    %{lat: 59.9139, lng: 10.7522, label: "Oslo · UiO", offset: %{dlat: -0.6, dlng: 0.9}}
+  ]
+
+  defp markers_for("research"), do: [
+    %{lat: 39.4699, lng: -0.3763, label: "Valencia · ITQ", offset: %{dlat: 0.6, dlng: 0.9}}
+  ]
+
+  defp markers_for(_), do: []
 end
