@@ -36,6 +36,9 @@ defmodule PersonalWebsiteWeb.Router do
     get  "/about", PageController, :about
 
     live "/publications", PublicationsLive
+
+    live "/cv", CVLive
+
   end
 
 
