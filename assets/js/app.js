@@ -2,7 +2,6 @@ import "phoenix_html"
 import topbar from "../vendor/topbar"
 import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
-import { hooks as colocatedHooks } from "phoenix-colocated/personal_website"
 
 import { EduMap } from "./edu_map_hook"
 
@@ -12,6 +11,7 @@ import { EduMap } from "./edu_map_hook"
 const Hooks = {}
 
 Hooks.EduMap = EduMap
+
 
 Hooks.CVPrint = {
   mounted() {
@@ -111,12 +111,13 @@ Hooks.BuildToc = {
 // ---------------------------
 // LiveSocket bootstrapping
 // ---------------------------
+
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 const liveSocket = new LiveSocket("/live", Socket, {
+  longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { ...colocatedHooks, ...Hooks },
-  longPollFallbackMs: 2500
+  hooks: { ...colocatedHooks, ...Hooks }
 })
 
 // Topbar config
