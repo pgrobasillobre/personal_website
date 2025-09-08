@@ -1,38 +1,36 @@
+// assets/js/edu_map_hook.js
 export const EduMap = {
   mounted() {
-    // Leaflet is loaded via CDN
     this.map = L.map(this.el, { zoomControl: true, scrollWheelZoom: false });
 
-    this.tile = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors"
     }).addTo(this.map);
 
-    // Give it an initial view so tiles show even before markers arrive
-    this.map.setView([43.716, 10.403], 6); // Pisa-ish
+    this.map.setView([43.716, 10.403], 6); // initial Pisa-ish view
 
     this.markersLayer = L.layerGroup().addTo(this.map);
     this.linesLayer = L.layerGroup().addTo(this.map);
     this.labelsLayer = L.layerGroup().addTo(this.map);
 
-    this.handleEvent("edu:markers", ({ markers }) => {
-      this.updateMarkers(markers);
+    this.handleEvent("edu:markers", ({ markers, view }) => {
+      this.updateMarkers(markers, view);
     });
 
-    // Fix sizing glitches when the hook mounts
     requestAnimationFrame(() => this.map.invalidateSize());
   },
 
   updated() {
     this.map && this.map.invalidateSize();
-  }, // <-- missing comma was here
+  }, // <— keep this comma
 
-  updateMarkers(markers) {
+  updateMarkers(markers, view) {
     this.markersLayer.clearLayers();
     this.linesLayer.clearLayers();
     this.labelsLayer.clearLayers();
 
     const bounds = [];
-    markers.forEach(m => {
+    (markers || []).forEach(m => {
       const p = L.latLng(m.lat, m.lng);
       bounds.push(p);
 
@@ -53,7 +51,12 @@ export const EduMap = {
       L.marker(labelPt, { icon: labelIcon, interactive: false }).addTo(this.labelsLayer);
     });
 
-    if (bounds.length) {
+    // If a view override is provided, use it; otherwise fit to markers.
+    if (view?.center && typeof view.zoom === "number") {
+      this.map.setView(view.center, view.zoom);
+    } else if (view?.bounds && Array.isArray(view.bounds) && view.bounds.length === 2) {
+      this.map.fitBounds(L.latLngBounds(view.bounds[0], view.bounds[1]), { padding: [30, 30] });
+    } else if (bounds.length) {
       this.map.fitBounds(L.latLngBounds(bounds), { padding: [30, 30] });
     }
   }
