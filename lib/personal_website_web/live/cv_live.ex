@@ -526,6 +526,22 @@ defmodule PersonalWebsiteWeb.CVLive do
             </div>
           </div>
         <% end %>
+
+
+        <!-- Awards -->
+        <div id="awards" class="max-w-7xl mx-auto px-4 py-16">
+          <h2 class="text-3xl font-bold mb-10">Awards</h2>
+
+          <ul class="list-disc ml-6 text-xl text-gray-800 space-y-2">
+            <li>PhD awarded with honors (<span class="italic">cum laude</span>).</li>
+            <li>Scuola Normale Superiore PhD Scholarship (2020–2025).</li>
+            <li>Two NanoX Research Scholarships (2019 &amp; 2020).</li>
+            <li>Erasmus Internship Fellowship (2019–2020).</li>
+            <li>Consejo Superior de Investigaciones Científicas (CSIC) – Jae Intro Fellowship (2019).</li>
+            <li>Extraordinary Prize for achieving the best academic record in the Bachelor of Chemistry (2018).</li>
+            <li>Erasmus+ scholarship (2016).</li>
+          </ul>
+        </div>
       </div>
     </section>
     """
