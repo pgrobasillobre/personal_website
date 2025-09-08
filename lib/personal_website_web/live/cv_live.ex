@@ -151,6 +151,13 @@ defmodule PersonalWebsiteWeb.CVLive do
                   <li><strong>Plasmon-Mediated Electronic Energy Transfer</strong>.</li>
                 </ul>
               </div>
+              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                </svg>
+                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
+                <span class="ml-2">English · Italian</span>
+              </div>
             <% end %>
 
             <%= if @selected_section == "phd" do %>
@@ -167,6 +174,14 @@ defmodule PersonalWebsiteWeb.CVLive do
                   <li><span class="font-semibold">Supervisor:</span> Chiara Cappelli</li>
                 </ul>
               </div>
+
+              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                </svg>
+                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
+                <span class="ml-2">English · Italian</span>
+              </div>
             <% end %>
 
             <%= if @selected_section == "msc" do %>
@@ -182,6 +197,13 @@ defmodule PersonalWebsiteWeb.CVLive do
                   <li>Internship at Okayama University (MD simulations)</li>
                 </ul>
               </div>
+              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                </svg>
+                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
+                <span class="ml-2">English · French · Spanish · Italian</span>
+              </div>
             <% end %>
 
             <%= if @selected_section == "bsc" do %>
@@ -194,6 +216,13 @@ defmodule PersonalWebsiteWeb.CVLive do
                 <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
                   <li>Erasmus Exchange: University of Oslo (2016)</li>
                 </ul>
+              </div>
+              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                </svg>
+                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
+                <span class="ml-2">English · Spanish · Galician</span>
               </div>
             <% end %>
 
@@ -208,6 +237,13 @@ defmodule PersonalWebsiteWeb.CVLive do
                   <li>MD for sugar separation in the food industry</li>
                   <li><span class="font-semibold">Supervisor:</span> Germán I. Sastre Navarro</li>
                 </ul>
+              </div>
+              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z"/>
+                </svg>
+                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
+                <span class="ml-2">English · Spanish</span>
               </div>
             <% end %>
           </div>
