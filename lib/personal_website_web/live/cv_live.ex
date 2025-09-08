@@ -248,6 +248,105 @@ defmodule PersonalWebsiteWeb.CVLive do
             <% end %>
           </div>
         </div>
+
+
+        <!-- Research Projects -->
+        <div id="projects" class="max-w-7xl mx-auto px-4 py-16 mt-10">
+          <h2 class="text-3xl font-bold mb-10">Research Projects</h2>
+
+          <!-- SCM / AMS -->
+          <div class="grid md:grid-cols-3 gap-10 items-start">
+            <!-- Left: clickable logo -->
+            <a href="https://www.scm.com/"
+              target="_blank" rel="noopener noreferrer"
+              aria-label="Open Software for Chemistry & Materials"
+              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+              <img src="/images/cv/scm.png" alt="SCM (Software for Chemistry & Materials) logo" class="w-full h-full object-contain" />
+            </a>
+
+            <!-- Right: text -->
+            <div class="md:col-span-2 space-y-3">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <h3 class="text-xl font-bold">
+                  <a href="https://www.scm.com/"
+                    target="_blank" rel="noopener noreferrer"
+                    class="hover:underline decoration-sky-400/70 underline-offset-4">
+                    Development of Quantum Chemistry Software for SCM (Software for Chemistry &amp; Materials)
+                  </a>
+                </h3>
+                <span class="font-serif italic text-lg text-slate-700">Industry collaboration       associated with Scuola Normale Superiore | Nov 2020 – Present
+                </span>
+              </div>
+
+
+
+              <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
+                <li>Algorithms for <strong>Surface-Enhanced Raman Scattering (SERS)</strong>.</li>
+                <li>Methods for <strong>Surface-Enhanced Fluorescence (SEF)</strong>.</li>
+                <li>Tools for <strong>plasmon-mediated resonance energy transfer</strong>.</li>
+                <li>Implementation of <strong>Surface-Enhanced Raman Optical Activity (SEROA)</strong> calculations.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FARE -->
+          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
+            <!-- Left: logo (same height as map) -->
+            <div class="rounded-xl border p-4 bg-white shadow-sm h-60">
+              <img src="/images/cv/fare.png" alt="FARE logo" class="w-full h-full object-contain" />
+            </div>
+
+            <!-- Right: text -->
+            <div class="md:col-span-2 space-y-3">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <h3 class="text-xl font-bold">FARE — “Framework per l’attrazione e il rafforzamento delle eccellenze per la ricerca in Italia”</h3>
+              </div>
+              <p class="font-serif italic text-lg text-slate-700">
+                Scuola Normale Superiore | 2020 – 2025 | PI: Chiara Cappelli
+              </p>
+              <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
+                <li><strong>Python</strong> programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and <strong>visualization</strong> (e.g., Python-driven figures in P. Grobas Illobre <em>et al.</em>, <em>Nanoscale Adv.</em>, 2024, 6, 3410).</li>
+                <li>Quantum chemistry <strong>QM/MM software development</strong> in <strong>C++</strong> and <strong>Fortran</strong> (AMS + in-house) for surface-enhanced fluorescence and plasmon-mediated electronic energy transfer.</li>
+                <li>Intensive use of <strong>HPC</strong> infrastructures to automate and streamline <strong>data production</strong> workflows.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- GEMS -->
+          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
+            <!-- Left: logo (clickable, same height as map) -->
+            <a href="https://gems.sns.it/"
+              target="_blank" rel="noopener noreferrer"
+              aria-label="Open GEMS website"
+              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+              <img src="/images/cv/gems.png" alt="GEMS logo" class="w-full h-full object-contain" />
+            </a>
+
+            <!-- Right: text -->
+            <div class="md:col-span-2 space-y-3">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <h3 class="text-xl font-bold">
+                  <a href="https://gems.sns.it/"
+                    target="_blank" rel="noopener noreferrer"
+                    class="hover:underline decoration-sky-400/70 underline-offset-4">
+                    GEMS — General Embedding Models for Spectroscopy
+                  </a>,
+                </h3>
+                <span class="font-serif italic text-lg text-slate-700">ERC Consolidator Grant</span>
+              </div>
+              <p class="font-serif italic text-lg text-slate-700">
+                Scuola Normale Superiore | 2020 – 2025 | PI: Chiara Cappelli
+              </p>
+              <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
+                <li><strong>Python</strong> programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and <strong>visualization</strong> (e.g., Python-driven figures in T. Giovannini <em>et al.</em>, <em>ACS Photonics</em>, 2022, 9, 3025).</li>
+                <li>Currently developing a <strong>machine learning</strong> pipeline in <strong>Python</strong> to study and simulate graphene samples.</li>
+                <li>Quantum chemistry <strong>software development</strong> in <strong>Fortran</strong> (Amsterdam Modeling Suite + in-house) for plasmonic materials, <strong>QM/MM</strong> SERS, and Raman optical activity.</li>
+                <li>Intensive use of <strong>HPC</strong> infrastructures to streamline large-scale <strong>data production</strong> workflows.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
     """
