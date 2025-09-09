@@ -468,10 +468,13 @@ defmodule PersonalWebsiteWeb.CVLive do
               </ul>
             </div>
           </div>
+          <div class="mt-8">
+            <a href={~p"/software"} class="text-xl underline">See related softwares →</a>
+          </div>
         </div> <!-- end of #projects -->
 
         <!-- Selected Publications -->
-        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-16">
+        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-10 mb-5">
           <h2 class="text-3xl font-bold mb-10">Selected Publications</h2>
 
           <ul class="space-y-5">
