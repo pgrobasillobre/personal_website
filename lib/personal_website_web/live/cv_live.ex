@@ -75,24 +75,27 @@ defmodule PersonalWebsiteWeb.CVLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="relative isolate overflow-hidden">
-      <!-- gradient background -->
-      <div aria-hidden="true"
-          class="pointer-events-none absolute inset-0 -z-10
-                  bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
-      </div>
 
-      <!-- final-frame image layer  -->
-      <div aria-hidden="true"
-          class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5">
-        <img
-          src={~p"/videos/molecules-final.jpg"}
-          alt=""
-          class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+
+    <!-- gradient background (put this ABOVE the image; higher z) -->
+    <div aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-10
+                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
+    </div>
+
+    <!-- image background layer (lower z) -->
+    <div aria-hidden="true"
+        class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5">
+      <img
+        src={~p"/videos/molecules-final.jpg"}
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+    <section class="relative isolate overflow-hidden">
 
       <!-- Hero-style layout -->
       <div class="max-w-7xl mx-auto px-4 py-0 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">

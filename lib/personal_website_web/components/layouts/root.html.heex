@@ -66,7 +66,12 @@
 </head>
 <body>
   <!-- Site-wide header -->
+
+  <!-- Changing colors -->
+
   <header class="bg-sky-50 border-b border-sky-500">
+  <!-- <header class="bg-slate-800 border-b border-slate-700"> -->
+
     <nav class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main">
       <!-- Left-aligned name -->
       <div>
@@ -77,11 +82,22 @@
   <!-- Right-aligned nav -->
   <div class="flex gap-1 text-sm">
     <a href={~p"/about"}
+
     class="text-lg px-2 py-1 rounded-md transition
           hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
           focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+          About
+    </a>
+
+    <!-- changing colors 
+
+    <a href={~p"/about"}
+      class="text-lg px-2 py-1 rounded-md transition text-slate-100
+       hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
       About
     </a>
+    -->
+
 
     <a href={~p"/cv"}
     class="text-lg px-2 py-1 rounded-md transition
@@ -90,6 +106,15 @@
       CV
     </a>
 
+    <!-- changing colors 
+    <a href={~p"/cv"}
+      class="text-lg px-2 py-1 rounded-md transition text-slate-100
+       hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
+      CV
+    </a>
+    -->
+
+
     <a href={~p"/software"}
     class="text-lg px-2 py-1 rounded-md transition
           hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
@@ -97,12 +122,30 @@
       Software
     </a>
 
+    <!-- changing colors 
+    <a href={~p"/software"}
+      class="text-lg px-2 py-1 rounded-md transition text-slate-100
+       hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
+      Software
+    </a>
+    -->
+
+
     <a href={~p"/publications"}
     class="text-lg px-2 py-1 rounded-md transition
           hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-200
           focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
       Publications
     </a>
+
+    <!-- changing colors 
+    <a href={~p"/publications"}
+      class="text-lg px-2 py-1 rounded-md transition text-slate-100
+       hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
+      Publications
+    </a>
+    --> 
+
 
     <!-- Contact trigger (same hover) -->
     <button
@@ -115,14 +158,34 @@
             focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
       Contact
     </button>
+
+    <!-- changing colors 
+    <button
+      type="button"
+      data-contact-trigger
+      aria-haspopup="true"
+      aria-expanded="false"
+      class="text-lg px-2 py-1 rounded-md transition text-slate-100
+       hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
+      Contact
+    </button>
+    -->
   </div>
     </nav>
   </header>
 
   <!-- Main content -->
+  <!-- Changing colors -->
   <main class="min-h-screen">
     {@inner_content}
   </main>
+  
+
+  <!-- Changing colors 
+  <main class="min-h-screen bg-slate-900 text-slate-100">
+    {@inner_content}
+  </main>
+  -->
 
   <!-- Footer -->
   <footer class="border-t mt-10">
