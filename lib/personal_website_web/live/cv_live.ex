@@ -367,7 +367,7 @@ defmodule PersonalWebsiteWeb.CVLive do
         </div>
 
         <!-- Research Projects -->
-        <div id="projects" class="max-w-7xl mx-auto px-4 py-10 mt-10">
+        <div id="projects" class="max-w-7xl mx-auto px-4 py-10 mt-13">
           <h2 class="text-3xl font-bold mb-10">Research Projects</h2>
 
           <!-- SCM / AMS -->
@@ -474,7 +474,7 @@ defmodule PersonalWebsiteWeb.CVLive do
         </div> <!-- end of #projects -->
 
         <!-- Selected Publications -->
-        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-10 mb-5">
+        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-10 mb-10">
           <h2 class="text-3xl font-bold mb-10">Selected Publications</h2>
 
           <ul class="space-y-5">
