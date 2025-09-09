@@ -1,18 +1,81 @@
-# PersonalWebsite
+# Personal Website — Pablo Grobas Illobre
 
-To start your Phoenix server:
+This is the source code of my personal website, built using Elixir and the Phoenix web framework.  
+The site is publicly deployed at: https://www.pgrobasillobre.com
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+It serves as a digital CV, publication archive, and software showcase.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+---
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Features
 
-## Learn more
+- Interactive CV viewer
+- Section for publications
+- Software projects overview
+- Responsive design using Tailwind CSS
+- Production-ready Phoenix LiveView app
 
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
+---
+
+## Getting Started
+
+To run this project locally:
+
+### 1. Prerequisites
+
+- Elixir and Phoenix installed  
+- Docker installed and running
+
+---
+
+### 2. Clone the Repository
+
+```bash
+git clone https://github.com/pgrobasillobre/personal_website.git
+cd personal_website
+```
+
+---
+
+### 3. Set up the Dockerized Database
+
+```bash
+mix docker.setup
+```
+
+If the database is already created, you can restart it with:
+
+```bash
+docker restart personal_website_db
+```
+
+---
+
+### 4. Set up the Database Schema
+
+```bash
+mix ecto.setup
+```
+
+---
+
+### 5. Install and Build Assets
+
+```bash
+mix assets.setup
+mix assets.build
+mix assets.deploy
+```
+
+---
+
+### 6. Run the Server
+
+```bash
+iex -S mix phx.server
+```
+
+Then navigate to http://localhost:4000 in your browser.
+
+
+
