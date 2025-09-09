@@ -233,19 +233,34 @@
       const triggers = () => Array.from(document.querySelectorAll('[data-contact-trigger]'));
 
       function openPanelFor(trigger) {
+        // Make it temporarily visible to calculate accurate dimensions
+        panel.classList.remove('hidden');
+        panel.style.visibility = 'hidden';
+        panel.style.display = 'block';
+
+        // Trigger layout
+        panel.offsetHeight;
+
+        // Now compute dimensions
         const rect = trigger.getBoundingClientRect();
         const top = Math.round(rect.bottom + window.scrollY + 12);
-        const left = Math.round(rect.left + window.scrollX + rect.width / 2 - panel.offsetWidth / 2);
+        const left = Math.round(rect.left + window.scrollX + rect.width / 2 - panel.offsetWidth / 2 + 16 // shift by 16px
+        );
+
+        // Apply final position and styles
         panel.style.top = `${top}px`;
         panel.style.left = `${Math.max(8, left)}px`;
+        panel.style.visibility = '';
+        panel.style.display = '';
 
-        panel.classList.remove('hidden');
+        // Transition in
         requestAnimationFrame(() => {
           panel.classList.remove('opacity-0', 'translate-y-1');
         });
 
         triggers().forEach(t => t.setAttribute('aria-expanded', t === trigger ? 'true' : 'false'));
         panel.dataset.open = 'true';
+
         document.addEventListener('click', onDocClick, { capture: true });
         document.addEventListener('keydown', onKeyDown);
       }
