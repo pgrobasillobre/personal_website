@@ -18,6 +18,11 @@
   padding-bottom: 0.25rem;
 }
 
+/* Force UA widgets (forms/scrollbars) to stay light */
+html {
+  color-scheme: light;
+}
+
 
 /* Softly fade the bottom of the video to transparent */
 .hero-video-mask {
