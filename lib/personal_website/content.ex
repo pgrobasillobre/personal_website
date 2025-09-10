@@ -13,16 +13,40 @@ defmodule PersonalWebsite.Content do
   # Give absolute path to priv/content, which we have created
   @root Application.app_dir(:personal_website, "priv/content")
 
-  def list(section) when section in ~w(projects notes publications cases) do
-    section_path = Path.join(@root, section)
 
-    section_path
-    |> File.ls!()
-    |> Enum.filter(&String.ends_with?(&1, ".md"))
-    |> Enum.map(&Path.join(section_path, &1))
+  # Runtime path helpers (work in dev and in releases)
+  @sections ~w(projects notes publications cases cv software)
+
+  defp priv_path do
+    :code.priv_dir(:personal_website) |> to_string()
+  end
+
+  defp section_dir(section) do
+    Path.join([priv_path(), "content", section])
+  end
+
+
+  # Only allow known sections (incl. "cv" and "software")
+  def list(section) when section in @sections do
+    dir = section_dir(section)
+
+    md_files =
+      if File.dir?(dir) do
+        dir
+        |> File.ls!()
+        |> Enum.filter(&String.ends_with?(&1, ".md"))
+      else
+        []
+      end
+
+    md_files
+    |> Enum.map(&Path.join(dir, &1))
     |> Enum.map(&parse_md!/1)
     |> Enum.sort_by(&sort_date_key/1, {:desc, Date})
   end
+
+  # Safe fallback: unknown section → empty list (prevents crashes)
+  def list(_), do: []
 
   defp sort_date_key(%{date: %Date{} = d}), do: d
   defp sort_date_key(_), do: ~D[0001-01-01]   # fallback for nil/absent dates
