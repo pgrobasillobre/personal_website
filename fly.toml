@@ -1,0 +1,30 @@
+# fly.toml
+app = 'personal-website-pgrobasillobre'
+primary_region = 'cdg'          # use Paris (or 'fra', 'mad' is closed for new machines)
+kill_signal = 'SIGTERM'
+
+[build]
+
+[env]
+  # While you're testing on the fly.dev URL:
+  PHX_HOST = 'personal-website-pgrobasillobre.fly.dev'
+  PORT = '8080'
+  # Once DNS is pointed, switch PHX_HOST to your apex domain:
+  # PHX_HOST = 'pgrobasillobre.com'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true      # boolean works well with Machines
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'connections'
+    hard_limit = 1000
+    soft_limit = 1000
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory_mb = 256       
