@@ -7,7 +7,7 @@ kill_signal = 'SIGTERM'
 
 [env]
   # While you're testing on the fly.dev URL:
-  PHX_HOST = 'personal-website-pgrobasillobre.fly.dev'
+  PHX_HOST = 'pgrobasillobre.com'
   PORT = '8080'
   # Once DNS is pointed, switch PHX_HOST to your apex domain:
   # PHX_HOST = 'pgrobasillobre.com'
