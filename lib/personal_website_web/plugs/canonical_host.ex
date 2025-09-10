@@ -9,8 +9,12 @@ defmodule PersonalWebsiteWeb.Plugs.CanonicalHost do
   def call(%Plug.Conn{host: @canonical} = conn, _opts), do: conn
 
   def call(conn, _opts) do
-    scheme = if conn.scheme == :https, do: "https", else: "http"
-    Controller.redirect(conn, external: "#{scheme}://#{@canonical}#{conn.request_path}")
-    |> halt()
+    qs = if conn.query_string in [nil, ""], do: "", else: "?" <> conn.query_string
+    location = "https://#{@canonical}#{conn.request_path}#{qs}"
+
+    conn
+    |> Plug.Conn.put_resp_header("location", location)
+    |> Plug.Conn.send_resp(301, "redirect")
+    |> Plug.Conn.halt()
   end
 end
