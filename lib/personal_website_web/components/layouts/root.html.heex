@@ -2,6 +2,20 @@
 <html lang="en" data-theme="light">
 <head>
 
+
+  <!-- Google tag (gtag.js) -->
+  <%= if ga_id = Application.get_env(:personal_website, :ga_id) do %>
+    <script async src={"https://www.googletagmanager.com/gtag/js?id=#{ga_id}"}></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      // Full tracking (cookies). Note: may require consent in the EU.
+      gtag('config', '<%= ga_id %>');
+    </script>
+  <% end %>
+
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
