@@ -126,14 +126,13 @@ defmodule PersonalWebsiteWeb.CVLive do
           <div>
             <h1 class="text-4xl font-bold tracking-tight">Pablo Grobas Illobre, PhD</h1>
               <p class="mt-4 text-gray-700 leading-relaxed text-xl">
-                Experienced <strong>researcher</strong> with <strong>6+ years</strong> of expertise in
-                <strong>computational quantum chemistry</strong>, specialized in the development and application of
-                <strong>QM/MM</strong> methodologies in the context of biosensor design. Skilled in
-                <strong>Python</strong>, <strong>C++</strong>, and <strong>Fortran</strong>, with a strong track record in
-                <strong>scientific software development</strong>, <strong>data analysis</strong>, <strong>manipulation</strong>,
-                and <strong>visualization</strong>. Now seeking to apply this expertise in <strong>drug discovery</strong>, with a
-                growing interest in applying <strong>machine learning</strong> and <strong>data science</strong> to molecular
-                modeling and cheminformatics.
+                <strong>Computational chemist</strong> and <strong>scientific software developer</strong>
+                  with <strong>6+ years’</strong> experience in
+                  <strong>computational modeling, QM/MM, and HPC workflows.</strong>
+                  Skilled in <strong>C++/Fortran/Python</strong> programming with a proven track record
+                  in <strong>scientific software development</strong> and international collaborations.
+                  <strong>Currently transitioning</strong> toward the <strong>drug discovery industry</strong>,
+                  applying <strong>physics-based ML</strong> and high-performance computing to molecular modeling challenges.
               </p>
           </div>
           <div>
