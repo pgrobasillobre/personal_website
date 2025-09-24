@@ -139,7 +139,7 @@ defmodule PersonalWebsiteWeb.CVLive do
             <h2 class="mt-10 text-2xl font-bold">Technical Skills</h2>
             <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xl text-gray-800">
               <li><b>Languages:</b> Python, C++, Fortran, Matlab</li>
-              <li><b>Libraries:</b> NumPy, SciPy, TensorFlow, PyTorch</li>
+              <li><b>Libraries:</b> RDKit, TensorFlow, PyTorch, Keras, Scipy, Numpy</li>
               <li><b>Tools:</b> Git, Vim, VS Code</li>
               <li><b>Scripting:</b> Bash, Linux</li>
               <li><b>Scientific SW:</b> AMS, Gaussian</li>
