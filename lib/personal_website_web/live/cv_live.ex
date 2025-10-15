@@ -125,25 +125,27 @@ defmodule PersonalWebsiteWeb.CVLive do
         <div class="mt-15 md:col-span-2 space-y-6">
           <div>
             <h1 class="text-4xl font-bold tracking-tight">Pablo Grobas Illobre, PhD</h1>
-              <p class="mt-4 text-gray-700 leading-relaxed text-xl">
-                <strong>Computational chemist</strong> and <strong>scientific software developer</strong>
-                  with <strong>6+ years’</strong> experience in
-                  <strong>computational modeling, QM/MM, and HPC workflows.</strong>
-                  Skilled in <strong>C++/Fortran/Python</strong> programming with a proven track record
-                  in <strong>scientific software development</strong> and international collaborations.
-                  <strong>Currently transitioning</strong> toward the <strong>drug discovery industry</strong>,
-                  applying <strong>physics-based ML</strong> and high-performance computing to molecular modeling challenges.
-              </p>
+            <p class="mt-4 text-gray-700 leading-relaxed text-xl text-justify">
+              <strong>Computational chemist</strong> and <strong>scientific software developer</strong> with over <strong>six years of experience</strong> in
+              <strong>quantum chemistry, QM/MM methodologies, and high-performance computing</strong>.
+              Lead developer of <strong>quantum-chemistry algorithms (C++/Fortran)</strong> within the
+              <strong>Amsterdam Modeling Suite</strong>, in collaboration with
+              <strong>Software for Chemistry & Materials (SCM)</strong>.
+              Skilled in <strong>Python</strong> for <strong>data analysis, cheminformatics (RDKit)</strong>, and
+              <strong>machine learning (TensorFlow, PyTorch)</strong>.
+              Passionate about bridging <strong>physics-based modelling</strong> and <strong>AI-driven drug discovery</strong> through scalable, production-grade scientific software.
+            </p>
           </div>
+
           <div>
             <h2 class="mt-10 text-2xl font-bold">Technical Skills</h2>
             <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xl text-gray-800">
-              <li><b>Languages:</b> Python, C++, Fortran, Matlab</li>
-              <li><b>Libraries:</b> RDKit, TensorFlow, PyTorch, Keras, Scipy, Numpy</li>
-              <li><b>Tools:</b> Git, Vim, VS Code</li>
-              <li><b>Scripting:</b> Bash, Linux</li>
-              <li><b>Scientific SW:</b> AMS, Gaussian</li>
-              <li><b>HPC:</b> Cluster environments</li>
+              <li><b>Expertise:</b> QM/MM and molecular modelling</li>
+              <li><b>Programming:</b> Python, C++, Fortran, MATLAB</li>
+              <li><b>Libraries:</b> RDKit, TensorFlow, PyTorch, scikit-learn, NumPy, SciPy</li>
+              <li><b>Development:</b> Git, VS Code, CI/CD basics</li>
+              <li><b>Systems:</b> Linux, Bash, HPC environments</li>
+              <li><b>Scientific Software:</b> Amsterdam Modeling Suite (AMS), Gaussian</li>
             </ul>
           </div>
         </div>
@@ -183,24 +185,27 @@ defmodule PersonalWebsiteWeb.CVLive do
         <!-- Grid: Map and Details -->
         <div class="grid md:grid-cols-3 gap-10 items-start">
           <!-- Left: Map -->
-          <div class="rounded-xl border p-4 bg-white shadow-sm h-96">
+          <div class="rounded-xl border p-4 bg-white shadow-sm h-100">
             <div id="cv-edu-map" phx-hook="EduMap" phx-update="ignore" class="w-full h-full"></div>
           </div>
 
           <!-- Right: Education content -->
-          <div class="md:col-span-2 space-y-10">
+          <div class="md:col-span-2 space-y-8">
             <%= if @selected_section == "postdoc" do %>
               <div>
                 <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">Postdoctoral Researcher,</h3>
+                  <h3 class="text-xl font-bold">Senior Postdoctoral Researcher,</h3>
                   <span class="font-serif italic text-lg text-slate-700">Scuola Normale Superiore (Pisa, Italy)</span>
                 </div>
                 <p class="font-serif italic text-lg text-slate-700">02/2025 – Present</p>
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify ">
-                  Currently developing <strong>QM/MM quantum chemistry software</strong> in <strong>C++</strong> and <strong>Fortran</strong> in collaboration with the
-                  <span class="font-serif italic">Software for Chemistry &amp; Materials</span> company. This work is complemented by
-                  <strong>Python programming</strong> for <strong>machine learning</strong>, <strong>data analysis</strong>, <strong>statistics</strong>, and <strong>visualization</strong>.
-                </p>
+                  <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
+                    I lead the development of <strong>QM/MM quantum-chemistry algorithms</strong> in <strong>C++</strong> and <strong>Fortran</strong> within the
+                    <strong>Amsterdam Modeling Suite</strong>, in collaboration with the
+                    <span class="font-serif italic">Software for Chemistry &amp; Materials</span>.
+                    This work is complemented with <strong>Python</strong> for <strong>machine learning</strong>,
+                    <strong>data analysis</strong>, and <strong>scientific visualization</strong> in spectroscopy and multiscale modelling research.
+                  </p>
+
 
                 <p class="text-gray-700 text-lg leading-relaxed mt-3">
                   My research integrates intensive <strong>software development</strong> to investigate:
@@ -224,17 +229,20 @@ defmodule PersonalWebsiteWeb.CVLive do
               <div>
                 <div class="flex flex-wrap items-baseline gap-2">
                   <h3 class="text-xl font-bold">
-                    Ph.D. in Methods and Models for Molecular Sciences (<span class="font-serif italic font-bold">cum laude</span>),
+                    Ph.D. in Methods and Models for Molecular Sciences (<span class="font-serif italic font-bold">with honors</span>),
                   </h3>
                   <span class="font-serif italic text-lg text-slate-700">Scuola Normale Superiore (Pisa, Italy)</span>
                 </div>
 
                 <p class="font-serif italic text-lg text-slate-700">11/2020 – 01/2025</p>
 
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  During my PhD, I focused on the development of novel <strong>computational strategies</strong> in the field of <strong>nanoplasmonics</strong> using <strong>hybrid QM/MM approaches</strong>.
-                  I designed and implemented custom codes in <strong>Fortran</strong>, <strong>C++</strong>, and <strong>Python</strong> to model the interaction between light and matter at the nanoscale.
-                </p>
+                  <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
+                    My PhD research focused on developing <strong>hybrid QM/MM methodologies</strong> for
+                    <strong>nanoplasmonic systems</strong> and <strong>light–matter interactions</strong>.
+                    I implemented simulation codes in <strong>Fortran</strong>, <strong>C++</strong>, and <strong>Python</strong>
+                    to model <strong>spectroscopic phenomena</strong> at the nanoscale, in collaboration with the
+                    <span class="font-serif italic">Software for Chemistry &amp; Materials</span> company — a partnership I continue in my current postdoctoral work.
+                  </p>
 
                 <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
                   <li><span class="font-semibold">Title:</span> <em>Modeling Atomistic Nanoplasmonics: Classical and Hybrid Quantum Mechanical/Classical Schemes</em></li>
@@ -372,6 +380,7 @@ defmodule PersonalWebsiteWeb.CVLive do
         <div id="projects" class="max-w-7xl mx-auto px-4 py-10 mt-13">
           <h2 class="text-3xl font-bold mb-10">Research Projects</h2>
 
+
           <!-- SCM / AMS -->
           <div class="grid md:grid-cols-3 gap-10 items-start">
             <a href="https://www.scm.com/" target="_blank" rel="noopener noreferrer"
@@ -389,18 +398,49 @@ defmodule PersonalWebsiteWeb.CVLive do
                   </a>
                 </h3>
                 <span class="font-serif italic text-lg text-slate-700">
-                  Industry collaboration associated with Scuola Normale Superiore | Nov 2020 – Present
+                  Industry collaboration associated with Scuola Normale Superiore | 2020 – Present
                 </span>
               </div>
 
               <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
                 <li>Algorithms for <strong>Surface-Enhanced Raman Scattering (SERS)</strong>.</li>
-                <li>Methods for <strong>Surface-Enhanced Fluorescence (SEF)</strong>.</li>
+                <li>Pipeline for <strong>Surface-Enhanced Fluorescence (SEF)</strong>.</li>
                 <li>Tools for <strong>plasmon-mediated resonance energy transfer</strong>.</li>
                 <li>Implementation of <strong>Surface-Enhanced Raman Optical Activity (SEROA)</strong> calculations.</li>
               </ul>
             </div>
           </div>
+
+          <!-- plasmonX -->
+          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
+            <a href="/software/plasmonx"
+              aria-label="Open plasmonX project"
+              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+              <img src="/images/cv/plasmonX.png" alt="plasmonX logo" class="w-full h-full object-contain" />
+            </a>
+
+            <div class="md:col-span-2 space-y-3">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <h3 class="text-xl font-bold">
+                  <a href="/software/plasmonx" target="_blank" rel="noopener noreferrer"
+                     class="underline decoration-transparent hover:decoration-sky-400/70 transition duration-150">
+                    Development of High Performance Software for Nanoplasmonics Research
+                  </a>
+                </h3>
+                <span class="font-serif italic text-lg text-slate-700">
+                  Scuola Normale Superiore | 2020 – Present
+                </span>
+              </div>
+
+              <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
+                <li>Standalone, <strong>parallelized</strong> implementations for <strong>&omega;FQF&mu;</strong> and <strong>BEM</strong> equations.</li>
+                <li><strong>High-performance</strong> algorithms for solving the linear systems via direct inversion and iterative schemes.</li>
+                <li><strong>Analysis</strong> of the optical response (absorption spectra, charge/density distributions, and more).</li>
+                <li>User-friendly interface via integration with the <strong>GEOM</strong> module.</li>
+              </ul>
+            </div>
+          </div>
+
 
           <!-- FARE -->
           <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
@@ -413,7 +453,7 @@ defmodule PersonalWebsiteWeb.CVLive do
                 <h3 class="text-xl font-bold">FARE — “Framework per l’attrazione e il rafforzamento delle eccellenze per la ricerca in Italia”</h3>
               </div>
               <p class="font-serif italic text-lg text-slate-700">
-                Scuola Normale Superiore | 2020 – 2025 | PI: Chiara Cappelli
+                Scuola Normale Superiore | 2020 – Present | PI: Chiara Cappelli
               </p>
               <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
                 <li><strong>Python</strong> programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and <strong>visualization</strong> (e.g., Python-driven figures in
@@ -633,7 +673,7 @@ defmodule PersonalWebsiteWeb.CVLive do
           <h2 class="text-3xl font-bold mb-10">Awards</h2>
 
           <ul class="list-disc ml-6 text-xl text-gray-800 space-y-2">
-            <li>PhD awarded with honors (<span class="italic">cum laude</span>).</li>
+            <li>PhD awarded with honors (<span class="italic">with honors</span>).</li>
             <li>Scuola Normale Superiore PhD Scholarship (2020–2025).</li>
             <li>Two NanoX Research Scholarships (2019 &amp; 2020).</li>
             <li>Erasmus Internship Fellowship (2019–2020).</li>
