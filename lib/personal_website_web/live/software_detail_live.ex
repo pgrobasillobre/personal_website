@@ -84,6 +84,7 @@ defmodule PersonalWebsiteWeb.SoftwareDetailLive do
             <%= if @proj.links["docs"] do %><a class="text-lg  underline" href={@proj.links["docs"]}>Docs</a><% end %>
             <%= if @proj.links["code_cpp"] do %><a class="text-lg  underline" href={@proj.links["code_cpp"]}>C++ Code</a><% end %>
             <%= if @proj.links["code_fortran"] do %><a class="text-lg  underline" href={@proj.links["code_fortran"]}>Fortran Code</a><% end %>
+            <%= if @proj.links["publication"] do %><a class="text-lg  underline" href={@proj.links["publication"]}>Publication</a><% end %>
           </div>
 
           <%= if @proj.tags != [] do %>

@@ -124,6 +124,8 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
                 <% end %>
 
                 <%= if p.links["docs"] do %><a class="text-lg underline" href={p.links["docs"]}>Docs</a><% end %>
+                <%= if p.links["publication"] do %><a class="text-lg underline" href={p.links["publication"]}>Publication</a><% end %>
+
                 <%= if p.links["benchmarks"] do %><a class="text-lg underline" href={p.links["benchmarks"]}>Benchmarks</a><% end %>
               </div>
               <%= if p.tags != [] do %>
