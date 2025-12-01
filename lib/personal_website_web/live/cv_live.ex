@@ -133,7 +133,7 @@ defmodule PersonalWebsiteWeb.CVLive do
               <strong>Software for Chemistry & Materials (SCM)</strong>.
               Skilled in <strong>Python</strong> for <strong>data analysis, cheminformatics (RDKit)</strong>, and
               <strong>machine learning (TensorFlow, PyTorch)</strong>.
-              Passionate about bridging <strong>physics-based modelling</strong> and <strong>AI-driven drug discovery</strong> through scalable, production-grade scientific software.
+              Passionate about bridging <strong>physics-based modelling</strong>, <strong>materials science</strong>,  and <strong>AI-driven drug discovery</strong> through scalable, production-grade scientific software.
             </p>
           </div>
 
