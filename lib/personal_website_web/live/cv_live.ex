@@ -107,15 +107,17 @@ defmodule PersonalWebsiteWeb.CVLive do
             alt="Pablo Grobas Illobre"
             class="h-full w-full rounded-full object-cover"
           />
-          <div class="flex flex-wrap gap-3">
+          <div class="flex flex-wrap gap-3 justify-center mt-3">
+          <!-- Photo
             <a href="/pdfs/GROBAS_CV_2025.pdf"
                download
                class="mt-13 px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg">
               ↓ Download CV
             </a>
+            -->
             <button type="button"
                     data-contact-trigger
-                    class="mt-13 text-lg px-4 py-2 rounded-2xl bg-white shadow ring-1 ring-gray-200 hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50 hover:shadow-md hover:border-sky-300 transition flex gap-4 p-4">
+                    class="mt-13 px-10 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-xl">
               Contact
             </button>
           </div>
@@ -133,7 +135,6 @@ defmodule PersonalWebsiteWeb.CVLive do
               <strong>Software for Chemistry & Materials (SCM)</strong>.
               Skilled in <strong>Python</strong> for <strong>data analysis, cheminformatics (RDKit)</strong>, and
               <strong>machine learning (TensorFlow, PyTorch)</strong>.
-              Passionate about bridging <strong>physics-based modelling</strong>, <strong>materials science</strong>,  and <strong>AI-driven drug discovery</strong> through scalable, production-grade scientific software.
             </p>
           </div>
 
@@ -145,7 +146,7 @@ defmodule PersonalWebsiteWeb.CVLive do
               <li><b>Libraries:</b> RDKit, TensorFlow, PyTorch, scikit-learn, NumPy, SciPy</li>
               <li><b>Development:</b> Git, VS Code, CI/CD basics</li>
               <li><b>Systems:</b> Linux, Bash, HPC environments</li>
-              <li><b>Scientific Software:</b> Amsterdam Modeling Suite (AMS), Gaussian</li>
+              <li><b>Scientific Software:</b> Amsterdam Modeling Suite, Gaussian, GAMESS</li>
             </ul>
           </div>
         </div>
@@ -153,7 +154,7 @@ defmodule PersonalWebsiteWeb.CVLive do
 
       <!-- Interactive Education Section -->
       <div id="education" class="max-w-7xl mx-auto px-4 py-5">
-        <h2 class="text-3xl font-bold mt-20 mb-10">Experience & Training</h2>
+        <h2 class="text-3xl font-bold mt-10 mb-10">Experience & Training</h2>
 
         <!-- Buttons (stateful) -->
         <div class="flex flex-wrap gap-3 mb-8">

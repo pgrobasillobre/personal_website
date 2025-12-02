@@ -122,7 +122,7 @@ defmodule PersonalWebsiteWeb.HomeLive do
         </p>
         <p class="mt-5 text-xl">
           Currently, I’m a postdoctoral researcher at the Scuola Normale Superiore (Pisa, Italy), where I also
-          completed my Ph.D. <em>with honors</em> in Methods and Models for Molecular Sciences. My research combines software development, quantum chemistry, and machine learning  to investigate molecular systems.
+          completed my Ph.D. <em>with honors</em> in Methods and Models for Molecular Sciences. My research combines software development, quantum chemistry, and machine learning  to investigate materials and molecular systems.
         </p>
         <p class="mt-5 text-xl">
           <a href={~p"/about"} class="underline">More about me →</a>
