@@ -1,7 +1,6 @@
 defmodule PersonalWebsiteWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :personal_website
 
-
   if Mix.env() == :prod do
     plug PersonalWebsiteWeb.Plugs.CanonicalHost
   end

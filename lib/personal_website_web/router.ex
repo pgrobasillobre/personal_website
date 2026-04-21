@@ -16,11 +16,11 @@ defmodule PersonalWebsiteWeb.Router do
 
   # Classic HTTP routes (controller + template)
   # Use when rendering a static or pre-rendered page with no interactivity
-  #scope "/", PersonalWebsiteWeb do
+  # scope "/", PersonalWebsiteWeb do
   #  pipe_through :browser
   #
   #  get "/", PageController, :home
-  #end
+  # end
 
   # LiveView routes (interactive, real-time via WebSocket)
   # Use when you need dynamic updates or richer interactivity (no JS needed)
@@ -33,14 +33,12 @@ defmodule PersonalWebsiteWeb.Router do
 
     # When someone visits /about, Phoenix will call the about/2 function in your PageController.
     # This is different from live "/", which uses a LiveView module directly.
-    get  "/about", PageController, :about
+    get "/about", PageController, :about
 
     live "/publications", PublicationsLive
 
     live "/cv", CVLive
-
   end
-
 
   # Other scopes may use custom stacks.
   # scope "/api", PersonalWebsiteWeb do

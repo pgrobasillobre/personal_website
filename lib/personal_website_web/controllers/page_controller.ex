@@ -10,5 +10,4 @@ defmodule PersonalWebsiteWeb.PageController do
   # Renders templates like about.html.heex via render/2.
   # Used for non-interactive routes like "/about".
   def about(conn, _params), do: render(conn, :about)
-
 end

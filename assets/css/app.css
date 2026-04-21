@@ -23,6 +23,15 @@ html {
   color-scheme: light;
 }
 
+body {
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  background: #faf9f5;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
 
 /* Softly fade the bottom of the video to transparent */
 .hero-video-mask {

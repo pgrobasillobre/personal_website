@@ -16,7 +16,6 @@ defmodule PersonalWebsite.Application do
       # Start to serve requests, typically the last entry
       PersonalWebsiteWeb.Endpoint,
       {Finch, name: PersonalWebsiteFinch}
-
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

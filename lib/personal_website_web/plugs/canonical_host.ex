@@ -15,7 +15,8 @@ defmodule PersonalWebsiteWeb.Plugs.CanonicalHost do
 
     conn
     |> put_resp_header("location", location)
-    |> put_resp_header("x-canonical-redirect", "1")   # debug header
+    # debug header
+    |> put_resp_header("x-canonical-redirect", "1")
     |> send_resp(301, "redirect")
     |> halt()
   end

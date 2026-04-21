@@ -2,17 +2,16 @@
 
 # Defines a module named PersonalWebsite.Content.
 
-# This module:
-#   Reads content files (markdown with YAML frontmatter)
-#   Parses them into Elixir maps
-#   Converts markdown to HTML
-#   Sorts and formats them for display
-#   Helps power things like blog sections, project listings, or a "Now" page
+#  This module:
+#    Reads content files (markdown with YAML frontmatter)
+#    Parses them into Elixir maps
+#    Converts markdown to HTML
+#    Sorts and formats them for display
+#    Helps power things like blog sections, project listings, or a "Now" page
 
 defmodule PersonalWebsite.Content do
   # Give absolute path to priv/content, which we have created
   @root Application.app_dir(:personal_website, "priv/content")
-
 
   # Runtime path helpers (work in dev and in releases)
   @sections ~w(projects notes publications cases cv software)
@@ -24,7 +23,6 @@ defmodule PersonalWebsite.Content do
   defp section_dir(section) do
     Path.join([priv_path(), "content", section])
   end
-
 
   # Only allow known sections (incl. "cv" and "software")
   def list(section) when section in @sections do
@@ -49,14 +47,15 @@ defmodule PersonalWebsite.Content do
   def list(_), do: []
 
   defp sort_date_key(%{date: %Date{} = d}), do: d
-  defp sort_date_key(_), do: ~D[0001-01-01]   # fallback for nil/absent dates
-
+  # fallback for nil/absent dates
+  defp sort_date_key(_), do: ~D[0001-01-01]
 
   # Loads a YAML file named now.yml from priv/content.
   # If it exists, parses it into Elixir data (using YamlElixir).
   # If it doesn’t exist, returns an empty list.
   def now() do
     path = Path.join(@root, "now.yml")
+
     case File.read(path) do
       {:ok, yml} -> YamlElixir.read_from_string!(yml)
       _ -> []
@@ -67,15 +66,13 @@ defmodule PersonalWebsite.Content do
   # Convert Markdown + Frontmatter into a Map
   # This is the core function that transforms a plain .md file into a content object for the website.
 
-
-
-# Reads the file contents
-# Splits it into frontmatter (YAML metadata) and markdown body
-# Parses markdown into HTML (via Earmark)
-# Builds a structured Elixir map with keys like:
-#   :title, :summary, :tags, :impact, :date, etc.
-#   :slug: a URL-safe name based on the filename
-#   :html: the rendered HTML of the markdown
+  # Reads the file contents
+  # Splits it into frontmatter (YAML metadata) and markdown body
+  # Parses markdown into HTML (via Earmark)
+  # Builds a structured Elixir map with keys like:
+  #   :title, :summary, :tags, :impact, :date, etc.
+  #   :slug: a URL-safe name based on the filename
+  #   :html: the rendered HTML of the markdown
   defp parse_md!(path) do
     body = File.read!(path)
     {meta, md} = split_frontmatter(body)
@@ -106,8 +103,6 @@ defmodule PersonalWebsite.Content do
     }
   end
 
-
-
   defp inject_heading_ids(html) do
     {:ok, doc} = Floki.parse_document(html)
 
@@ -116,10 +111,13 @@ defmodule PersonalWebsite.Content do
         {"h2", attrs, children} ->
           text = Floki.text(children) |> String.trim()
           {"h2", put_id(attrs, slugify(text)), children}
+
         {"h3", attrs, children} ->
           text = Floki.text(children) |> String.trim()
           {"h3", put_id(attrs, slugify(text)), children}
-        other -> other
+
+        other ->
+          other
       end)
 
     Floki.raw_html(doc)
@@ -133,9 +131,9 @@ defmodule PersonalWebsite.Content do
     end
   end
 
-  # Checks if the file starts with ---, which is how YAML frontmatter begins.
+  #  Checks if the file starts with ---, which is how YAML frontmatter begins.
   # Splits the content into two parts:
-  #   YAML frontmatter (for metadata)
+  #    YAML frontmatter (for metadata)
   #   Markdown body
   # If no frontmatter is present, returns just the markdown with an empty metadata map.
   defp split_frontmatter(str) when is_binary(str) do

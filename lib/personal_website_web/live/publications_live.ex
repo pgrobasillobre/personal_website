@@ -31,16 +31,19 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
   ## -----------------------------------------------------------
   def render(assigns) do
     ~H"""
-
     <!-- gradient background -->
-    <div aria-hidden="true"
-        class="pointer-events-none absolute inset-0 -z-10
-                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10
+                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]"
+    >
     </div>
 
     <!-- final-frame image layer, SAME structure as Home's video wrapper -->
-    <div aria-hidden="true"
-        class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5">
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5"
+    >
       <img
         src={~p"/videos/molecules-final.jpg"}
         alt=""
@@ -49,7 +52,6 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
         decoding="async"
       />
     </div>
-
 
     <section class="relative isolate overflow-hidden">
       <div class="max-w-7xl mx-auto p-4">
@@ -62,14 +64,15 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                        hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
                        hover:shadow-md hover:border-sky-300 transition
                        flex gap-4 p-4">
-
-              <!-- Optional TOC image on the left; now opens the modal -->
+              
+    <!-- Optional TOC image on the left; now opens the modal -->
               <%= if p.image do %>
                 <button
                   type="button"
                   phx-click="open_abstract"
                   phx-value-slug={p.slug}
-                  class="shrink-0 self-center">
+                  class="shrink-0 self-center"
+                >
                   <img
                     src={p.image}
                     alt={"TOC graphic for " <> p.title}
@@ -78,8 +81,8 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                   />
                 </button>
               <% end %>
-
-              <!-- Text/content on the right -->
+              
+    <!-- Text/content on the right -->
               <div class="min-w-0">
                 <div class="flex flex-wrap items-baseline gap-2">
                   <!-- Title now opens the modal instead of navigating -->
@@ -87,55 +90,62 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                     type="button"
                     phx-click="open_abstract"
                     phx-value-slug={p.slug}
-                    class="text-xl text-left underline text-xl font-medium">
-                    <%= p.title %>,
+                    class="text-xl text-left underline text-xl font-medium"
+                  >
+                    {p.title},
                   </button>
-
-                  <!-- Journal and date -->
+                  
+    <!-- Journal and date -->
                   <%= if p.venue do %>
-                    <p class="text-lg text-gray-700"><%= p.venue %> <span>(<%= p.date.year %>)</span> </p>
+                    <p class="text-lg text-gray-700">{p.venue} <span>({p.date.year})</span></p>
                   <% end %>
                 </div>
-
-                <!-- Authors (highlight your name) -->
+                
+    <!-- Authors (highlight your name) -->
                 <%= if (p.authors || []) != [] do %>
                   <div class="mt-1 text-lg text-gray-700">
                     <%= for {a, i} <- Enum.with_index(p.authors) do %>
-                      <%= if i > 0, do: ", " %>
+                      {if i > 0, do: ", "}
                       <%= if a == "P. Grobas Illobre" do %>
-                        <span class="font-semibold underline"><%= a %></span>
+                        <span class="font-semibold underline">{a}</span>
                       <% else %>
-                        <span><%= a %></span>
+                        <span>{a}</span>
                       <% end %>
                     <% end %>
                   </div>
                 <% end %>
-
-                <!-- TL;DR shown in list-->
+                
+    <!-- TL;DR shown in list-->
                 <%= if p.summary do %>
-                  <p class="mt-5 text-xl text-justify"><%= p.summary %></p>
+                  <p class="mt-5 text-xl text-justify">{p.summary}</p>
                 <% end %>
 
                 <div class="mt-5 text-lg text-gray-700">
                   <%= if p.tags != [] do %>
                     <%= for {t, i} <- Enum.with_index(p.tags) do %>
-                      <%= if i > 0, do: " ·  " %><%= t %>
+                      {if i > 0, do: " ·  "}{t}
                     <% end %>
                   <% end %>
                 </div>
-
-                <!-- Actions: Abstract opens modal; DOI still available here -->
+                
+    <!-- Actions: Abstract opens modal; DOI still available here -->
                 <div class="mt-5 flex gap-3">
                   <button
                     phx-click="open_abstract"
                     phx-value-slug={p.slug}
                     class="text-xl underline"
-                    type="button">
+                    type="button"
+                  >
                     Abstract
                   </button>
 
                   <%= if p.links["doi"] do %>
-                    <a class="text-xl underline" href={p.links["doi"]} target="_blank" rel="noopener noreferrer">
+                    <a
+                      class="text-xl underline"
+                      href={p.links["doi"]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Read the article →
                     </a>
                   <% end %>
@@ -149,30 +159,31 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
       <%= if @active_pub do %>
         <!-- Backdrop: purely visual; blur + dim -->
         <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"></div>
-
-        <!-- Centered modal panel -->
+        
+    <!-- Centered modal panel -->
         <div class="fixed inset-0 z-50 flex items-center justify-center p-8">
           <div
-              role="dialog"
-              aria-modal="true"
-              aria-label="Publication abstract"
-              class="w-full max-w-5xl max-h-[85vh] overflow-y-auto
+            role="dialog"
+            aria-modal="true"
+            aria-label="Publication abstract"
+            class="w-full max-w-5xl max-h-[85vh] overflow-y-auto
                         bg-white rounded-2xl border border-sky-200 shadow-xl"
-              phx-click-away="close_abstract"
-              phx-window-keydown="close_abstract"
-              phx-key="escape"
-            >
-
-          <!-- Close button (top-right) -->
-          <div class="flex justify-end p-2">
-            <button
-              phx-click="close_abstract"
-              type="button"
-              class="rounded-full p-1.5 hover:bg-sky-50 border border-sky-500"
-              aria-label="Close">
-              X
-            </button>
-          </div>
+            phx-click-away="close_abstract"
+            phx-window-keydown="close_abstract"
+            phx-key="escape"
+          >
+            
+    <!-- Close button (top-right) -->
+            <div class="flex justify-end p-2">
+              <button
+                phx-click="close_abstract"
+                type="button"
+                class="rounded-full p-1.5 hover:bg-sky-50 border border-sky-500"
+                aria-label="Close"
+              >
+                X
+              </button>
+            </div>
 
             <%= if @active_pub.image do %>
               <img
@@ -183,46 +194,48 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
               />
             <% end %>
 
-
             <div class="p-5 space-y-3">
-            <!-- Title + venue + year, inline but with different fonts -->
-            <div class="text-xl font-semibold">
-              <%= @active_pub.title %>,
-              <%= if @active_pub.venue do %>
-                <span class="text-xl text-gray-700">
-                  <%= @active_pub.venue %><%= if @active_pub.date, do: " (#{@active_pub.date.year})" %>
-                </span>
-              <% end %>
-            </div>
-
-              <!-- Authors (highlight your name) -->
+              <!-- Title + venue + year, inline but with different fonts -->
+              <div class="text-xl font-semibold">
+                {@active_pub.title},
+                <%= if @active_pub.venue do %>
+                  <span class="text-xl text-gray-700">
+                    {@active_pub.venue}{if @active_pub.date, do: " (#{@active_pub.date.year})"}
+                  </span>
+                <% end %>
+              </div>
+              
+    <!-- Authors (highlight your name) -->
               <%= if ( @active_pub.authors || [] ) != [] do %>
                 <div class="text-xl text-gray-700">
                   <%= for {a, i} <- Enum.with_index(@active_pub.authors) do %>
-                    <%= if i > 0, do: ", " %>
+                    {if i > 0, do: ", "}
                     <%= if a == "P. Grobas Illobre" do %>
-                      <span class="font-semibold underline"><%= a %></span>
+                      <span class="font-semibold underline">{a}</span>
                     <% else %>
-                      <span><%= a %></span>
+                      <span>{a}</span>
                     <% end %>
                   <% end %>
                 </div>
               <% end %>
-
-              <!-- Prefer abstract; fallback to summary -->
+              
+    <!-- Prefer abstract; fallback to summary -->
               <%= if @active_pub.abstract do %>
-                <p class="text-xl text-gray-700 text-justify"><%= @active_pub.abstract %></p>
+                <p class="text-xl text-gray-700 text-justify">{@active_pub.abstract}</p>
               <% else %>
                 <%= if @active_pub.summary do %>
-                  <p class="text-gray-700 text-justify"><%= @active_pub.summary %></p>
+                  <p class="text-gray-700 text-justify">{@active_pub.summary}</p>
                 <% end %>
               <% end %>
 
               <div class="pt-2">
                 <%= if @active_pub.links["doi"] do %>
-                  <a href={@active_pub.links["doi"]}
-                    target="_blank" rel="noopener noreferrer"
-                    class="text-xl inline-flex items-center gap-1 underline">
+                  <a
+                    href={@active_pub.links["doi"]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xl inline-flex items-center gap-1 underline"
+                  >
                     Read the article →
                   </a>
                 <% end %>
@@ -230,7 +243,6 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
             </div>
           </div>
         </div>
-
       <% end %>
     </section>
     """

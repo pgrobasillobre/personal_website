@@ -15,7 +15,6 @@ defmodule PersonalWebsite.MixProject do
     ]
   end
 
-
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
@@ -66,9 +65,12 @@ defmodule PersonalWebsite.MixProject do
       # debugpgi add parsers to read markdonw and yaml files
       {:earmark, "~> 1.4"},
       {:yaml_elixir, "~> 2.9"},
-      {:finch, "~> 0.18"},          # HTTP client
-      {:html_sanitize_ex, "~> 1.4"}, # Sanitize README HTML
-      {:floki, ">= 0.36.0"}    ]
+      # HTTP client
+      {:finch, "~> 0.18"},
+      # Sanitize README HTML
+      {:html_sanitize_ex, "~> 1.4"},
+      {:floki, ">= 0.36.0"}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

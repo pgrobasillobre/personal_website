@@ -26,9 +26,13 @@ Hooks.HeroVideo = {
     const video = this.el.querySelector("#hero-video-el")
     const still = this.el.querySelector("#hero-still")
     if (!video || !still) return
+    video.loop = false
+    video.style.opacity = "1"
+    video.style.transition = "opacity 250ms linear"
     video.classList.add("opacity-100")
     still.classList.add("opacity-0")
     const showVideo = () => {
+      video.style.opacity = "1"
       video.classList.add("opacity-100")
       still.classList.add("opacity-0")
       still.classList.remove("opacity-100")
@@ -38,9 +42,29 @@ Hooks.HeroVideo = {
       still.classList.remove("opacity-0")
       still.classList.add("opacity-100")
     }
+    const fadeNearEnd = () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return
+      const remaining = video.duration - video.currentTime
+      if (remaining <= 5) {
+        video.style.opacity = String(Math.max(0, remaining / 5))
+      } else {
+        video.style.opacity = "1"
+      }
+    }
+    const hideAtEnd = () => {
+      video.style.opacity = "0"
+    }
     video.addEventListener("canplay", showVideo, { once: true })
-    video.addEventListener("ended", showStill)
-    this._cleanup = () => video.removeEventListener("ended", showStill)
+    video.addEventListener("playing", showVideo)
+    video.addEventListener("timeupdate", fadeNearEnd)
+    video.addEventListener("ended", hideAtEnd)
+    video.addEventListener("error", showStill)
+    this._cleanup = () => {
+      video.removeEventListener("playing", showVideo)
+      video.removeEventListener("timeupdate", fadeNearEnd)
+      video.removeEventListener("ended", hideAtEnd)
+      video.removeEventListener("error", showStill)
+    }
   },
   destroyed() {
     this._cleanup && this._cleanup()

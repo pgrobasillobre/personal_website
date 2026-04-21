@@ -3,6 +3,10 @@ defmodule PersonalWebsiteWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "Peace of mind from prototype to production"
+    document = html_response(conn, 200) |> LazyHTML.from_document()
+
+    assert document |> LazyHTML.query_by_id("home-hero") |> Enum.count() == 1
+    assert document |> LazyHTML.query_by_id("home-hero-cv") |> Enum.count() == 1
+    assert document |> LazyHTML.query_by_id("home-proof") |> Enum.count() == 1
   end
 end
