@@ -66,7 +66,7 @@ defmodule PersonalWebsiteWeb.HomeLive do
 
       <section
         id="home-hero"
-        class="mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl content-center items-center gap-8 px-5 py-14 sm:px-6 lg:grid-cols-[minmax(0,1.28fr)_360px] lg:px-8"
+        class="relative mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl content-center items-center gap-8 px-5 py-14 sm:px-6 lg:grid-cols-[minmax(0,1.28fr)_360px] lg:px-8"
       >
         <div>
           <h1 class="max-w-none text-5xl font-semibold leading-[0.98] tracking-tight text-slate-950 sm:text-6xl lg:whitespace-nowrap lg:text-6xl">
@@ -165,6 +165,19 @@ defmodule PersonalWebsiteWeb.HomeLive do
             </div>
           </div>
         </aside>
+
+        <button
+          id="home-scroll-cue"
+          type="button"
+          data-scroll-target="#home-positioning"
+          phx-hook="HomeScrollCue"
+          aria-label="Scroll to the next section"
+          class="home-scroll-cue group absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-4 focus-visible:ring-offset-[#faf9f5]"
+        >
+          <span class="home-scroll-cue-mark flex size-14 items-center justify-center rounded-full border border-slate-400/80 bg-white/90 text-slate-700 shadow-xl shadow-slate-300/40 backdrop-blur transition group-hover:border-slate-600 group-hover:bg-white group-hover:text-slate-950 sm:size-16">
+            <.icon name="hero-chevron-down" class="size-8 sm:size-9" />
+          </span>
+        </button>
       </section>
 
       <section id="home-positioning" class="border-y border-slate-200 bg-white">
@@ -182,34 +195,102 @@ defmodule PersonalWebsiteWeb.HomeLive do
               </p>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-3">
-              <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
-                <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  01
-                </p>
-                <h3 class="mt-3 text-xl font-semibold text-slate-950">Molecular science</h3>
-                <p class="mt-3 leading-7 text-slate-600">
-                  A chemistry foundation for asking the right computational questions.
-                </p>
-              </article>
-              <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
-                <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  02
-                </p>
-                <h3 class="mt-3 text-xl font-semibold text-slate-950">Scientific code</h3>
-                <p class="mt-3 leading-7 text-slate-600">
-                  Implementations that connect numerical methods, data, and real research workflows.
-                </p>
-              </article>
-              <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
-                <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  03
-                </p>
-                <h3 class="mt-3 text-xl font-semibold text-slate-950">Research output</h3>
-                <p class="mt-3 leading-7 text-slate-600">
-                  Papers and project pages that show the scientific context behind the work.
-                </p>
-              </article>
+            <div class="overflow-visible">
+              <div class="grid gap-4 md:grid-cols-3">
+                <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    01
+                  </p>
+                  <h3 class="mt-3 text-xl font-semibold text-slate-950">Molecular science</h3>
+                  <p class="mt-3 leading-7 text-slate-600">
+                    A chemistry foundation for asking the right computational questions.
+                  </p>
+                </article>
+                <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    02
+                  </p>
+                  <h3 class="mt-3 text-xl font-semibold text-slate-950">Scientific code</h3>
+                  <p class="mt-3 leading-7 text-slate-600">
+                    Implementations that connect numerical methods, data, and real research workflows.
+                  </p>
+                </article>
+                <article class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    03
+                  </p>
+                  <h3 class="mt-3 text-xl font-semibold text-slate-950">Research output</h3>
+                  <p class="mt-3 leading-7 text-slate-600">
+                    Papers and project pages that show the scientific context behind the work.
+                  </p>
+                </article>
+              </div>
+
+              <div
+                id="home-positioning-arrow"
+                phx-hook="HomeTimeline"
+                class="home-positioning-arrow mt-8 hidden overflow-visible md:block"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 1000 48"
+                  class="h-10 w-full overflow-visible"
+                  role="img"
+                >
+                  <defs>
+                    <marker
+                      id="home-positioning-arrowhead"
+                      viewBox="0 0 10 10"
+                      refX="8"
+                      refY="5"
+                      markerWidth="7"
+                      markerHeight="7"
+                      orient="auto-start-reverse"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" class="fill-slate-900" />
+                    </marker>
+                    <filter
+                      id="home-positioning-arrow-glow"
+                      x="-10%"
+                      y="-80%"
+                      width="120%"
+                      height="260%"
+                    >
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <path
+                    class="home-positioning-arrow-shadow"
+                    d="M 166 16 C 234 16 340 16 500 16 S 742 16 834 16 S 1080 16 1460 16"
+                    pathLength="1"
+                  />
+                  <path
+                    class="home-positioning-arrow-line"
+                    d="M 166 16 C 234 16 340 16 500 16 S 742 16 834 16 S 1080 16 1460 16"
+                    pathLength="1"
+                    marker-end="url(#home-positioning-arrowhead)"
+                    filter="url(#home-positioning-arrow-glow)"
+                  />
+
+                  <g class="home-positioning-checkpoint home-positioning-checkpoint-1">
+                    <circle cx="166" cy="16" r="13" />
+                    <circle cx="166" cy="16" r="5" />
+                  </g>
+                  <g class="home-positioning-checkpoint home-positioning-checkpoint-2">
+                    <circle cx="500" cy="16" r="13" />
+                    <circle cx="500" cy="16" r="5" />
+                  </g>
+                  <g class="home-positioning-checkpoint home-positioning-checkpoint-3">
+                    <circle cx="834" cy="16" r="13" />
+                    <circle cx="834" cy="16" r="5" />
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

@@ -71,6 +71,71 @@ Hooks.HeroVideo = {
   }
 }
 
+Hooks.HomeScrollCue = {
+  mounted() {
+    const targetSelector = this.el.dataset.scrollTarget
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+    this._updateVisibility = () => {
+      this.el.classList.toggle("is-hidden", window.scrollY > 24)
+    }
+
+    this._handleClick = event => {
+      const target = targetSelector && document.querySelector(targetSelector)
+      if (!target) return
+
+      event.preventDefault()
+      const targetTop = target.getBoundingClientRect().top + window.scrollY
+      const offset = Math.min(28, window.innerHeight * 0.04)
+
+      window.scrollTo({
+        top: Math.max(0, targetTop - offset),
+        behavior: prefersReducedMotion.matches ? "auto" : "smooth"
+      })
+    }
+
+    this._readyTimer = window.setTimeout(() => {
+      this.el.classList.add("is-ready")
+    }, 2800)
+
+    this.el.addEventListener("click", this._handleClick)
+    window.addEventListener("scroll", this._updateVisibility, { passive: true })
+    this._updateVisibility()
+  },
+  destroyed() {
+    window.clearTimeout(this._readyTimer)
+    this.el.removeEventListener("click", this._handleClick)
+    window.removeEventListener("scroll", this._updateVisibility)
+  }
+}
+
+Hooks.HomeTimeline = {
+  mounted() {
+    const reveal = () => this.el.classList.add("is-visible")
+
+    if (!("IntersectionObserver" in window)) {
+      reveal()
+      return
+    }
+
+    this._observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return
+
+      reveal()
+      this._observer.disconnect()
+      this._observer = null
+    }, {
+      rootMargin: "0px 0px -18% 0px",
+      threshold: 0.35
+    })
+
+    this._observer.observe(this.el)
+  },
+  destroyed() {
+    this._observer && this._observer.disconnect()
+  }
+}
+
 Hooks.RenderMath = {
   mounted() { this.render() },
   updated() { this.render() },

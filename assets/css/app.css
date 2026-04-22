@@ -45,6 +45,139 @@ body {
   pointer-events: none;
 }
 
+.home-scroll-cue {
+  opacity: 0;
+  transition: opacity 320ms ease, visibility 320ms ease;
+}
+
+.home-scroll-cue.is-ready {
+  opacity: 1;
+}
+
+.home-scroll-cue.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.home-scroll-cue-mark {
+  animation: home-scroll-cue-float 1.9s ease-in-out 3.5s infinite;
+}
+
+@keyframes home-scroll-cue-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-scroll-cue,
+  .home-scroll-cue-mark {
+    animation: none;
+  }
+
+  .home-scroll-cue {
+    opacity: 1;
+  }
+}
+
+.home-positioning-arrow-line,
+.home-positioning-arrow-shadow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.home-positioning-arrow.is-visible .home-positioning-arrow-line,
+.home-positioning-arrow.is-visible .home-positioning-arrow-shadow {
+  animation: home-positioning-arrow-draw 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.home-positioning-arrow-line {
+  stroke: #0f172a;
+  stroke-width: 3;
+}
+
+.home-positioning-arrow-shadow {
+  stroke: rgba(148, 163, 184, 0.26);
+  stroke-width: 15;
+}
+
+.home-positioning-checkpoint {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.home-positioning-checkpoint circle:first-child {
+  fill: #ffffff;
+  stroke: #0f172a;
+  stroke-width: 2;
+}
+
+.home-positioning-checkpoint circle:last-child {
+  fill: #0f172a;
+}
+
+.home-positioning-arrow.is-visible .home-positioning-checkpoint-1 {
+  animation: home-positioning-checkpoint-pop 420ms cubic-bezier(0.2, 0.9, 0.2, 1.2) 0.9s forwards;
+}
+
+.home-positioning-arrow.is-visible .home-positioning-checkpoint-2 {
+  animation: home-positioning-checkpoint-pop 420ms cubic-bezier(0.2, 0.9, 0.2, 1.2) 1.42s forwards;
+}
+
+.home-positioning-arrow.is-visible .home-positioning-checkpoint-3 {
+  animation: home-positioning-checkpoint-pop 420ms cubic-bezier(0.2, 0.9, 0.2, 1.2) 1.94s forwards;
+}
+
+@keyframes home-positioning-arrow-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes home-positioning-checkpoint-pop {
+  0% {
+    opacity: 0;
+    scale: 0.45;
+  }
+
+  70% {
+    opacity: 1;
+    scale: 1.12;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-positioning-arrow-line,
+  .home-positioning-arrow-shadow,
+  .home-positioning-checkpoint {
+    animation: none;
+  }
+
+  .home-positioning-arrow-line,
+  .home-positioning-arrow-shadow {
+    stroke-dashoffset: 0;
+  }
+
+  .home-positioning-checkpoint {
+    opacity: 1;
+  }
+}
+
 /* Simple callout label for map points */
 .leaflet-div-icon.map-label {
   background: white;
