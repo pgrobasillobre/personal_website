@@ -21,6 +21,75 @@ Hooks.CVPrint = {
   }
 }
 
+Hooks.HeroCanvas = {
+  mounted() {
+    const canvas = this.el
+    const ctx = canvas.getContext('2d')
+    let W, H, nodes, rafId
+    const N = 60, DIST = 155
+
+    const resize = () => {
+      W = canvas.width  = canvas.offsetWidth
+      H = canvas.height = canvas.offsetHeight
+      nodes = Array.from({length: N}, () => ({
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        vx: (Math.random() - .5) * .26,
+        vy: (Math.random() - .5) * .26,
+        r:  Math.random() < .14 ? 3.2 : 1.7,
+        green: Math.random() < .12,
+      }))
+    }
+
+    const frame = () => {
+      ctx.clearRect(0, 0, W, H)
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y
+          const d = Math.sqrt(dx*dx + dy*dy)
+          if (d < DIST) {
+            const a = (1 - d / DIST) * 0.22
+            ctx.beginPath()
+            ctx.moveTo(nodes[i].x, nodes[i].y)
+            ctx.lineTo(nodes[j].x, nodes[j].y)
+            ctx.strokeStyle = `rgba(79,199,232,${a})`
+            ctx.lineWidth = 0.6
+            ctx.stroke()
+          }
+        }
+      }
+      nodes.forEach(n => {
+        const c = n.green ? '168,216,176' : '79,199,232'
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${c},0.75)`
+        ctx.fill()
+        if (n.r > 2.5) {
+          ctx.beginPath()
+          ctx.arc(n.x, n.y, n.r * 3, 0, Math.PI * 2)
+          ctx.strokeStyle = `rgba(${c},0.1)`
+          ctx.lineWidth = 1
+          ctx.stroke()
+        }
+        n.x += n.vx; n.y += n.vy
+        if (n.x < 0 || n.x > W) n.vx *= -1
+        if (n.y < 0 || n.y > H) n.vy *= -1
+      })
+      rafId = requestAnimationFrame(frame)
+    }
+
+    this._onResize = resize
+    window.addEventListener('resize', this._onResize)
+    resize()
+    frame()
+    this._stop = () => { cancelAnimationFrame(rafId) }
+  },
+  destroyed() {
+    window.removeEventListener('resize', this._onResize)
+    this._stop && this._stop()
+  }
+}
+
 Hooks.HeroVideo = {
   mounted() {
     const video = this.el.querySelector("#hero-video-el")
@@ -198,6 +267,21 @@ Hooks.BuildToc = {
     })
   }
 }
+
+// ---------------------------
+// Scroll reveal
+// ---------------------------
+function initReveal() {
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) }
+    }),
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+  )
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el))
+}
+window.addEventListener('DOMContentLoaded', initReveal)
+window.addEventListener('phx:page-loading-stop', initReveal)
 
 // ---------------------------
 // LiveSocket bootstrapping

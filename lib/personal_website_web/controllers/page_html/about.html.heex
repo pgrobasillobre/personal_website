@@ -1,105 +1,68 @@
-<section class="max-w-5xl mx-auto p-6 space-y-6">
-  
-<!-- gradient background -->
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 -z-10
-              bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]"
-  >
-  </div>
-  
-<!-- final-frame image layer, SAME structure as Home's video wrapper -->
-  <div
-    aria-hidden="true"
-    class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5"
-  >
-    <img
-      src={~p"/videos/molecules-final.jpg"}
-      alt=""
-      class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
-      loading="eager"
-      decoding="async"
-    />
-  </div>
+<div class="pgi-section">
 
-  <div class="mt-6">
+  <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);font-weight:400;color:var(--text);margin-bottom:2rem;">
+    About
+  </h1>
+
+  <div class="pgi-about-img">
     <img
       src="/images/home/coruna.png"
       alt="A Coruña"
-      class="rounded-xl shadow-md w-full object-cover max-h-96"
     />
   </div>
 
-  <div class="mt-15 mb-15 space-y-6 text-gray-700 text-xl leading-relaxed text-justify">
+  <div class="pgi-about-prose">
     <p>
-      I was born and raised in <strong>A Coruña, Galicia</strong>, a coastal city in the northwest of Spain. I’ve been into surfing since I was ten, and the ocean has always been an important part of my daily life.
+      I was born and raised in <strong>A Coruña, Galicia</strong>, a coastal city in the northwest
+      of Spain. I've been into surfing since I was ten, and the ocean has always been an important
+      part of my daily life.
     </p>
 
     <p>
-      It was also in <u>A Coruña</u>, at the <strong>University of A Coruña</strong>, where I began my academic journey, earning a
-      <strong>B.Sc. in Chemistry</strong>
-      in 2018. I then moved to <u>Toulouse, France</u>, to pursue a
+      It was also in <u>A Coruña</u>, at the <strong>University of A Coruña</strong>, where I began
+      my academic journey, earning a <strong>B.Sc. in Chemistry</strong> in 2018. I then moved to
+      <u>Toulouse, France</u>, to pursue a
       <strong>M.Sc. in Theoretical Chemistry and Computational Modelling (TCCM)</strong>
-      at <strong>Paul Sabatier University</strong>, graduating in 2020. My growing interest in computational chemistry and scientific software development led me to the
-      <strong>Scuola Normale Superiore</strong>
-      in <u>Pisa, Italy</u>, where I completed a PhD focused on developing
-      <strong>high-performance tools</strong>
-      for <strong>QM/MM simulations</strong>.
+      at <strong>Paul Sabatier University</strong>, graduating in 2020. My growing interest in
+      computational chemistry and scientific software development led me to the
+      <strong>Scuola Normale Superiore</strong> in <u>Pisa, Italy</u>, where I completed a PhD
+      focused on developing <strong>high-performance tools</strong> for
+      <strong>QM/MM simulations</strong>.
     </p>
 
     <p>
-      Since then, I’ve been working at the interface of <strong>quantum chemistry</strong>
-      and <strong>software engineering</strong>, contributing to the Amsterdam Modeling Suite in collaboration with <em>Software for Chemistry & Materials</em>. My research explores <strong>molecular modeling</strong>, including phenomena like
-      <strong>surface-enhanced spectroscopies</strong>
-      and <strong>long-range energy transfer</strong>.
+      Since then, I've been working at the interface of <strong>quantum chemistry</strong> and
+      <strong>software engineering</strong>, contributing to the Amsterdam Modeling Suite in
+      collaboration with <em>Software for Chemistry &amp; Materials</em>. My research explores
+      <strong>molecular modeling</strong>, including phenomena like
+      <strong>surface-enhanced spectroscopies</strong> and
+      <strong>long-range energy transfer</strong>.
     </p>
 
     <p>
-      I’m currently <strong>transitioning from academia to industry</strong>, looking to apply my expertise to real-world challenges in <strong>drug discovery</strong>, <strong>molecular modeling</strong>, and <strong>materials science</strong>. With growing experience in machine learning and data science, I aim to contribute to interdisciplinary teams working at the intersection of chemistry, physics, software, and data.
+      I'm currently <strong>transitioning from academia to industry</strong>, looking to apply my
+      expertise to real-world challenges in <strong>drug discovery</strong>,
+      <strong>molecular modeling</strong>, and <strong>materials science</strong>. With growing
+      experience in machine learning and data science, I aim to contribute to interdisciplinary
+      teams working at the intersection of chemistry, physics, software, and data.
     </p>
 
     <p>
-      On the side, I’ve been exploring <strong>investment strategies</strong>
-      and <strong>quantitative finance</strong>
-      in the stock market — a fun way to apply my background in <strong>data analysis</strong>
-      to a completely different domain.
+      On the side, I've been exploring <strong>investment strategies</strong> and
+      <strong>quantitative finance</strong> in the stock market — a fun way to apply my background
+      in <strong>data analysis</strong> to a completely different domain.
     </p>
 
     <p>
-      Eventually, I’d love to return to <strong>A Coruña</strong>
-      and contribute to scientific and technological innovation in my hometown.
+      Eventually, I'd love to return to <strong>A Coruña</strong> and contribute to scientific and
+      technological innovation in my hometown.
     </p>
   </div>
-  <!--
-  <div>
-    <h2 class="text-xl font-semibold mb-2">Now</h2>
-    <ul class="list-disc ml-6 space-y-1">
-      <%= for item <- PersonalWebsite.Content.now() do %>
-        <li><%= item %></li>
-      <% end %>
-    </ul>
-  </div>
--->
-  <div class="flex flex-wrap gap-4 mt-6">
-    <a
-      href={~p"/cv"}
-      class="px-5 py-2 rounded-xl bg-gray-900 text-white shadow hover:bg-gray-800 transition"
-    >
-      See my CV →
-    </a>
 
-    <a
-      href={~p"/software"}
-      class="px-5 py-2 rounded-xl bg-sky-100 text-sky-900 shadow hover:bg-sky-200 transition"
-    >
-      Explore softwares →
-    </a>
-
-    <a
-      href={~p"/publications"}
-      class="px-5 py-2 rounded-xl bg-gray-100 text-gray-800 shadow hover:bg-gray-200 transition"
-    >
-      Browse publications →
-    </a>
+  <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2.5rem;">
+    <a href="/cv" class="pgi-btn pgi-btn-primary">See my CV →</a>
+    <a href="/software" class="pgi-btn pgi-btn-ghost">Explore software →</a>
+    <a href="/publications" class="pgi-btn pgi-btn-ghost">Browse publications →</a>
   </div>
-</section>
+
+</div>

@@ -37,99 +37,78 @@ defmodule PersonalWebsiteWeb.SoftwareDetailLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <!-- gradient background -->
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute inset-0 -z-10
-                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]"
-    >
-    </div>
+    <div class="pgi-section">
 
-    <!-- final-frame image layer, SAME structure as Home's video wrapper -->
-    <div
-      aria-hidden="true"
-      class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5"
-    >
-      <img
-        src={~p"/videos/molecules-final.jpg"}
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
+      <a href={~p"/software"} class="pgi-cv-footer-link" style="margin-top:0;margin-bottom:2rem;display:inline-block;">
+        ← All software
+      </a>
 
-    <section class="relative isolate overflow-hidden">
-      <!-- Hero image -->
+
       <%= if @proj.image do %>
-        <img
-          src={@proj.image}
-          alt={@proj.title}
-          class="mb-6 mt-6 max-w-3xl w-full h-auto mx-auto rounded-lg border hover:opacity-90 transition"
-        />
+        <div style="margin-bottom:2rem;border:1px solid var(--border);border-radius:4px;overflow:hidden;background:#090d14;">
+          <img
+            src={@proj.image}
+            alt={@proj.title}
+            style="width:100%;height:auto;display:block;object-fit:contain;"
+            loading="lazy"
+          />
+        </div>
       <% end %>
-      
-    <!-- Single container for header + article -->
-      <div class="max-w-5xl mx-auto p-6">
-        <!-- Header/meta block -->
-        <div class="space-y-4">
-          <h1 class="text-4xl font-semibold">{@proj.title}</h1>
 
-          <%= if @proj.summary do %>
-            <p class="text-lg text-gray-700">{@proj.summary}</p>
-          <% end %>
+      <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:400;color:var(--text);margin-bottom:1rem;">
+        {@proj.title}
+      </h1>
 
-          <%= if @proj.impact do %>
-            <p class="text-lg text-gray-600">Impact: {@proj.impact}</p>
-          <% end %>
+      <%= if @proj.summary do %>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.75;margin-bottom:1rem;max-width:72ch;">
+          {@proj.summary}
+        </p>
+      <% end %>
 
-          <div class="text-lg flex gap-4 text-sm flex-wrap">
-            <%= if @proj.links["code"] do %>
-              <a class="text-lg  underline" href={@proj.links["code"]}>Code</a>
-            <% end %>
-            <%= if @proj.links["docs"] do %>
-              <a class="text-lg  underline" href={@proj.links["docs"]}>Docs</a>
-            <% end %>
-            <%= if @proj.links["code_cpp"] do %>
-              <a class="text-lg  underline" href={@proj.links["code_cpp"]}>C++ Code</a>
-            <% end %>
-            <%= if @proj.links["code_fortran"] do %>
-              <a class="text-lg  underline" href={@proj.links["code_fortran"]}>Fortran Code</a>
-            <% end %>
-            <%= if @proj.links["publication"] do %>
-              <a class="text-lg  underline" href={@proj.links["publication"]}>Publication</a>
-            <% end %>
-          </div>
+      <%= if @proj.impact do %>
+        <p style="color:var(--accent);font-size:0.85rem;line-height:1.6;margin-bottom:1.25rem;max-width:72ch;">
+          {@proj.impact}
+        </p>
+      <% end %>
 
-          <%= if @proj.tags != [] do %>
-            <div class="flex flex-wrap gap-2">
-              <span class="text-base">Tags:</span>
-              <%= for t <- @proj.tags do %>
-                <span class="mb-8 text-base bg-gray-100 rounded px-2 py-0.5">{t}</span>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-
-        <hr class="my-1 mx-auto max-w-5xl border-t-2 border-gray-800 rounded" />
-        
-    <!-- Two-column layout -->
-        <div class="mt-8 lg:grid-cols-[220px_minmax(0,1fr)] gap-8">
-          <!-- Article -->
-          <div
-            id="article-body"
-            phx-hook="RenderMath"
-            class="mb-6 prose prose-slate lg:prose-lg dark:prose-invert max-w-none"
-          >
-            {Phoenix.HTML.raw(@proj.html || "")}
-          </div>
-
-          <p class="pt-6">
-            <a class="text-xl underline" href={~p"/software"}>← Back to all software</a>
-          </p>
-        </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.25rem;">
+        <%= for t <- @proj.tags do %>
+          <span class="pgi-sw-tag">{t}</span>
+        <% end %>
       </div>
-    </section>
+
+      <div class="pgi-sw-links" style="margin-bottom:2rem;">
+        <%= if @proj.links["docs"] do %>
+          <a href={@proj.links["docs"]} target="_blank" rel="noopener noreferrer">Docs</a>
+        <% end %>
+        <%= if @proj.links["code"] do %>
+          <a href={@proj.links["code"]} target="_blank" rel="noopener noreferrer">Code</a>
+        <% end %>
+        <%= if @proj.links["code_cpp"] do %>
+          <a href={@proj.links["code_cpp"]} target="_blank" rel="noopener noreferrer">C++ Code</a>
+        <% end %>
+        <%= if @proj.links["code_fortran"] do %>
+          <a href={@proj.links["code_fortran"]} target="_blank" rel="noopener noreferrer">Fortran Code</a>
+        <% end %>
+        <%= if @proj.links["publication"] do %>
+          <a href={@proj.links["publication"]} target="_blank" rel="noopener noreferrer">Publication</a>
+        <% end %>
+        <%= if @proj.links["benchmarks"] do %>
+          <a href={@proj.links["benchmarks"]} target="_blank" rel="noopener noreferrer">Benchmarks</a>
+        <% end %>
+      </div>
+
+      <hr class="pgi-divider" style="margin-bottom:2rem;" />
+
+      <div
+        id="article-body"
+        phx-hook="RenderMath"
+        class="prose prose-invert max-w-none"
+      >
+        {Phoenix.HTML.raw(@proj.html || "")}
+      </div>
+
+    </div>
     """
   end
 end

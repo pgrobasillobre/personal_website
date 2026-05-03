@@ -82,790 +82,439 @@ defmodule PersonalWebsiteWeb.CVLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <!-- gradient background (put this ABOVE the image; higher z) -->
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute inset-0 -z-10
-                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]"
-    >
-    </div>
+    <div class="pgi-section">
 
-    <!-- image background layer (lower z) -->
-    <div
-      aria-hidden="true"
-      class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5"
-    >
-      <img
-        src={~p"/videos/molecules-final.jpg"}
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
-
-    <section class="relative isolate overflow-hidden">
-      
-    <!-- Hero-style layout -->
-      <div class="max-w-7xl mx-auto px-4 py-0 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-        <!-- Photo -->
-        <div class="mx-auto mt-15 h-60 w-60 md:h-70 md:w-70 lg:h-80 lg:w-80 rounded-full p-[5px]
-                    bg-gradient-to-br from-cyan-400 to-indigo-500 shadow-xl ring-1 ring-black/5">
-          <img
-            src="/images/profile.jpg"
-            alt="Pablo Grobas Illobre"
-            class="h-full w-full rounded-full object-cover"
-          />
-          <div class="flex flex-wrap gap-3 justify-center mt-3">
-            <!-- Photo
-            <a href="/pdfs/GROBAS_CV_2025.pdf"
-               download
-               class="mt-13 px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg">
-              ↓ Download CV
-            </a>
-            -->
-            <button
-              type="button"
-              data-contact-trigger
-              class="mt-13 px-10 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-xl"
-            >
-              Contact
-            </button>
-          </div>
+      <%!-- Profile header --%>
+      <div class="pgi-cv-header">
+        <div class="pgi-cv-photo">
+          <img src="/images/profile.jpg" alt="Pablo Grobas Illobre" />
         </div>
-        
-    <!-- Bio + Skills -->
-        <div class="mt-15 md:col-span-2 space-y-6">
-          <div>
-            <h1 class="text-4xl font-bold tracking-tight">Pablo Grobas Illobre, PhD</h1>
-            <p class="mt-4 text-gray-700 leading-relaxed text-xl text-justify">
-              <strong>Computational chemist</strong>
-              and <strong>scientific software developer</strong>
-              with over <strong>six years of experience</strong>
-              in <strong>quantum chemistry, QM/MM methodologies, and high-performance computing</strong>.
-              Lead developer of <strong>quantum-chemistry algorithms (C++/Fortran)</strong>
-              within the <strong>Amsterdam Modeling Suite</strong>, in collaboration with <strong>Software for Chemistry & Materials (SCM)</strong>.
-              Skilled in <strong>Python</strong>
-              for <strong>data analysis, cheminformatics (RDKit)</strong>, and <strong>machine learning (TensorFlow, PyTorch)</strong>.
-            </p>
-          </div>
-
-          <div>
-            <h2 class="mt-10 text-2xl font-bold">Technical Skills</h2>
-            <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xl text-gray-800">
-              <li><b>Expertise:</b> QM/MM and molecular modelling</li>
-              <li><b>Programming:</b> Python, C++, Fortran</li>
-              <li><b>Libraries:</b> RDKit, TensorFlow, PyTorch, scikit-learn, NumPy, SciPy</li>
-              <li><b>Development:</b> Git, VS Code, CI/CD basics</li>
-              <li><b>Systems:</b> Linux, Bash, HPC environments</li>
-              <li><b>Scientific Software:</b> Amsterdam Modeling Suite, Gaussian, GAMESS</li>
-            </ul>
-          </div>
+        <div class="pgi-cv-bio">
+          <h1 style="font-family:var(--serif);font-size:clamp(1.4rem,4vw,2.6rem);font-weight:400;color:var(--text);margin-bottom:1rem;">
+            Pablo Grobas Illobre, <em style="font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(79,199,232,0.45);">PhD</em>
+          </h1>
+          <a href="https://www.linkedin.com/in/grobas-illobre/" target="_blank" rel="noopener noreferrer" class="pgi-btn pgi-btn-primary">Get in touch</a>
         </div>
       </div>
-      
-    <!-- Interactive Education Section -->
-      <div id="education" class="max-w-7xl mx-auto px-4 py-5">
-        <h2 class="text-3xl font-bold mt-10 mb-10">Experience & Training</h2>
-        
-    <!-- Buttons (stateful) -->
-        <div class="flex flex-wrap gap-3 mb-8">
-          <%= for {label, sect} <- [
-                {"Postdoc","postdoc"},
-                {"Ph.D.","phd"},
-                {"M.Sc.","msc"},
-                {"Research Assistant","research"},
-                {"B.Sc.","bsc"}
-              ] do %>
-            <button
-              type="button"
-              phx-click="select_section"
-              phx-value-section={sect}
-              aria-pressed={@selected_section == sect}
-              class={[
-                "px-4 py-2 rounded-xl border text-lg md:text-xl font-semibold transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60",
-                @selected_section == sect &&
-                  "bg-slate-200 text-slate-900 border-slate-400 hover:bg-slate-300",
-                @selected_section != sect &&
-                  "bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
-              ]}
+      <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:1.5rem;">
+        <strong>Computational chemist</strong> and <strong>scientific software developer</strong>
+        with over <strong>six years of experience</strong> in
+        <strong>quantum chemistry, QM/MM methodologies, and high-performance computing</strong>.
+        Lead developer of <strong>quantum-chemistry algorithms (C++/Fortran)</strong>
+        within the <strong>Amsterdam Modeling Suite</strong>, in collaboration with
+        <strong>Software for Chemistry &amp; Materials (SCM)</strong>.
+        Skilled in <strong>Python</strong> for
+        <strong>data analysis, cheminformatics (RDKit)</strong>, and
+        <strong>machine learning (TensorFlow, PyTorch)</strong>.
+      </p>
+
+      <%!-- Technical Skills --%>
+      <h2 class="pgi-cv-h2">Technical Skills</h2>
+      <ul class="pgi-cv-skills-grid">
+        <li><strong>Expertise:</strong> QM/MM and molecular modelling</li>
+        <li><strong>Programming:</strong> Python, C++, Fortran</li>
+        <li><strong>Libraries:</strong> RDKit, TensorFlow, PyTorch, scikit-learn, NumPy, SciPy</li>
+        <li><strong>Development:</strong> Git, VS Code, CI/CD basics</li>
+        <li><strong>Systems:</strong> Linux, Bash, HPC environments</li>
+        <li><strong>Scientific Software:</strong> Amsterdam Modeling Suite, Gaussian</li>
+      </ul>
+
+      <hr class="pgi-divider" style="margin:2.5rem 0;" />
+
+      <%!-- Experience & Training --%>
+      <h2 class="pgi-cv-h2" style="margin-top:0;">Experience &amp; Training</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem;">
+        <%= for {label, sect} <- [
+              {"Postdoc","postdoc"},
+              {"Ph.D.","phd"},
+              {"M.Sc.","msc"},
+              {"Research Assistant","research"},
+              {"B.Sc.","bsc"}
+            ] do %>
+          <button
+            type="button"
+            phx-click="select_section"
+            phx-value-section={sect}
+            aria-pressed={@selected_section == sect}
+            class={["pgi-tag-btn", @selected_section == sect && "active"]}
+          >{label}</button>
+        <% end %>
+      </div>
+
+      <div class="pgi-cv-edu-grid">
+        <div class="pgi-cv-map-wrap">
+          <div id="cv-edu-map" phx-hook="EduMap" phx-update="ignore" style="width:100%;height:100%;"></div>
+        </div>
+
+        <div>
+          <%= if @selected_section == "postdoc" do %>
+            <h3 class="pgi-cv-h3">Senior Postdoctoral Researcher</h3>
+            <p class="pgi-cv-label">Scuola Normale Superiore (Pisa, Italy)</p>
+            <p class="pgi-cv-label" style="margin-bottom:1rem;">02/2025 – Present</p>
+            <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:0.75rem;">
+              I lead the development of <strong>QM/MM quantum-chemistry algorithms</strong>
+              in <strong>C++</strong> and <strong>Fortran</strong>
+              within the <strong>Amsterdam Modeling Suite</strong>, in collaboration with
+              <em>Software for Chemistry &amp; Materials</em>.
+              This work is complemented with <strong>Python</strong>
+              for <strong>machine learning</strong>, <strong>data analysis</strong>, and
+              <strong>scientific visualization</strong> in spectroscopy and multiscale modelling research.
+            </p>
+            <p class="pgi-cv-prose" style="margin-bottom:0.5rem;">
+              My research integrates intensive <strong>software development</strong> to investigate:
+            </p>
+            <ul class="pgi-cv-list">
+              <li><strong>QM/MM Surface-Enhanced Spectroscopies</strong>: fluorescence, Raman scattering, Raman optical activity.</li>
+              <li><strong>Plasmonic Materials</strong>: graphene &amp; metal nanoparticles.</li>
+              <li><strong>Plasmon-Mediated Electronic Energy Transfer</strong>.</li>
+            </ul>
+            <div class="pgi-cv-lang-row">
+              <span class="pgi-cv-lang-label">Working languages</span>
+              <span>English · Italian</span>
+            </div>
+          <% end %>
+
+          <%= if @selected_section == "phd" do %>
+            <h3 class="pgi-cv-h3">
+              Ph.D. in Methods and Models for Molecular Sciences (<em style="color:var(--accent);font-style:italic;">with honors</em>)
+            </h3>
+            <p class="pgi-cv-label">Scuola Normale Superiore (Pisa, Italy)</p>
+            <p class="pgi-cv-label" style="margin-bottom:1rem;">11/2020 – 01/2025</p>
+            <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:0.75rem;">
+              My PhD research focused on developing <strong>hybrid QM/MM methodologies</strong>
+              for <strong>nanoplasmonic systems</strong> and <strong>light–matter interactions</strong>.
+              I implemented simulation codes in <strong>Fortran</strong>, <strong>C++</strong>, and
+              <strong>Python</strong> to model <strong>spectroscopic phenomena</strong>
+              at the nanoscale, in collaboration with
+              <em>Software for Chemistry &amp; Materials</em>
+              — a partnership I continue in my current postdoctoral work.
+            </p>
+            <ul class="pgi-cv-list" style="margin-bottom:1rem;">
+              <li>
+                <strong>Title:</strong>
+                <em>Modeling Atomistic Nanoplasmonics: Classical and Hybrid Quantum Mechanical/Classical Schemes</em>
+              </li>
+              <li><strong>Supervisors:</strong> Prof. Chiara Cappelli, Dr. Tommaso Giovannini</li>
+            </ul>
+            <a href="/pdfs/PhD_Thesis_Pablo_Grobas_Illobre.pdf" download class="pgi-btn pgi-btn-ghost" style="font-size:0.68rem;">
+              ↓ Download PhD Thesis
+            </a>
+            <div class="pgi-cv-lang-row">
+              <span class="pgi-cv-lang-label">Working languages</span>
+              <span>English · Italian</span>
+            </div>
+          <% end %>
+
+          <%= if @selected_section == "msc" do %>
+            <h3 class="pgi-cv-h3">M.Sc. in Theoretical Chemistry and Computational Modeling (Erasmus Mundus)</h3>
+            <p class="pgi-cv-label">Université Paul Sabatier (Toulouse, France)</p>
+            <p class="pgi-cv-label" style="margin-bottom:1rem;">09/2018 – 08/2020</p>
+            <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:0.75rem;">
+              The Erasmus Mundus TCCM program provided rigorous training in
+              <strong>quantum chemistry</strong> as well as <strong>molecular dynamics</strong>,
+              through an intensive hands-on, project-based curriculum. My M.Sc. thesis focused on
+              <strong>high-performance Fortran development</strong> for quantum simulations, laying
+              the foundation for later work in <strong>scientific programming</strong> and
+              <strong>QM/MM methods</strong>.
+            </p>
+            <ul class="pgi-cv-list">
+              <li>
+                Thesis at University of Trieste (<strong>Fortran development</strong>).
+                <strong>Supervisors:</strong> <em>Prof. Mauro Stener</em>, <em>Dr. Emanuele Coccia</em>
+              </li>
+              <li>Internship at Okayama University (<strong>MD simulations</strong> – Gromacs).</li>
+              <li>Visiting student at Autonomous University of Madrid (<strong>Computational chemistry</strong>).</li>
+            </ul>
+            <div class="pgi-cv-lang-row">
+              <span class="pgi-cv-lang-label">Working languages</span>
+              <span>English · French · Spanish · Italian</span>
+            </div>
+          <% end %>
+
+          <%= if @selected_section == "bsc" do %>
+            <h3 class="pgi-cv-h3">B.Sc. in Chemistry</h3>
+            <p class="pgi-cv-label">University of A Coruña (A Coruña, Spain)</p>
+            <p class="pgi-cv-label" style="margin-bottom:1rem;">09/2014 – 07/2018</p>
+            <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:0.75rem;">
+              My undergraduate degree offered a thorough grounding in
+              <strong>organic</strong>, <strong>inorganic</strong>, <strong>analytical</strong>, and
+              <strong>physical chemistry</strong>, complemented by extensive laboratory work in
+              <strong>experimental techniques</strong> and <strong>instrumental analysis</strong>.
+              In my final year, I carried out a theoretical project focused on modeling acid–base
+              systems using <strong>DFT methods</strong> implemented in <strong>Gaussian</strong>,
+              which first introduced me to <strong>computational chemistry</strong>.
+            </p>
+            <ul class="pgi-cv-list">
+              <li>Erasmus Exchange: University of Oslo (2016).</li>
+            </ul>
+            <div class="pgi-cv-lang-row">
+              <span class="pgi-cv-lang-label">Working languages</span>
+              <span>English · Spanish · Galician</span>
+            </div>
+          <% end %>
+
+          <%= if @selected_section == "research" do %>
+            <h3 class="pgi-cv-h3">Research Assistant</h3>
+            <p class="pgi-cv-label">Instituto de Tecnología Química (Valencia, Spain)</p>
+            <p class="pgi-cv-label" style="margin-bottom:1rem;">07/2019 – 08/2019</p>
+            <p class="pgi-cv-prose" style="text-align:justify;margin-bottom:0.75rem;">
+              During my stay at the Instituto de Tecnología Química, I conducted
+              <strong>molecular dynamics simulations</strong> with <strong>DL_POLY</strong>
+              to study the adsorption of industrially relevant sugars into
+              <strong>zeolitic frameworks</strong>, aiming to explore novel cost-effective
+              separation strategies for the food industry.
+            </p>
+            <ul class="pgi-cv-list" style="margin-bottom:1rem;">
+              <li><strong>Supervisor:</strong> <em>Dr. Germán Ignacio Sastre Navarro</em></li>
+            </ul>
+            <a
+              href="https://linkinghub.elsevier.com/retrieve/pii/S1387181121001578"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pgi-btn pgi-btn-ghost"
+              style="font-size:0.68rem;"
             >
-              {label}
-            </button>
+              View Related Publication ↗
+            </a>
+            <div class="pgi-cv-lang-row">
+              <span class="pgi-cv-lang-label">Working languages</span>
+              <span>English · Spanish</span>
+            </div>
           <% end %>
         </div>
-        
-    <!-- Grid: Map and Details -->
-        <div class="grid md:grid-cols-3 gap-10 items-start">
-          <!-- Left: Map -->
-          <div class="rounded-xl border p-4 bg-white shadow-sm h-100">
-            <div id="cv-edu-map" phx-hook="EduMap" phx-update="ignore" class="w-full h-full"></div>
-          </div>
-          
-    <!-- Right: Education content -->
-          <div class="md:col-span-2 space-y-8">
-            <%= if @selected_section == "postdoc" do %>
-              <div>
-                <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">Senior Postdoctoral Researcher,</h3>
-                  <span class="font-serif italic text-lg text-slate-700">
-                    Scuola Normale Superiore (Pisa, Italy)
-                  </span>
-                </div>
-                <p class="font-serif italic text-lg text-slate-700">02/2025 – Present</p>
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  I lead the development of <strong>QM/MM quantum-chemistry algorithms</strong>
-                  in <strong>C++</strong>
-                  and <strong>Fortran</strong>
-                  within the <strong>Amsterdam Modeling Suite</strong>, in collaboration with the <span class="font-serif italic">Software for Chemistry &amp; Materials</span>.
-                  This work is complemented with <strong>Python</strong>
-                  for <strong>machine learning</strong>, <strong>data analysis</strong>, and
-                  <strong>scientific visualization</strong>
-                  in spectroscopy and multiscale modelling research.
-                </p>
+      </div>
 
-                <p class="text-gray-700 text-lg leading-relaxed mt-3">
-                  My research integrates intensive <strong>software development</strong>
-                  to investigate:
-                </p>
-                <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                  <li>
-                    <strong>QM/MM Surface-Enhanced Spectroscopies</strong>: fluorescence, Raman scattering, Raman optical activity.
-                  </li>
-                  <li><strong>Plasmonic Materials</strong>: graphene &amp; metal nanoparticles.</li>
-                  <li><strong>Plasmon-Mediated Electronic Energy Transfer</strong>.</li>
-                </ul>
-              </div>
-              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z" />
-                </svg>
-                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
-                <span class="ml-2">English · Italian</span>
-              </div>
-            <% end %>
+      <hr class="pgi-divider" style="margin:2.5rem 0;" />
 
-            <%= if @selected_section == "phd" do %>
-              <div>
-                <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">
-                    Ph.D. in Methods and Models for Molecular Sciences (<span class="font-serif italic font-bold">with honors</span>),
-                  </h3>
-                  <span class="font-serif italic text-lg text-slate-700">
-                    Scuola Normale Superiore (Pisa, Italy)
-                  </span>
-                </div>
+      <%!-- Research Projects --%>
+      <h2 class="pgi-cv-h2" style="margin-top:0;">Research Projects</h2>
 
-                <p class="font-serif italic text-lg text-slate-700">11/2020 – 01/2025</p>
+      <div class="pgi-cv-project-grid">
+        <a href="https://www.scm.com/" target="_blank" rel="noopener noreferrer" class="pgi-cv-img-card" aria-label="SCM">
+          <img src="/images/cv/scm.png" alt="SCM logo" />
+        </a>
+        <div>
+          <h3 class="pgi-cv-h3">
+            <a href="https://www.scm.com/" target="_blank" rel="noopener noreferrer" class="pgi-cv-inline-link">
+              Quantum Chemistry Software for SCM (Software for Chemistry &amp; Materials)
+            </a>
+          </h3>
+          <p class="pgi-cv-label" style="margin-bottom:0.75rem;">Industry collaboration · Scuola Normale Superiore | 2020 – Present</p>
+          <ul class="pgi-cv-list">
+            <li>Algorithms for <strong>Surface-Enhanced Raman Scattering (SERS)</strong>.</li>
+            <li>Pipeline for <strong>Surface-Enhanced Fluorescence (SEF)</strong>.</li>
+            <li>Tools for <strong>plasmon-mediated resonance energy transfer</strong>.</li>
+            <li>Implementation of <strong>Surface-Enhanced Raman Optical Activity (SEROA)</strong> calculations.</li>
+          </ul>
+        </div>
+      </div>
 
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  My PhD research focused on developing <strong>hybrid QM/MM methodologies</strong>
-                  for <strong>nanoplasmonic systems</strong>
-                  and <strong>light–matter interactions</strong>.
-                  I implemented simulation codes in <strong>Fortran</strong>, <strong>C++</strong>, and
-                  <strong>Python</strong>
-                  to model <strong>spectroscopic phenomena</strong>
-                  at the nanoscale, in collaboration with the
-                  <span class="font-serif italic">Software for Chemistry &amp; Materials</span>
-                  company — a partnership I continue in my current postdoctoral work.
-                </p>
+      <div class="pgi-cv-project-grid">
+        <a href="/software/plasmonx" class="pgi-cv-img-card" aria-label="plasmonX">
+          <img src="/images/cv/plasmonX.png" alt="plasmonX logo" />
+        </a>
+        <div>
+          <h3 class="pgi-cv-h3">
+            <a href="/software/plasmonx" class="pgi-cv-inline-link">
+              High Performance Software for Nanoplasmonics Research
+            </a>
+          </h3>
+          <p class="pgi-cv-label" style="margin-bottom:0.75rem;">Scuola Normale Superiore | 2020 – Present</p>
+          <ul class="pgi-cv-list">
+            <li>Standalone, <strong>parallelized</strong> implementations for <strong>&omega;FQF&mu;</strong> and <strong>BEM</strong> equations.</li>
+            <li><strong>High-performance</strong> algorithms for solving linear systems via direct inversion and iterative schemes.</li>
+            <li><strong>Analysis</strong> of the optical response (absorption spectra, charge/density distributions, and more).</li>
+            <li>User-friendly interface via integration with the <strong>GEOM</strong> module.</li>
+          </ul>
+        </div>
+      </div>
 
-                <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                  <li>
-                    <span class="font-semibold">Title:</span>
-                    <em>
-                      Modeling Atomistic Nanoplasmonics: Classical and Hybrid Quantum Mechanical/Classical Schemes
-                    </em>
-                  </li>
-                  <li>
-                    <span class="font-semibold">Supervisors:</span>
-                    Prof. Chiara Cappelli, Dr. Tommaso Giovannini
-                  </li>
-                </ul>
-              </div>
+      <div class="pgi-cv-project-grid">
+        <div class="pgi-cv-img-card">
+          <img src="/images/cv/fare.png" alt="FARE logo" />
+        </div>
+        <div>
+          <h3 class="pgi-cv-h3"><span style="color:var(--accent);">FARE — "Framework per l'attrazione e il rafforzamento delle eccellenze per la ricerca in Italia"</span></h3>
+          <p class="pgi-cv-label" style="margin-bottom:0.75rem;">Scuola Normale Superiore | 2020 – Present | PI: Chiara Cappelli</p>
+          <ul class="pgi-cv-list">
+            <li>
+              <strong>Python</strong> programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and <strong>visualization</strong>
+              (e.g., Python-driven figures in
+              <a href="https://pubs.rsc.org/en/content/articlelanding/2024/na/d4na00080c" target="_blank" class="pgi-cv-inline-link">
+                P. Grobas Illobre <em>et al.</em>, <em>Nanoscale Adv.</em>, 2024, 6, 3410
+              </a>).
+            </li>
+            <li>Quantum chemistry <strong>QM/MM software development</strong> in <strong>C++</strong> and <strong>Fortran</strong> for surface-enhanced fluorescence and plasmon-mediated electronic energy transfer.</li>
+            <li>Intensive use of <strong>HPC</strong> infrastructures to automate and streamline <strong>data production</strong> workflows.</li>
+          </ul>
+        </div>
+      </div>
 
-              <a
-                href="/pdfs/PhD_Thesis_Pablo_Grobas_Illobre.pdf"
-                download
-                class="px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg"
+      <div class="pgi-cv-project-grid">
+        <a href="https://gems.sns.it/" target="_blank" rel="noopener noreferrer" class="pgi-cv-img-card" aria-label="GEMS">
+          <img src="/images/cv/gems.png" alt="GEMS logo" />
+        </a>
+        <div>
+          <h3 class="pgi-cv-h3">
+            <a href="https://gems.sns.it/" target="_blank" rel="noopener noreferrer" class="pgi-cv-inline-link">
+              GEMS — General Embedding Models for Spectroscopy
+            </a>, ERC Consolidator Grant
+          </h3>
+          <p class="pgi-cv-label" style="margin-bottom:0.75rem;">Scuola Normale Superiore | 2020 – 2025 | PI: Chiara Cappelli</p>
+          <ul class="pgi-cv-list">
+            <li>
+              <strong>Python</strong> programming for <strong>data analysis</strong>, <strong>manipulation</strong>, and <strong>visualization</strong>
+              (e.g., Python-driven figures in
+              <a href="https://pubs.acs.org/doi/10.1021/acsphotonics.2c00761" target="_blank" class="pgi-cv-inline-link">
+                T. Giovannini <em>et al.</em>, <em>ACS Photonics</em>, 2022, 9, 3025
+              </a>).
+            </li>
+            <li>Machine learning pipeline in <strong>Python</strong> to study and simulate graphene samples.</li>
+            <li>Quantum chemistry <strong>software development</strong> in <strong>Fortran</strong> for plasmonic materials, <strong>QM/MM</strong> SERS, and Raman optical activity.</li>
+            <li>Intensive use of <strong>HPC</strong> infrastructures for large-scale <strong>data production</strong> workflows.</li>
+          </ul>
+        </div>
+      </div>
+
+      <a href={~p"/software"} class="pgi-cv-footer-link">See related software →</a>
+
+      <hr class="pgi-divider" style="margin:2.5rem 0;" />
+
+      <%!-- Selected Publications --%>
+      <h2 class="pgi-cv-h2" style="margin-top:0;">Selected Publications</h2>
+
+      <div>
+        <%= for p <- @recent_pubs do %>
+          <div class="pgi-cv-pub-item">
+            <%= if p.image do %>
+              <button
+                type="button"
+                phx-click="open_abstract"
+                phx-value-slug={p.slug}
+                class="pgi-cv-pub-toc"
               >
-                ↓ Download PhD Thesis
-              </a>
-
-              <div class="mt-5 flex items-center gap-2 text-lg text-slate-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z" />
-                </svg>
-                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
-                <span class="ml-2">English · Italian</span>
-              </div>
+                <img src={p.image} alt={"TOC graphic for " <> p.title} loading="lazy" />
+              </button>
             <% end %>
-
-            <%= if @selected_section == "msc" do %>
-              <div>
-                <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">
-                    M.Sc. in Theoretical Chemistry and Computational Modeling (Erasmus Mundus),
-                  </h3>
-                  <span class="font-serif italic text-lg text-slate-700">
-                    Université Paul Sabatier (Toulouse, France)
-                  </span>
+            <div style="flex:1;min-width:0;">
+              <%= if p.venue do %>
+                <div class="pgi-pub-journal">{p.venue}{if p.date, do: " · #{p.date.year}"}</div>
+              <% end %>
+              <button
+                type="button"
+                phx-click="open_abstract"
+                phx-value-slug={p.slug}
+                class="pgi-cv-pub-title"
+              >
+                {p.title}
+              </button>
+              <%= if (p.authors || []) != [] do %>
+                <div class="pgi-pub-authors" style="margin-top:0.4rem;">
+                  <%= for {a, i} <- Enum.with_index(p.authors) do %>
+                    {if i > 0, do: ", "}
+                    <span class={if a == "P. Grobas Illobre", do: "self", else: ""}>{a}</span>
+                  <% end %>
                 </div>
-
-                <p class="font-serif italic text-lg text-slate-700">09/2018 – 08/2020</p>
-
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  The Erasmus Mundus TCCM program provided rigorous training in
-                  <strong>quantum chemistry</strong>
-                  as well as <strong>molecular dynamics</strong>, through an intensive hands-on, project-based curriculum. My M.Sc. thesis focused on
-                  <strong>high-performance Fortran development</strong>
-                  for quantum simulations, laying the foundation for later work in
-                  <strong>scientific programming</strong>
-                  and <strong>QM/MM methods</strong>.
-                </p>
-
-                <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
-                  <li>
-                    Thesis at University of Trieste (<strong>Fortran development</strong>).
-                    <span class="text-sm text-slate-600">
-                      <strong>Supervisors:</strong> <span class="italic">Prof. Mauro Stener</span>,
-                      <span class="italic">Dr. Emanuele Coccia</span>
-                    </span>
-                  </li>
-                  <li>
-                    Internship at Okayama University (<strong>MD simulations</strong> - Gromacs).
-                  </li>
-                  <li>
-                    Visiting student at Autonomous University of Madrid (<strong>Computational chemistry</strong>)
-                  </li>
-                </ul>
-              </div>
-              <div class="flex items-center gap-2 text-lg text-slate-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0 2.9 1.88 3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4  -1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z" />
-                </svg>
-                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
-                <span class="ml-2">English · French · Spanish · Italian</span>
-              </div>
-            <% end %>
-
-            <%= if @selected_section == "bsc" do %>
-              <div>
-                <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">B.Sc. in Chemistry,</h3>
-                  <span class="font-serif italic text-lg text-slate-700">
-                    University of A Coruña (A Coruña, Spain)
-                  </span>
-                </div>
-                <p class="font-serif italic text-lg text-slate-700">09/2014 – 07/2018</p>
-
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  My undergraduate degree offered a thorough grounding in <strong>organic</strong>, <strong>inorganic</strong>, <strong>analytical</strong>, and <strong>physical chemistry</strong>, complemented by extensive laboratory work in
-                  <strong>experimental techniques</strong>
-                  and <strong>instrumental analysis</strong>. In my final year, I carried out a theoretical project focused on modeling acid–base systems using
-                  <strong>DFT methods</strong>
-                  implemented in <strong>Gaussian</strong>, which first introduced me to the field of
-                  <strong>computational chemistry</strong>
-                  and sparked my interest in molecular simulation.
-                </p>
-
-                <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                  <li>Erasmus Exchange: University of Oslo (2016)</li>
-                </ul>
-              </div>
-              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z" />
-                </svg>
-                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
-                <span class="ml-2">English · Spanish · Galician</span>
-              </div>
-            <% end %>
-
-            <%= if @selected_section == "research" do %>
-              <div>
-                <div class="flex flex-wrap items-baseline gap-2">
-                  <h3 class="text-xl font-bold">Research Assistant,</h3>
-                  <span class="font-serif italic text-lg text-slate-700">
-                    Instituto de Tecnología Química (Valencia, Spain)
-                  </span>
-                </div>
-                <p class="font-serif italic text-lg text-slate-700">07/2019 – 08/2019</p>
-
-                <p class="mt-5 text-gray-700 text-lg leading-relaxed text-justify">
-                  During my stay at the Instituto de Tecnología Química, I conducted
-                  <strong>molecular dynamics simulations</strong>
-                  with <strong>DL_POLY</strong>
-                  to study the adsorption of industrially relevant sugars into <strong>zeolitic frameworks</strong>, aiming to explore novel cost-effective separation strategies for the food industry.
-                </p>
-
-                <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                  <li>
-                    <span class="font-semibold">Supervisor:</span>
-                    <span class="italic">Dr. Germán Ignacio Sastre Navarro</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="mt-8">
+              <% end %>
+              <%= if p.summary do %>
+                <p class="pgi-pub-abstract" style="margin-top:0.5rem;">{p.summary}</p>
+              <% end %>
+              <%= if p.links && p.links["doi"] do %>
                 <a
-                  href="https://linkinghub.elsevier.com/retrieve/pii/S1387181121001578"
+                  href={p.links["doi"]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="px-4 py-2 rounded-xl bg-sky-600 text-white font-medium shadow hover:bg-sky-700 text-lg"
+                  class="pgi-cv-footer-link"
+                  style="margin-top:0.75rem;font-size:0.65rem;"
                 >
-                  🔗 View Related Publication
+                  Read the article →
                 </a>
-              </div>
-
-              <div class="mt-4 flex items-center gap-2 text-lg text-slate-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 opacity-70"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.12A14.9 14.9 0 0016 5.46 8.03 8.03 0 0119.9 11zM12 4c1.25 0-2.9 1.88-3.64 6H8.36C9.1 5.88 10.75 4 12 4zM4.1 11A8.03 8.03 0 018 5.46 14.9 14.9 0 007.22 11H4.1zm0 2h3.12A14.9 14.9 0 008 18.54 8.03 8.03 0 014.1 13zM12 20c-1.25 0-2.9-1.88-3.64-6h7.28C14.9 18.12 13.25 20 12 20zm4-1.46A14.9 14.9 0 0016.78 13H19.9a8.03 8.03 0 01-3.9 5.54z" />
-                </svg>
-                <span class="uppercase tracking-wide text-slate-500 text-sm">Working languages</span>
-                <span class="ml-2">English · Spanish</span>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        
-    <!-- Research Projects -->
-        <div id="projects" class="max-w-7xl mx-auto px-4 py-10 mt-13">
-          <h2 class="text-3xl font-bold mb-10">Research Projects</h2>
-          
-    <!-- SCM / AMS -->
-          <div class="grid md:grid-cols-3 gap-10 items-start">
-            <a
-              href="https://www.scm.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Software for Chemistry & Materials"
-              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-            >
-              <img
-                src="/images/cv/scm.png"
-                alt="SCM (Software for Chemistry & Materials) logo"
-                class="w-full h-full object-contain"
-              />
-            </a>
-
-            <div class="md:col-span-2 space-y-3">
-              <div class="flex flex-wrap items-baseline gap-2">
-                <h3 class="text-xl font-bold">
-                  <a
-                    href="https://www.scm.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="underline decoration-transparent hover:decoration-sky-400/70 transition duration-150"
-                  >
-                    Development of Quantum Chemistry Software for SCM (Software for Chemistry &amp; Materials)
-                  </a>
-                </h3>
-                <span class="font-serif italic text-lg text-slate-700">
-                  Industry collaboration associated with Scuola Normale Superiore | 2020 – Present
-                </span>
-              </div>
-
-              <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
-                <li>Algorithms for <strong>Surface-Enhanced Raman Scattering (SERS)</strong>.</li>
-                <li>Pipeline for <strong>Surface-Enhanced Fluorescence (SEF)</strong>.</li>
-                <li>Tools for <strong>plasmon-mediated resonance energy transfer</strong>.</li>
-                <li>
-                  Implementation of <strong>Surface-Enhanced Raman Optical Activity (SEROA)</strong>
-                  calculations.
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-    <!-- plasmonX -->
-          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
-            <a
-              href="/software/plasmonx"
-              aria-label="Open plasmonX project"
-              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-            >
-              <img
-                src="/images/cv/plasmonX.png"
-                alt="plasmonX logo"
-                class="w-full h-full object-contain"
-              />
-            </a>
-
-            <div class="md:col-span-2 space-y-3">
-              <div class="flex flex-wrap items-baseline gap-2">
-                <h3 class="text-xl font-bold">
-                  <a
-                    href="/software/plasmonx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="underline decoration-transparent hover:decoration-sky-400/70 transition duration-150"
-                  >
-                    Development of High Performance Software for Nanoplasmonics Research
-                  </a>
-                </h3>
-                <span class="font-serif italic text-lg text-slate-700">
-                  Scuola Normale Superiore | 2020 – Present
-                </span>
-              </div>
-
-              <ul class="list-disc ml-5 text-gray-700 mt-1 space-y-1">
-                <li>
-                  Standalone, <strong>parallelized</strong>
-                  implementations for <strong>&omega;FQF&mu;</strong>
-                  and <strong>BEM</strong>
-                  equations.
-                </li>
-                <li>
-                  <strong>High-performance</strong>
-                  algorithms for solving the linear systems via direct inversion and iterative schemes.
-                </li>
-                <li>
-                  <strong>Analysis</strong>
-                  of the optical response (absorption spectra, charge/density distributions, and more).
-                </li>
-                <li>
-                  User-friendly interface via integration with the <strong>GEOM</strong> module.
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-    <!-- FARE -->
-          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
-            <div class="rounded-xl border p-4 bg-white shadow-sm h-60">
-              <img src="/images/cv/fare.png" alt="FARE logo" class="w-full h-full object-contain" />
-            </div>
-
-            <div class="md:col-span-2 space-y-3">
-              <div class="flex flex-wrap items-baseline gap-2">
-                <h3 class="text-xl font-bold">
-                  FARE — “Framework per l’attrazione e il rafforzamento delle eccellenze per la ricerca in Italia”
-                </h3>
-              </div>
-              <p class="font-serif italic text-lg text-slate-700">
-                Scuola Normale Superiore | 2020 – Present | PI: Chiara Cappelli
-              </p>
-              <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                <li>
-                  <strong>Python</strong>
-                  programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and
-                  <strong>visualization</strong>
-                  (e.g., Python-driven figures in
-                  <a
-                    href="https://pubs.rsc.org/en/content/articlelanding/2024/na/d4na00080c"
-                    target="_blank"
-                    class="underline decoration-transparent hover:decoration-current transition duration-150"
-                  >
-                    P. Grobas Illobre <em>et al.</em>, <em>Nanoscale Adv.</em>, 2024, 6, 3410
-                  </a>
-                  ).
-                </li>
-                <li>
-                  Quantum chemistry <strong>QM/MM software development</strong>
-                  in <strong>C++</strong>
-                  and <strong>Fortran</strong>
-                  (AMS + in-house) for surface-enhanced fluorescence and plasmon-mediated electronic energy transfer.
-                </li>
-                <li>
-                  Intensive use of <strong>HPC</strong>
-                  infrastructures to automate and streamline <strong>data production</strong>
-                  workflows.
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-    <!-- GEMS -->
-          <div class="mt-15 grid md:grid-cols-3 gap-10 items-start">
-            <a
-              href="https://gems.sns.it/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open GEMS website"
-              class="rounded-xl border p-4 bg-white shadow-sm h-60 block hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-            >
-              <img src="/images/cv/gems.png" alt="GEMS logo" class="w-full h-full object-contain" />
-            </a>
-
-            <div class="md:col-span-2 space-y-3">
-              <div class="flex flex-wrap items-baseline gap-2">
-                <h3 class="text-xl font-bold">
-                  <a
-                    href="https://gems.sns.it/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="underline decoration-transparent hover:decoration-sky-400/70 transition duration-150"
-                  >
-                    GEMS — General Embedding Models for Spectroscopy
-                  </a>,
-                </h3>
-                <span class="font-serif italic text-lg text-slate-700">ERC Consolidator Grant</span>
-              </div>
-              <p class="font-serif italic text-lg text-slate-700">
-                Scuola Normale Superiore | 2020 – 2025 | PI: Chiara Cappelli
-              </p>
-              <ul class="list-disc ml-5 text-gray-700 mt-2 space-y-1">
-                <li>
-                  <strong>Python</strong>
-                  programming (in-house codes) for <strong>data analysis</strong>, <strong>manipulation</strong>, and
-                  <strong>visualization</strong>
-                  (e.g., Python-driven figures in
-                  <a
-                    href="https://pubs.acs.org/doi/10.1021/acsphotonics.2c00761"
-                    target="_blank"
-                    class="underline decoration-transparent hover:decoration-current transition duration-150"
-                  >
-                    T. Giovannini <em>et al.</em>, <em>ACS Photonics</em>, 2022, 9, 3025
-                  </a>
-                  ).
-                </li>
-                <li>
-                  Currently developing a <strong>machine learning</strong>
-                  pipeline in <strong>Python</strong>
-                  to study and simulate graphene samples.
-                </li>
-                <li>
-                  Quantum chemistry <strong>software development</strong>
-                  in <strong>Fortran</strong>
-                  (Amsterdam Modeling Suite + in-house) for plasmonic materials,
-                  <strong>QM/MM</strong>
-                  SERS, and Raman optical activity.
-                </li>
-                <li>
-                  Intensive use of <strong>HPC</strong>
-                  infrastructures to streamline large-scale <strong>data production</strong>
-                  workflows.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="mt-8">
-            <a href={~p"/software"} class="text-xl underline">See related softwares →</a>
-          </div>
-        </div>
-        <!-- end of #projects -->
-
-        <!-- Selected Publications -->
-        <div id="selected-publications" class="max-w-7xl mx-auto px-4 py-10 mb-10">
-          <h2 class="text-3xl font-bold mb-10">Selected Publications</h2>
-
-          <ul class="space-y-5">
-            <%= for p <- @recent_pubs do %>
-              <li class="group rounded-2xl border border-sky-200 bg-white shadow
-                        hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50
-                        hover:shadow-md hover:border-sky-300 transition
-                        flex gap-4 p-4">
-                <%= if p.image do %>
-                  <button
-                    type="button"
-                    phx-click="open_abstract"
-                    phx-value-slug={p.slug}
-                    class="shrink-0 self-center"
-                  >
-                    <img
-                      src={p.image}
-                      alt={"TOC graphic for " <> p.title}
-                      class="max-w-[16rem] md:max-w-[24rem] h-auto group-hover:opacity-95 transition"
-                      loading="lazy"
-                    />
-                  </button>
-                <% end %>
-
-                <div class="min-w-0">
-                  <div class="flex flex-wrap items-baseline gap-2">
-                    <button
-                      type="button"
-                      phx-click="open_abstract"
-                      phx-value-slug={p.slug}
-                      class="text-left underline text-xl font-medium"
-                    >
-                      {p.title},
-                    </button>
-
-                    <%= if p.venue do %>
-                      <p class="text-lg text-gray-700">
-                        {p.venue}{if p.date, do: " (#{p.date.year})"}
-                      </p>
-                    <% end %>
-                  </div>
-
-                  <%= if (p.authors || []) != [] do %>
-                    <div class="mt-1 text-lg text-gray-700">
-                      <%= for {a, i} <- Enum.with_index(p.authors) do %>
-                        {if i > 0, do: ", "}
-                        <%= if a == "P. Grobas Illobre" do %>
-                          <span class="font-semibold underline">{a}</span>
-                        <% else %>
-                          <span>{a}</span>
-                        <% end %>
-                      <% end %>
-                    </div>
-                  <% end %>
-
-                  <%= if p.summary do %>
-                    <p class="mt-5 text-xl text-justify">{p.summary}</p>
-                  <% end %>
-
-                  <div class="mt-5 text-lg text-gray-700">
-                    <%= if p.tags != [] do %>
-                      <%= for {t, i} <- Enum.with_index(p.tags) do %>
-                        {if i > 0, do: " ·  "}{t}
-                      <% end %>
-                    <% end %>
-                  </div>
-
-                  <div class="mt-5">
-                    <%= if p.links && p.links["doi"] do %>
-                      <a
-                        class="text-xl underline"
-                        href={p.links["doi"]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Read the article →
-                      </a>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% end %>
-          </ul>
-
-          <div class="mt-8">
-            <a href={~p"/publications"} class="text-xl underline">See all publications →</a>
-          </div>
-        </div>
-        
-    <!-- Modal (abstract) -->
-        <%= if @active_pub do %>
-          <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"></div>
-
-          <div class="fixed inset-0 z-50 flex items-center justify-center p-8">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-label="Publication abstract"
-              class="w-full max-w-5xl max-h-[85vh] overflow-y-auto
-                        bg-white rounded-2xl border border-sky-200 shadow-xl"
-              phx-click-away="close_abstract"
-              phx-window-keydown="close_abstract"
-              phx-key="escape"
-            >
-              <div class="flex justify-end p-2">
-                <button
-                  phx-click="close_abstract"
-                  type="button"
-                  class="rounded-full p-1.5 hover:bg-sky-50 border border-sky-500"
-                  aria-label="Close"
-                >
-                  X
-                </button>
-              </div>
-
-              <%= if @active_pub.image do %>
-                <img
-                  src={@active_pub.image}
-                  alt={"TOC graphic for " <> @active_pub.title}
-                  class="w-full h-auto object-contain"
-                  loading="lazy"
-                />
               <% end %>
-
-              <div class="p-5 space-y-3">
-                <div class="text-xl font-semibold">
-                  {@active_pub.title},
-                  <%= if @active_pub.venue do %>
-                    <span class="text-xl text-gray-700">
-                      {@active_pub.venue}{if @active_pub.date, do: " (#{@active_pub.date.year})"}
-                    </span>
-                  <% end %>
-                </div>
-
-                <%= if (@active_pub.authors || []) != [] do %>
-                  <div class="text-xl text-gray-700">
-                    <%= for {a, i} <- Enum.with_index(@active_pub.authors) do %>
-                      {if i > 0, do: ", "}
-                      <%= if a == "P. Grobas Illobre" do %>
-                        <span class="font-semibold underline">{a}</span>
-                      <% else %>
-                        <span>{a}</span>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
-
-                <%= if @active_pub.abstract do %>
-                  <p class="text-xl text-gray-700 text-justify">{@active_pub.abstract}</p>
-                <% else %>
-                  <%= if @active_pub.summary do %>
-                    <p class="text-gray-700 text-justify">{@active_pub.summary}</p>
-                  <% end %>
-                <% end %>
-
-                <div class="pt-2">
-                  <%= if @active_pub.links && @active_pub.links["doi"] do %>
-                    <a
-                      href={@active_pub.links["doi"]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-xl inline-flex items-center gap-1 underline"
-                    >
-                      Read the article →
-                    </a>
-                  <% end %>
-                </div>
-              </div>
             </div>
           </div>
         <% end %>
-        
-    <!-- Awards -->
-        <div id="awards" class="max-w-7xl mx-auto px-4 py-1">
-          <h2 class="text-3xl font-bold mb-10">Awards</h2>
-
-          <ul class="list-disc ml-6 text-xl text-gray-800 space-y-2">
-            <li>PhD awarded with honors (<span class="italic">with honors</span>).</li>
-            <li>Scuola Normale Superiore PhD Scholarship (2020–2025).</li>
-            <li>Two NanoX Research Scholarships (2019 &amp; 2020).</li>
-            <li>Erasmus Internship Fellowship (2019–2020).</li>
-            <li>
-              Consejo Superior de Investigaciones Científicas (CSIC) – Jae Intro Fellowship (2019).
-            </li>
-            <li>
-              Extraordinary Prize for achieving the best academic record in the Bachelor of Chemistry (2018).
-            </li>
-            <li>Erasmus+ scholarship (2016).</li>
-          </ul>
-        </div>
       </div>
-    </section>
+
+      <a href={~p"/publications"} class="pgi-cv-footer-link">See all publications →</a>
+
+      <%!-- Abstract modal --%>
+      <%= if @active_pub do %>
+        <div class="pgi-modal-backdrop" phx-click="close_abstract"></div>
+        <div class="pgi-modal-wrap">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Publication abstract"
+            class="pgi-modal"
+            phx-click-away="close_abstract"
+            phx-window-keydown="close_abstract"
+            phx-key="escape"
+          >
+            <div class="pgi-modal-header">
+              <button phx-click="close_abstract" type="button" class="pgi-modal-close">Close</button>
+            </div>
+            <%= if @active_pub.image do %>
+              <img
+                src={@active_pub.image}
+                alt={"TOC graphic for " <> @active_pub.title}
+                style="width:100%;height:auto;object-fit:contain;"
+                loading="lazy"
+              />
+            <% end %>
+            <div class="pgi-modal-body">
+              <%= if @active_pub.venue do %>
+                <div class="pgi-pub-journal">
+                  {@active_pub.venue}<%= if @active_pub.date do %> · {@active_pub.date.year}<% end %>
+                </div>
+              <% end %>
+              <div style="font-family:var(--serif);font-size:clamp(1rem,2.2vw,1.15rem);font-weight:400;line-height:1.3;color:var(--text);margin-bottom:0.8rem;">
+                {@active_pub.title}
+              </div>
+              <%= if (@active_pub.authors || []) != [] do %>
+                <div class="pgi-pub-authors" style="margin-bottom:1rem;">
+                  <%= for {a, i} <- Enum.with_index(@active_pub.authors) do %>
+                    {if i > 0, do: ", "}
+                    <span class={if a == "P. Grobas Illobre", do: "self", else: ""}>{a}</span>
+                  <% end %>
+                </div>
+              <% end %>
+              <%= if @active_pub.abstract do %>
+                <p class="pgi-pub-abstract" style="font-size:0.85rem;line-height:1.7;">{@active_pub.abstract}</p>
+              <% else %>
+                <%= if @active_pub.summary do %>
+                  <p class="pgi-pub-abstract" style="font-size:0.85rem;line-height:1.7;">{@active_pub.summary}</p>
+                <% end %>
+              <% end %>
+              <%= if @active_pub.links && @active_pub.links["doi"] do %>
+                <a
+                  href={@active_pub.links["doi"]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="pgi-modal-doi"
+                >
+                  Read article →
+                </a>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <hr class="pgi-divider" style="margin:2.5rem 0;" />
+
+      <%!-- Awards --%>
+      <h2 class="pgi-cv-h2" style="margin-top:0;">Awards</h2>
+      <ul class="pgi-cv-list">
+        <li>PhD awarded with honors (<em>with honors</em>).</li>
+        <li>Scuola Normale Superiore PhD Scholarship (2020–2025).</li>
+        <li>Two NanoX Research Scholarships (2019 &amp; 2020).</li>
+        <li>Erasmus Internship Fellowship (2019–2020).</li>
+        <li>Consejo Superior de Investigaciones Científicas (CSIC) – Jae Intro Fellowship (2019).</li>
+        <li>Extraordinary Prize for achieving the best academic record in the Bachelor of Chemistry (2018).</li>
+        <li>Erasmus+ scholarship (2016).</li>
+      </ul>
+
+    </div>
     """
   end
 

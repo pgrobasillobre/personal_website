@@ -37,120 +37,68 @@ defmodule PersonalWebsiteWeb.SoftwareLive do
 
   def render(assigns) do
     ~H"""
-    <!-- gradient background -->
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute inset-0 -z-10
-                bg-[radial-gradient(1400px_700px_at_50%_-10%,#e0f2fe_0%,transparent_72%)]"
-    >
-    </div>
+    <div class="pgi-section">
+      <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);font-weight:400;color:var(--text);margin-bottom:2rem;">
+        Software
+      </h1>
 
-    <!-- final-frame image layer, SAME structure as Home's video wrapper -->
-    <div
-      aria-hidden="true"
-      class="absolute inset-x-0 top-0 h-[clamp(560px,80svh,900px)] -z-20 hero-video-mask opacity-5"
-    >
-      <img
-        src={~p"/videos/molecules-final.jpg"}
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover object-[50%_40%] select-none pointer-events-none"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
-
-    <section class="relative isolate overflow-hidden">
-      <div class="max-w-7xl mx-auto p-6 space-y-6">
-        <h1 class="text-5xl font-semibold mt-6 mb-6">Software</h1>
-        
-    <!-- debugpgi: Multi-tag filtering -->
-        <div class="flex flex-wrap gap-2 items-center">
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem;">
+        <button phx-click="clear_tags" class="pgi-tag-btn">Clear all</button>
+        <%= for tag <- @tags do %>
           <button
-            phx-click="clear_tags"
-            class="px-3 py-1 rounded-full border text-base bg-gray-200 hover:bg-gray-300"
+            phx-click="toggle_tag"
+            phx-value-tag={tag}
+            class={"pgi-tag-btn" <> if(tag in @selected_tags, do: " active", else: "")}
           >
-            Clear All
+            {tag}
           </button>
+        <% end %>
+      </div>
 
-          <%= for tag <- @tags do %>
-            <button
-              phx-click="toggle_tag"
-              phx-value-tag={tag}
-              class={
-                "px-3 py-1 rounded-full border text-base transition " <>
-                if tag in @selected_tags, do: "bg-gray-900 text-white", else: "bg-white"
-              }
-            >
-              {tag}
-            </button>
-          <% end %>
-        </div>
-        
-    <!-- debugpgi: Filtered projects -->
-        <div class="grid md:grid-cols-2 gap-4">
-          <%= for p <- Enum.filter(@projects, fn p ->
-                @selected_tags == [] or Enum.any?(p.tags, &(&1 in @selected_tags))
-              end) do %>
-            
-    <!-- OUTER thick-bordered box -->
-            <!-- <div class="p-4 rounded-2xl border border-gray-600 shadow bg-white hover:bg-gray-200 hover:shadow-md transition">  -->
-            <div class="p-4 rounded-2xl border border-sky-200 shadow bg-white hover:bg-gradient-to-br hover:from-sky-50 hover:to-indigo-50 hover:shadow-md transition cursor-pointer">
-              <%= if p.image do %>
-                <a href={~p"/software/#{p.slug}"}>
-                  <img
-                    src={p.image}
-                    alt={"Screenshot of " <> p.title}
-                    class="mb-4 w-full rounded-lg border hover:opacity-90 transition"
-                  />
-                </a>
-              <% end %>
-
-              <h3 class="text-2xl font-medium">
-                <a class="underline" href={~p"/software/#{p.slug}"}>{p.title}</a>
-              </h3>
-
-              <p class="mt-3 text-lg text-justify">{p.summary}</p>
+      <div class="pgi-sw-list">
+        <%= for {p, i} <- Enum.with_index(Enum.filter(@projects, fn p ->
+              @selected_tags == [] or Enum.any?(p.tags, &(&1 in @selected_tags))
+            end)) do %>
+          <div class="pgi-sw-entry">
+            <div>
+              <a href={~p"/software/#{p.slug}"} class="pgi-sw-entry-title">{p.title}</a>
+              <p class="pgi-sw-entry-summary">{p.summary}</p>
               <%= if p.impact do %>
-                <p class="mt-2 text-lg  text-base text-gray-600 text-justify">Impact: {p.impact}</p>
+                <p class="pgi-sw-entry-impact">{p.impact}</p>
               <% end %>
-
-              <div class="mt-3 flex gap-3">
-                <%= if p.links["code"] do %>
-                  <a class="text-lg underline" href={p.links["code"]}>Code</a>
-                <% end %>
-                
-    <!-- Custom for FretLab -->
-                <%= if p.links["code_cpp"] do %>
-                  <a class="text-lg underline" href={p.links["code_cpp"]}>C++ Code</a>
-                <% end %>
-
-                <%= if p.links["code_fortran"] do %>
-                  <a class="text-lg underline" href={p.links["code_fortran"]}>Fortran Code</a>
-                <% end %>
-
-                <%= if p.links["docs"] do %>
-                  <a class="text-lg underline" href={p.links["docs"]}>Docs</a>
-                <% end %>
-                <%= if p.links["publication"] do %>
-                  <a class="text-lg underline" href={p.links["publication"]}>Publication</a>
-                <% end %>
-
-                <%= if p.links["benchmarks"] do %>
-                  <a class="text-lg underline" href={p.links["benchmarks"]}>Benchmarks</a>
-                <% end %>
-              </div>
-              <%= if p.tags != [] do %>
-                <div class="mt-3 flex flex-wrap gap-2">
+              <div class="pgi-sw-entry-meta">
+                <div class="pgi-sw-tags">
                   <%= for t <- p.tags do %>
-                    <span class="mt-2 h-full text-base bg-gray-100 rounded px-2 py-0.5">{t}</span>
+                    <span class="pgi-sw-tag">{t}</span>
                   <% end %>
                 </div>
-              <% end %>
+                <div class="pgi-sw-links">
+                  <%= if p.links["docs"] do %>
+                    <a href={p.links["docs"]} target="_blank" rel="noopener noreferrer">Docs</a>
+                  <% end %>
+                  <%= if p.links["code"] do %>
+                    <a href={p.links["code"]} target="_blank" rel="noopener noreferrer">Code</a>
+                  <% end %>
+                  <%= if p.links["code_cpp"] do %>
+                    <a href={p.links["code_cpp"]} target="_blank" rel="noopener noreferrer">C++ Code</a>
+                  <% end %>
+                  <%= if p.links["code_fortran"] do %>
+                    <a href={p.links["code_fortran"]} target="_blank" rel="noopener noreferrer">Fortran Code</a>
+                  <% end %>
+                  <%= if p.links["publication"] do %>
+                    <a href={p.links["publication"]} target="_blank" rel="noopener noreferrer">Publication</a>
+                  <% end %>
+                  <%= if p.links["benchmarks"] do %>
+                    <a href={p.links["benchmarks"]} target="_blank" rel="noopener noreferrer">Benchmarks</a>
+                  <% end %>
+                </div>
+              </div>
             </div>
-          <% end %>
-        </div>
+            <a href={~p"/software/#{p.slug}"} class="pgi-sw-arrow" tabindex="-1">↗</a>
+          </div>
+        <% end %>
       </div>
-    </section>
+    </div>
     """
   end
 end
