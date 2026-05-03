@@ -259,7 +259,7 @@ img { display: block; max-width: 100%; }
 .pgi-hero-scroll {
   position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
   z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  opacity: 0; animation: rise .7s 1.3s forwards;
+  opacity: 0; animation: rise-centered .7s 1.3s forwards;
 }
 .pgi-hero-scroll span {
   font-family: var(--mono); font-size: 0.56rem;
@@ -279,6 +279,20 @@ img { display: block; max-width: 100%; }
 @keyframes rise {
   from { opacity:0; transform:translateY(18px); }
   to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes rise-centered {
+  from { opacity:0; transform:translateX(-50%) translateY(18px); }
+  to   { opacity:1; transform:translateX(-50%) translateY(0); }
+}
+
+@media (min-width: 681px) and (max-width: 1199px) {
+  .pgi-hero { min-height: 100svh; }
+  .pgi-hero-inner {
+    padding: clamp(3rem,6vw,5rem) clamp(1.2rem,5vw,2.8rem) 3.5rem;
+  }
+  .pgi-hero-desc { margin-top: 1.2rem; }
+  .pgi-hero-actions { margin-top: 1.8rem; }
 }
 
 @media (max-width: 680px) {

@@ -32,19 +32,11 @@ defmodule PersonalWebsiteWeb.PublicationsLive do
                   {p.venue}<%= if p.date do %> · {p.date.year}<% end %>
                 </div>
               <% end %>
-              <button
-                type="button"
-                phx-click="open_abstract"
-                phx-value-slug={p.slug}
-                class="pgi-pub-title-btn pgi-desktop-only"
-              >
-                {p.title}
-              </button>
               <a
                 href={p.links["doi"]}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="pgi-pub-title-btn pgi-mobile-only"
+                class="pgi-pub-title-btn"
               >
                 {p.title}
               </a>
